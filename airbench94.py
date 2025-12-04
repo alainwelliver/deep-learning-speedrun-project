@@ -466,19 +466,14 @@ def main(run):
 
     return tta_val_acc
 
-if __name__ == "__main__":
-    with open(sys.argv[0]) as f:
-        code = f.read()
-
+def run_experiments(n_runs=25):
+    """Run multiple experiments and return results"""
     print_columns(logging_columns_list, is_head=True)
-    #main('warmup')
-    accs = torch.tensor([main(run) for run in range(25)])
-    print('Mean: %.4f    Std: %.4f' % (accs.mean(), accs.std()))
+    main('warmup')
+    accs = torch.tensor([main(run) for run in range(n_runs)])
+    print('Mean: %.4f Std: %.4f' % (accs.mean(), accs.std()))
+    return accs
 
-    log = {'code': code, 'accs': accs}
-    log_dir = os.path.join('logs', str(uuid.uuid4()))
-    os.makedirs(log_dir, exist_ok=True)
-    log_path = os.path.join(log_dir, 'log.pt')
-    print(os.path.abspath(log_path))
-    torch.save(log, os.path.join(log_dir, 'log.pt'))
+if __name__ == "__main__":
+    run_experiments(25)
 
