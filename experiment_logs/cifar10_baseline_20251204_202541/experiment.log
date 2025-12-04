@@ -1,0 +1,122 @@
+
+================================================================================
+EXPERIMENT LOG
+================================================================================
+Experiment Name: cifar10_baseline
+Start Time: 2025-12-04T20:25:41.252770
+
+GIT INFORMATION:
+  Commit:  a9ca3ac6e87274cd7583befeebf844184acd714a
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+  
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA A100 80GB PCIe (85.1 GB)
+
+================================================================================
+
+[2025-12-04 20:25:41.253] [INFO] Starting experiment: cifar10_baseline
+[2025-12-04 20:25:41.253] [INFO] Configuration file: configs/baseline.json
+[2025-12-04 20:25:41.253] [INFO] Number of runs: 5
+[2025-12-04 20:25:41.253] [INFO] Base seed: 42
+[2025-12-04 20:25:41.253] [INFO] Hypothesis: Baseline performance measurement using original airbench94 configuration
+[2025-12-04 20:25:41.253] [INFO] Modification: None - using original airbench94.py without modifications
+[2025-12-04 20:25:41.253] [INFO] Hyperparameters saved to hyperparameters.json
+[2025-12-04 20:25:41.253] [INFO] Hyperparameters: {
+  "experiment_name": "cifar10_baseline",
+  "hypothesis": "Baseline performance measurement using original airbench94 configuration",
+  "modification": "None - using original airbench94.py without modifications",
+  "description": "This is the baseline experiment to establish performance benchmarks. We use the default airbench94 hyperparameters to train a VGG-style model on CIFAR-10. Results from this experiment will serve as the reference point for evaluating modifications.",
+  "base_seed": 42,
+  "hyperparameters": {
+    "note": "These are the default airbench94 hyperparameters. They can be overridden by setting them at the top level of this config.",
+    "batch_size": 1024,
+    "learning_rate": 11.5,
+    "epochs": 9.9,
+    "momentum": 0.85,
+    "weight_decay": 0.0153,
+    "bias_scaler": 64.0,
+    "label_smoothing": 0.2,
+    "whiten_bias_epochs": 3,
+    "augmentation": {
+      "flip": true,
+      "translate": 2
+    },
+    "network": {
+      "widths": {
+        "block1": 64,
+        "block2": 256,
+        "block3": 256
+      },
+      "batchnorm_momentum": 0.6,
+      "scaling_factor": 0.1111111,
+      "tta_level": 2
+    }
+  },
+  "target_accuracy": 0.94,
+  "expected_results": {
+    "note": "Based on airbench94 paper, we expect ~94% accuracy in ~3.8 seconds on A100",
+    "mean_accuracy": 0.9401,
+    "std_accuracy": 0.0014,
+    "mean_time_seconds": 3.83
+  },
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "gpu_memory_gb": 40,
+    "estimated_time_per_run_seconds": 4,
+    "estimated_total_time_minutes": 1.5
+  },
+  "notes": [
+    "This baseline uses all the optimizations from the airbench94 paper:",
+    "- Frozen patch-whitening initialization",
+    "- Identity initialization for conv layers",
+    "- Scaled bias learning rates",
+    "- Lookahead optimizer",
+    "- Multi-crop test-time augmentation",
+    "- Alternating flip augmentation",
+    "Run this first to establish your baseline before testing modifications."
+  ]
+}
+[2025-12-04 20:25:41.253] [INFO] Loading and configuring airbench94...
+[2025-12-04 20:25:41.913] [INFO] Running warmup...
+[2025-12-04 20:26:02.964] [INFO] Warmup complete
+[2025-12-04 20:26:02.964] [INFO] ================================================================================
+[2025-12-04 20:26:02.964] [INFO] Starting 5 training runs...
+[2025-12-04 20:26:02.964] [INFO] ================================================================================
+[2025-12-04 20:26:02.964] [INFO] Starting run 0 with seed 42
+[2025-12-04 20:26:07.351] [INFO] Run 0 complete: accuracy=0.9393, time=4.39s, seed=42
+[2025-12-04 20:26:07.351] [INFO] Starting run 1 with seed 43
+[2025-12-04 20:26:11.723] [INFO] Run 1 complete: accuracy=0.9402, time=4.37s, seed=43
+[2025-12-04 20:26:11.723] [INFO] Starting run 2 with seed 44
+[2025-12-04 20:26:16.099] [INFO] Run 2 complete: accuracy=0.9411, time=4.38s, seed=44
+[2025-12-04 20:26:16.099] [INFO] Starting run 3 with seed 45
+[2025-12-04 20:26:20.483] [INFO] Run 3 complete: accuracy=0.9409, time=4.38s, seed=45
+[2025-12-04 20:26:20.483] [INFO] Starting run 4 with seed 46
+[2025-12-04 20:26:24.880] [INFO] Run 4 complete: accuracy=0.9411, time=4.40s, seed=46
+[2025-12-04 20:26:24.880] [INFO] Progress: 5/5 runs completed (5 successful)
+[2025-12-04 20:26:24.880] [INFO] ================================================================================
+[2025-12-04 20:26:24.880] [INFO] All runs completed: 5/5 successful
+[2025-12-04 20:26:24.880] [INFO] ================================================================================
+[2025-12-04 20:26:24.880] [INFO] Computing statistics...
+[2025-12-04 20:26:25.199] [INFO] Accuracy: 0.9405 ± 0.0008 (std)
+[2025-12-04 20:26:25.199] [INFO] Accuracy 95% CI: [0.9396, 0.9415]
+[2025-12-04 20:26:25.199] [INFO] Accuracy range: [0.9393, 0.9411]
+[2025-12-04 20:26:25.199] [INFO] Median accuracy: 0.9409
+[2025-12-04 20:26:25.199] [INFO] Mean time per run: 4.38s ± 0.01s
+[2025-12-04 20:26:25.199] [INFO] Total training time: 21.91s (0.01 hours)
+[2025-12-04 20:26:25.200] [INFO] Target accuracy: 0.9400
+[2025-12-04 20:26:25.200] [INFO] ✓ Target accuracy ACHIEVED: 0.9405 >= 0.9400
+[2025-12-04 20:26:25.200] [INFO] ================================================================================
+[2025-12-04 20:26:25.200] [INFO] FINALIZING EXPERIMENT
+[2025-12-04 20:26:25.200] [INFO] ================================================================================
+[2025-12-04 20:26:25.200] [INFO] Experiment completed with 5 runs
+[2025-12-04 20:26:25.200] [INFO] Mean accuracy: 0.9405 ± 0.0008
+[2025-12-04 20:26:25.200] [INFO] 95% CI: [0.9396, 0.9415]
+[2025-12-04 20:26:25.201] [INFO] Summary saved to summary.json
+[2025-12-04 20:26:25.201] [INFO] End Time: 2025-12-04 20:26:25.201274
+[2025-12-04 20:26:25.201] [INFO] ================================================================================
