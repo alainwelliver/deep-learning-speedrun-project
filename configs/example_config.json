@@ -1,0 +1,49 @@
+{
+    "experiment_name": "cifar10_residual_maxpool",
+    
+    "hypothesis": "Adding a residual skip connection with max pooling between the first and second convolutional layers will improve training speed by 10-15%",
+    
+    "modification": "Added residual connection between conv1 and conv2 with max pooling to match feature dimensions. This allows gradients to flow more directly between early layers, potentially accelerating convergence.",
+    
+    "description": "We hypothesize that the first and second layers learn similar features during training. By adding a residual connection with max pooling (to match the spatial dimensions after pooling), we enable more direct gradient flow. This should accelerate early-stage learning without significantly increasing computational cost.",
+    
+    "base_seed": 42,
+    
+    "batch_size": 1024,
+    "learning_rate": 11.5,
+    "epochs": 9.9,
+    "momentum": 0.85,
+    "weight_decay": 0.0153,
+    
+    "target_accuracy": 0.94,
+    
+    "baseline_accuracy": 0.9401,
+    "baseline_std": 0.0014,
+    
+    "implementation_notes": [
+      "Modified the ConvGroup class in airbench94.py",
+      "Added self.residual_pool = nn.MaxPool2d(2) in __init__",
+      "In forward(), compute residual = self.residual_pool(x) after conv1",
+      "Add residual to x after conv2: x = x + residual",
+      "No additional parameters introduced (pooling is parameter-free)"
+    ],
+    
+    "expected_impact": {
+      "accuracy_change": "+0.0% to +0.5%",
+      "speed_improvement": "10-15%",
+      "justification": "Residual connections are known to accelerate training in deep networks. Since our network is relatively shallow, we expect a modest improvement."
+    },
+    
+    "ablations_planned": [
+      "max pooling (this experiment)",
+      "average pooling",
+      "strided convolution",
+      "no residual (baseline)"
+    ],
+    
+    "compute_requirements": {
+      "gpu": "NVIDIA A100",
+      "estimated_runs": 100,
+      "estimated_total_time_minutes": 7
+    }
+  }
