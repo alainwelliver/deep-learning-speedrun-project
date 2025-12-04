@@ -7,7 +7,7 @@ Follow this checklist to get started with your experiments.
 ### Step 1: Clone and Setup
 ```bash
 # Clone YOUR fork (not the original!)
-git clone https://github.com/YOUR-USERNAME/ese-3060-project.git
+git clone https://github.com/alainwelliver/deep-learning-speedrun-project.git
 cd ese-3060-project
 
 # Install dependencies
