@@ -1,0 +1,61 @@
+{
+  "experiment_name": "cifar10_baseline",
+  "end_time": "2025-12-05T22:36:24.186393",
+  "git_info": {
+    "commit": "f9382c562720cb72e7e22d951789f10ff22aeffa",
+    "branch": "main",
+    "dirty": true,
+    "diff": "",
+    "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+    "status": "?? __pycache__/experiment_logger.cpython-312.pyc\n"
+  },
+  "gpu_info": {
+    "available": true,
+    "device_count": 1,
+    "cuda_version": "12.8",
+    "pytorch_version": "2.8.0+cu128",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA A100 80GB PCIe",
+        "capability": [
+          8,
+          0
+        ],
+        "total_memory_gb": 85.09587456
+      }
+    ]
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-58-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64"
+  },
+  "statistics": {
+    "n_runs": 100,
+    "accuracy": {
+      "mean": 0.9401369762420654,
+      "std": 0.001366604202900286,
+      "min": 0.9368000030517578,
+      "max": 0.9443999528884888,
+      "median": 0.9401499629020691,
+      "ci_95": [
+        0.9398658123195256,
+        0.9404081401646052
+      ]
+    },
+    "time": {
+      "mean": 4.384771690368653,
+      "std": 0.030657537688014876,
+      "min": 4.28242301940918,
+      "max": 4.4357359409332275,
+      "total": 438.47716903686523
+    }
+  },
+  "additional_info": {
+    "config_path": "configs/baseline.json",
+    "n_runs": 100,
+    "successful_runs": 100,
+    "failed_runs": 0
+  }
+}
