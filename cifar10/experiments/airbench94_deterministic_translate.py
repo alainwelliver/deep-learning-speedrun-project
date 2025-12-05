@@ -68,7 +68,7 @@ CIFAR_MEAN = torch.tensor((0.4914, 0.4822, 0.4465))
 CIFAR_STD = torch.tensor((0.2470, 0.2435, 0.2616))
 
 def hash_fn(n, seed=42):
-    """Hash function for deterministic augmentation (same as used for alternating flip)."""
+    """Hash function for deterministic augmentation - kept for reference but not used in hot path."""
     k = n * seed
     return int(hashlib.md5(bytes(str(k), 'utf-8')).hexdigest()[-8:], 16)
 
@@ -96,21 +96,20 @@ def batch_crop(images, crop_size):
             images_out[mask] = images_tmp[mask, :, :, r+s:r+s+crop_size]
     return images_out
 
-def batch_crop_deterministic(images, crop_size, indices, epoch):
+def batch_crop_deterministic_all(images, crop_size, epoch):
     """
-    NEW: Deterministic cropping that cycles through translation positions.
+    NEW: Deterministic cropping for ALL images at once (called once per epoch).
     
-    Instead of random translations, each image gets a deterministic position
-    based on hash(image_index) + epoch. This ensures:
-    1. Different images get different translations (via hash)
-    2. Same image gets different translations each epoch (via +epoch)
-    3. Consecutive epochs never show the same translation for any image
+    Each image gets a deterministic position based on hash(image_index) + epoch.
+    This ensures consecutive epochs show different translations for every image.
     """
     r = (images.size(-1) - crop_size) // 2
     num_positions = (2 * r + 1) ** 2  # 25 positions for r=2
     
-    # Compute deterministic positions for each image
-    # hashed_indices = torch.tensor([hash_fn(idx.item()) for idx in indices], device=images.device)
+    # Create indices for all images [0, 1, 2, ..., N-1]
+    indices = torch.arange(len(images), device=images.device)
+    
+    # Compute deterministic positions using fast vectorized hash
     hashed_indices = (indices * 2654435761) % (2**32)
     positions = (hashed_indices + epoch) % num_positions
     
@@ -118,7 +117,7 @@ def batch_crop_deterministic(images, crop_size, indices, epoch):
     shift_y = (positions // (2 * r + 1)) - r
     shift_x = (positions % (2 * r + 1)) - r
     
-    # Apply the shifts
+    # Apply the shifts (same loop structure as original batch_crop)
     images_out = torch.empty((len(images), 3, crop_size, crop_size), device=images.device, dtype=images.dtype)
     
     for sy in range(-r, r+1):
@@ -173,51 +172,31 @@ class CifarLoader:
             if pad > 0:
                 self.proc_images['pad'] = F.pad(images, (pad,)*4, 'reflect')
 
-        # Determine base images
+        # Apply translation augmentation (ONCE per epoch, on all images)
         if self.aug.get('translate', 0) > 0:
-            padded_images = self.proc_images['pad']
+            if self.aug.get('deterministic_translate', False):
+                # MODIFICATION: Use deterministic positions based on epoch
+                images = batch_crop_deterministic_all(self.proc_images['pad'], self.images.shape[-2], self.epoch)
+            else:
+                # Original: random crop
+                images = batch_crop(self.proc_images['pad'], self.images.shape[-2])
         elif self.aug.get('flip', False):
-            padded_images = None
+            images = self.proc_images['flip']
         else:
-            padded_images = None
-
-        # Handle alternating flip
+            images = self.proc_images['norm']
+        
+        # Handle alternating flip (from original)
         if self.aug.get('flip', False):
             if self.epoch % 2 == 1:
-                if padded_images is not None:
-                    padded_images = padded_images.flip(-1)
+                images = images.flip(-1)
 
-        current_epoch = self.epoch
         self.epoch += 1
 
-        # Generate indices for this epoch
-        indices = (torch.randperm if self.shuffle else torch.arange)(len(self.images), device=self.images.device)
-        
+        # Shuffle and yield batches (same as original)
+        indices = (torch.randperm if self.shuffle else torch.arange)(len(images), device=images.device)
         for i in range(len(self)):
-            batch_indices = indices[i*self.batch_size:(i+1)*self.batch_size]
-            
-            if self.aug.get('translate', 0) > 0:
-                batch_padded = padded_images[batch_indices]
-                
-                # MODIFICATION: Use deterministic or random cropping
-                if self.aug.get('deterministic_translate', False):
-                    batch_images = batch_crop_deterministic(
-                        batch_padded, 
-                        self.images.shape[-2], 
-                        batch_indices,
-                        current_epoch
-                    )
-                else:
-                    batch_images = batch_crop(batch_padded, self.images.shape[-2])
-            elif self.aug.get('flip', False):
-                base = self.proc_images['flip']
-                if current_epoch % 2 == 1:
-                    base = base.flip(-1)
-                batch_images = base[batch_indices]
-            else:
-                batch_images = self.proc_images['norm'][batch_indices]
-            
-            yield (batch_images, self.labels[batch_indices])
+            idxs = indices[i*self.batch_size:(i+1)*self.batch_size]
+            yield (images[idxs], self.labels[idxs])
 
 #############################################
 #           Network Components              #
