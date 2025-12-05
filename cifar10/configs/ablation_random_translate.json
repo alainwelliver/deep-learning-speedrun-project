@@ -1,0 +1,58 @@
+{
+    "experiment_name": "ablation_random_translate",
+
+    "hypothesis": "Control experiment: Using the modified module with deterministic_translate=false should match baseline performance exactly",
+
+    "modification": "Using the modified translation module but with deterministic_translate flag disabled. This serves as a control to verify the implementation doesn't introduce bugs or performance regressions when operating in baseline mode.",
+
+    "description": "This ablation experiment verifies that our deterministic translation module works correctly when the flag is disabled. It should produce identical results to the baseline, confirming that: (1) the module correctly falls back to random translation when deterministic_translate=false, and (2) no unintended side effects were introduced during implementation.",
+
+    "base_seed": 42,
+
+    "batch_size": 1024,
+    "learning_rate": 11.5,
+    "epochs": 9.9,
+    "momentum": 0.85,
+    "weight_decay": 0.0153,
+    "bias_scaler": 64.0,
+    "label_smoothing": 0.2,
+    "whiten_bias_epochs": 3,
+
+    "augmentation": {
+        "flip": true,
+        "translate": 2,
+        "deterministic_translate": false
+    },
+
+    "target_accuracy": 0.94,
+
+    "baseline_accuracy": null,
+    "baseline_std": null,
+    "baseline_n": 100,
+
+    "implementation_notes": [
+        "Uses the same modified CifarLoader class as deterministic_translate",
+        "deterministic_translate flag set to false",
+        "Should behave identically to baseline",
+        "Statistical test will verify no significant difference from baseline"
+    ],
+
+    "expected_impact": {
+        "accuracy_change": "0.0%",
+        "speed_improvement": "0%",
+        "justification": "This is a control experiment. With deterministic_translate=false, the module should use random translation exactly like the baseline. Any deviation would indicate a bug in the implementation."
+    },
+
+    "validation_criteria": [
+        "Mean accuracy should match baseline within error bars (±0.002)",
+        "Distribution of results should be statistically indistinguishable from baseline",
+        "Training time should match baseline",
+        "If significant differences appear, indicates bug in implementation"
+    ],
+
+    "compute_requirements": {
+        "gpu": "NVIDIA A100",
+        "estimated_runs": 100,
+        "estimated_total_time_minutes": 7
+    }
+}

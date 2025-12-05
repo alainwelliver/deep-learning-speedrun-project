@@ -6,17 +6,25 @@ Experiment runner for CIFAR-10 speedrun experiments.
 Runs multiple trials with different seeds and collects statistics.
 
 Usage:
-    python run_cifar_experiment.py --config configs/baseline.json --n_runs 20
+    # Run baseline
+    python run_cifar_experiment.py --config configs/baseline.json --n_runs 100
+    
+    # Run modification with different module
+    python run_cifar_experiment.py --config configs/deterministic_translate.json --module airbench94_deterministic_translate --n_runs 100
 """
 
 import sys
 import argparse
 import json
+import importlib
 import torch
 import time
 import numpy as np
 from pathlib import Path
 from experiment_logger import ExperimentLogger
+
+# Add experiments directory to Python path so modules can be imported
+sys.path.insert(0, str(Path(__file__).parent / 'experiments'))
 
 
 def load_config(config_path):
@@ -26,35 +34,51 @@ def load_config(config_path):
     return config
 
 
-def modify_airbench_hyperparameters(config):
+def load_airbench_module(module_name):
     """
-    Modify the hyperparameters in airbench94.py based on config.
+    Dynamically import an airbench module by name.
     
-    This is a simple approach: we'll modify the hyp dictionary in memory
-    after importing the module.
+    Args:
+        module_name: Name of the module (e.g., 'airbench94' or 'airbench94_deterministic_translate')
+    
+    Returns:
+        The imported module
     """
     try:
-        # Import airbench94 module
-        import airbench94
-        
-        # Update hyperparameters if specified in config
-        if 'batch_size' in config:
-            airbench94.hyp['opt']['batch_size'] = config['batch_size']
-        if 'learning_rate' in config:
-            airbench94.hyp['opt']['lr'] = config['learning_rate']
-        if 'epochs' in config:
-            airbench94.hyp['opt']['train_epochs'] = config['epochs']
-        if 'momentum' in config:
-            airbench94.hyp['opt']['momentum'] = config['momentum']
-        if 'weight_decay' in config:
-            airbench94.hyp['opt']['weight_decay'] = config['weight_decay']
-        
-        return airbench94
-        
+        module = importlib.import_module(module_name)
+        return module
     except ImportError as e:
-        print(f"ERROR: Could not import airbench94.py: {e}")
-        print("Make sure airbench94.py is in the current directory or Python path.")
+        print(f"ERROR: Could not import {module_name}: {e}")
+        print(f"Make sure {module_name}.py is in the experiments/ directory.")
         sys.exit(1)
+
+
+def modify_airbench_hyperparameters(airbench_module, config):
+    """
+    Modify the hyperparameters in airbench module based on config.
+    """
+    # Update hyperparameters if specified in config
+    if 'batch_size' in config:
+        airbench_module.hyp['opt']['batch_size'] = config['batch_size']
+    if 'learning_rate' in config:
+        airbench_module.hyp['opt']['lr'] = config['learning_rate']
+    if 'epochs' in config:
+        airbench_module.hyp['opt']['train_epochs'] = config['epochs']
+    if 'momentum' in config:
+        airbench_module.hyp['opt']['momentum'] = config['momentum']
+    if 'weight_decay' in config:
+        airbench_module.hyp['opt']['weight_decay'] = config['weight_decay']
+    
+    # NEW: Support for augmentation config
+    if 'aug' in config:
+        for key, value in config['aug'].items():
+            airbench_module.hyp['aug'][key] = value
+    
+    # NEW: Support for deterministic_translate flag
+    if 'deterministic_translate' in config:
+        airbench_module.hyp['aug']['deterministic_translate'] = config['deterministic_translate']
+    
+    return airbench_module
 
 
 def run_single_trial(airbench_module, run_id, seed, logger):
@@ -62,7 +86,7 @@ def run_single_trial(airbench_module, run_id, seed, logger):
     Run a single training trial.
     
     Args:
-        airbench_module: The imported airbench94 module
+        airbench_module: The imported airbench module
         run_id: Identifier for this run
         seed: Random seed to use
         logger: ExperimentLogger instance
@@ -82,7 +106,6 @@ def run_single_trial(airbench_module, run_id, seed, logger):
     
     try:
         # Run the main training function
-        # Note: This assumes airbench94.main() returns the accuracy
         accuracy = airbench_module.main(run=run_id)
         
         end_time = time.time()
@@ -116,13 +139,14 @@ def run_single_trial(airbench_module, run_id, seed, logger):
         }
 
 
-def run_experiment(config_path, n_runs, output_dir=None):
+def run_experiment(config_path, n_runs, module_name='airbench94', output_dir=None):
     """
     Run a complete experiment with multiple trials.
     
     Args:
         config_path: Path to JSON configuration file
         n_runs: Number of runs to perform
+        module_name: Name of the airbench module to use
         output_dir: Optional output directory (defaults to experiment_logs/)
     
     Returns:
@@ -141,6 +165,7 @@ def run_experiment(config_path, n_runs, output_dir=None):
     # Log experiment details
     logger.log(f"Starting experiment: {experiment_name}")
     logger.log(f"Configuration file: {config_path}")
+    logger.log(f"Module: {module_name}")
     logger.log(f"Number of runs: {n_runs}")
     logger.log(f"Base seed: {base_seed}")
     
@@ -152,9 +177,13 @@ def run_experiment(config_path, n_runs, output_dir=None):
     # Log all hyperparameters
     logger.log_hyperparameters(config)
     
-    # Modify airbench hyperparameters and import
-    logger.log("Loading and configuring airbench94...")
-    airbench_module = modify_airbench_hyperparameters(config)
+    # Load and configure airbench module
+    logger.log(f"Loading and configuring {module_name}...")
+    airbench_module = load_airbench_module(module_name)
+    airbench_module = modify_airbench_hyperparameters(airbench_module, config)
+    
+    # Log the actual hyp dict being used
+    logger.log(f"Effective augmentation config: {airbench_module.hyp['aug']}")
     
     # Run warmup if this is the first experiment
     logger.log("Running warmup...")
@@ -246,10 +275,15 @@ def run_experiment(config_path, n_runs, output_dir=None):
             # Statistical significance test
             if 'baseline_std' in config:
                 baseline_std = config['baseline_std']
-                # Simple z-test approximation
-                z_score = (mean_acc - baseline) / np.sqrt((std_acc**2 + baseline_std**2) / len(accuracies))
-                p_value = 2 * (1 - stats.norm.cdf(abs(z_score)))
-                logger.log(f"Statistical significance: z={z_score:.3f}, p={p_value:.4f}")
+                baseline_n = config.get('baseline_n', n_runs)
+                
+                # Two-sample t-test (Welch's t-test)
+                t_stat, p_value = stats.ttest_ind_from_stats(
+                    mean_acc, std_acc, len(accuracies),
+                    baseline, baseline_std, baseline_n,
+                    equal_var=False
+                )
+                logger.log(f"Statistical significance: t={t_stat:.3f}, p={p_value:.4f}")
                 
                 if p_value < 0.05:
                     logger.log("Result is statistically significant (p < 0.05)")
@@ -262,6 +296,7 @@ def run_experiment(config_path, n_runs, output_dir=None):
     # Finalize experiment
     additional_info = {
         'config_path': str(config_path),
+        'module_name': module_name,
         'n_runs': n_runs,
         'successful_runs': successful_runs,
         'failed_runs': n_runs - successful_runs,
@@ -289,6 +324,12 @@ def main():
         help='Number of training runs to perform (default: 20)'
     )
     parser.add_argument(
+        '--module',
+        type=str,
+        default='airbench94',
+        help='Name of airbench module to use (default: airbench94)'
+    )
+    parser.add_argument(
         '--output_dir',
         type=str,
         default=None,
@@ -308,7 +349,12 @@ def main():
     print(f"{'='*80}\n")
     
     try:
-        exp_dir, summary = run_experiment(args.config, args.n_runs, args.output_dir)
+        exp_dir, summary = run_experiment(
+            args.config, 
+            args.n_runs, 
+            module_name=args.module,
+            output_dir=args.output_dir
+        )
         
         print(f"\n{'='*80}")
         print(f"Experiment completed successfully!")
