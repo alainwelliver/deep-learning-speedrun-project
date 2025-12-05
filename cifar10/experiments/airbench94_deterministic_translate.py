@@ -96,36 +96,28 @@ def batch_crop(images, crop_size):
             images_out[mask] = images_tmp[mask, :, :, r+s:r+s+crop_size]
     return images_out
 
-def batch_crop_deterministic_all(images, crop_size, epoch):
+def batch_crop_deterministic_all(images, crop_size, positions, r):
     """
     NEW: Deterministic cropping for ALL images at once (called once per epoch).
-    
-    Each image gets a deterministic position based on hash(image_index) + epoch.
-    This ensures consecutive epochs show different translations for every image.
+
+    `positions` is a precomputed tensor of shape (N,) with values in
+    [0, (2*r + 1)^2), representing a grid of shifts in [-r, r] x [-r, r].
     """
-    r = (images.size(-1) - crop_size) // 2
-    num_positions = (2 * r + 1) ** 2  # 25 positions for r=2
-    
-    # Create indices for all images [0, 1, 2, ..., N-1]
-    indices = torch.arange(len(images), device=images.device)
-    
-    # Compute deterministic positions using fast vectorized hash
-    hashed_indices = (indices * 2654435761) % (2**32)
-    positions = (hashed_indices + epoch) % num_positions
-    
     # Convert linear position to (y, x) shifts in range [-r, r]
     shift_y = (positions // (2 * r + 1)) - r
-    shift_x = (positions % (2 * r + 1)) - r
-    
+    shift_x = (positions %  (2 * r + 1)) - r
+
     # Apply the shifts (same loop structure as original batch_crop)
-    images_out = torch.empty((len(images), 3, crop_size, crop_size), device=images.device, dtype=images.dtype)
-    
+    images_out = torch.empty((len(images), 3, crop_size, crop_size),
+                             device=images.device, dtype=images.dtype)
+
     for sy in range(-r, r+1):
         for sx in range(-r, r+1):
             mask = (shift_y == sy) & (shift_x == sx)
             if mask.any():
-                images_out[mask] = images[mask, :, r+sy:r+sy+crop_size, r+sx:r+sx+crop_size]
-    
+                images_out[mask] = images[mask, :,
+                                          r+sy:r+sy+crop_size,
+                                          r+sx:r+sx+crop_size]
     return images_out
 
 
@@ -155,6 +147,20 @@ class CifarLoader:
         for k in self.aug.keys():
             assert k in ['flip', 'translate', 'deterministic_translate'], 'Unrecognized key: %s' % k
 
+        # Precompute deterministic translation positions if enabled
+        self.translate_pad = self.aug.get('translate', 0)
+        if self.aug.get('deterministic_translate', False) and self.translate_pad > 0:
+            self.num_positions = (2 * self.translate_pad + 1) ** 2
+            N = len(self.images)
+            base_indices = torch.arange(N, device=self.images.device)
+            # Fast multiplicative hash, done once
+            hashed = (base_indices * 2654435761) % (2**32)
+            self.base_positions = hashed % self.num_positions
+        else:
+            self.translate_pad = self.translate_pad
+            self.num_positions = 0
+            self.base_positions = None
+
         self.batch_size = batch_size
         self.drop_last = train if drop_last is None else drop_last
         self.shuffle = train if shuffle is None else shuffle
@@ -173,10 +179,18 @@ class CifarLoader:
                 self.proc_images['pad'] = F.pad(images, (pad,)*4, 'reflect')
 
         # Apply translation augmentation (ONCE per epoch, on all images)
-        if self.aug.get('translate', 0) > 0:
+        pad = self.aug.get('translate', 0)
+        if pad > 0:
             if self.aug.get('deterministic_translate', False):
                 # MODIFICATION: Use deterministic positions based on epoch
-                images = batch_crop_deterministic_all(self.proc_images['pad'], self.images.shape[-2], self.epoch)
+                assert self.base_positions is not None, "base_positions must be precomputed when deterministic_translate is True"
+                positions = (self.base_positions + self.epoch) % self.num_positions
+                images = batch_crop_deterministic_all(
+                    self.proc_images['pad'],
+                    self.images.shape[-2],
+                    positions,
+                    self.translate_pad,
+                )
             else:
                 # Original: random crop
                 images = batch_crop(self.proc_images['pad'], self.images.shape[-2])
@@ -394,6 +408,10 @@ def main(run):
     loss_fn = nn.CrossEntropyLoss(label_smoothing=hyp['opt']['label_smoothing'], reduction='none')
     test_loader = CifarLoader('cifar10', train=False, batch_size=2000)
     train_loader = CifarLoader('cifar10', train=True, batch_size=batch_size, aug=hyp['aug'])
+
+    # Fast-fail if we somehow ended up on CPU instead of CUDA
+    assert train_loader.images.device.type == "cuda", f"Train images device is {train_loader.images.device}, expected CUDA. Check Runpod / GPU setup."
+
     if run == 'warmup':
         train_loader.labels = torch.randint(0, 10, size=(len(train_loader.labels),), device=train_loader.labels.device)
     total_train_steps = ceil(len(train_loader) * epochs)
