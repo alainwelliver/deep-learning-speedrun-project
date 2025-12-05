@@ -110,7 +110,8 @@ def batch_crop_deterministic(images, crop_size, indices, epoch):
     num_positions = (2 * r + 1) ** 2  # 25 positions for r=2
     
     # Compute deterministic positions for each image
-    hashed_indices = torch.tensor([hash_fn(idx.item()) for idx in indices], device=images.device)
+    # hashed_indices = torch.tensor([hash_fn(idx.item()) for idx in indices], device=images.device)
+    hashed_indices = (indices * 2654435761) % (2**32)
     positions = (hashed_indices + epoch) % num_positions
     
     # Convert linear position to (y, x) shifts in range [-r, r]
