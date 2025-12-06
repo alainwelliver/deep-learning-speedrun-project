@@ -1,0 +1,62 @@
+{
+  "experiment_name": "ablation_random_translate",
+  "end_time": "2025-12-06T22:16:33.313035",
+  "git_info": {
+    "commit": "55c80d9afd2388fc7aecf5c95196ae57a6134066",
+    "branch": "main",
+    "dirty": true,
+    "diff": "",
+    "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+    "status": "?? cifar10/cifar10/\n?? cifar10/experiment_logs/ablation_random_translate_20251206_215714/\n"
+  },
+  "gpu_info": {
+    "available": true,
+    "device_count": 1,
+    "cuda_version": "12.8",
+    "pytorch_version": "2.8.0+cu128",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA A100 80GB PCIe",
+        "capability": [
+          8,
+          0
+        ],
+        "total_memory_gb": 85.09587456
+      }
+    ]
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-6.14.0-24-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64"
+  },
+  "statistics": {
+    "n_runs": 100,
+    "accuracy": {
+      "mean": 0.9403139734268189,
+      "std": 0.00116159262540204,
+      "min": 0.9369999766349792,
+      "max": 0.9432999491691589,
+      "median": 0.9401499629020691,
+      "ci_95": [
+        0.9400834882490119,
+        0.9405444586046259
+      ]
+    },
+    "time": {
+      "mean": 5.337633326053619,
+      "std": 0.09152752181330098,
+      "min": 5.110314130783081,
+      "max": 5.585523843765259,
+      "total": 533.7633326053619
+    }
+  },
+  "additional_info": {
+    "config_path": "configs/ablation_random_translate.json",
+    "module_name": "airbench94",
+    "n_runs": 100,
+    "successful_runs": 100,
+    "failed_runs": 0
+  }
+}

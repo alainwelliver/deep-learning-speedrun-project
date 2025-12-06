@@ -1,0 +1,106 @@
+
+================================================================================
+EXPERIMENT LOG
+================================================================================
+Experiment Name: ablation_random_translate
+Start Time: 2025-12-06T21:57:15.103058
+
+GIT INFORMATION:
+  Commit:  871ca169f0d8681324b679ded286bb2eec179bd9
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   False
+  
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA A100 80GB PCIe (85.1 GB)
+
+================================================================================
+
+[2025-12-06 21:57:15.103] [INFO] Starting experiment: ablation_random_translate
+[2025-12-06 21:57:15.103] [INFO] Configuration file: configs/ablation_random_translate.json
+[2025-12-06 21:57:15.103] [INFO] Module: airbench94
+[2025-12-06 21:57:15.103] [INFO] Number of runs: 5
+[2025-12-06 21:57:15.103] [INFO] Base seed: 42
+[2025-12-06 21:57:15.103] [INFO] Hypothesis: Control experiment: Using the modified module with deterministic_translate=false should match baseline performance exactly
+[2025-12-06 21:57:15.103] [INFO] Modification: Using the modified translation module but with deterministic_translate flag disabled. This serves as a control to verify the implementation doesn't introduce bugs or performance regressions when operating in baseline mode.
+[2025-12-06 21:57:15.104] [INFO] Hyperparameters saved to hyperparameters.json
+[2025-12-06 21:57:15.104] [INFO] Hyperparameters: {
+  "experiment_name": "ablation_random_translate",
+  "hypothesis": "Control experiment: Using the modified module with deterministic_translate=false should match baseline performance exactly",
+  "modification": "Using the modified translation module but with deterministic_translate flag disabled. This serves as a control to verify the implementation doesn't introduce bugs or performance regressions when operating in baseline mode.",
+  "description": "This ablation experiment verifies that our deterministic translation module works correctly when the flag is disabled. It should produce identical results to the baseline, confirming that: (1) the module correctly falls back to random translation when deterministic_translate=false, and (2) no unintended side effects were introduced during implementation.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2,
+    "deterministic_translate": false
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": null,
+  "baseline_std": null,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "Uses the same modified CifarLoader class as deterministic_translate",
+    "deterministic_translate flag set to false",
+    "Should behave identically to baseline",
+    "Statistical test will verify no significant difference from baseline"
+  ],
+  "expected_impact": {
+    "accuracy_change": "0.0%",
+    "speed_improvement": "0%",
+    "justification": "This is a control experiment. With deterministic_translate=false, the module should use random translation exactly like the baseline. Any deviation would indicate a bug in the implementation."
+  },
+  "validation_criteria": [
+    "Mean accuracy should match baseline within error bars (\u00b10.002)",
+    "Distribution of results should be statistically indistinguishable from baseline",
+    "Training time should match baseline",
+    "If significant differences appear, indicates bug in implementation"
+  ],
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "estimated_runs": 100,
+    "estimated_total_time_minutes": 7
+  }
+}
+[2025-12-06 21:57:15.104] [INFO] Loading and configuring airbench94...
+[2025-12-06 21:57:16.161] [INFO] Effective augmentation config: {'flip': True, 'translate': 2}
+[2025-12-06 21:57:16.161] [INFO] Running warmup...
+[2025-12-06 21:57:36.773] [INFO] Warmup complete
+[2025-12-06 21:57:36.774] [INFO] ================================================================================
+[2025-12-06 21:57:36.774] [INFO] Starting 5 training runs...
+[2025-12-06 21:57:36.774] [INFO] ================================================================================
+[2025-12-06 21:57:36.774] [INFO] Starting run 0 with seed 42
+[2025-12-06 21:57:42.129] [INFO] Run 0 complete: accuracy=0.9393, time=5.35s, seed=42
+[2025-12-06 21:57:42.129] [INFO] Starting run 1 with seed 43
+[2025-12-06 21:57:47.538] [INFO] Run 1 complete: accuracy=0.9402, time=5.41s, seed=43
+[2025-12-06 21:57:47.538] [INFO] Starting run 2 with seed 44
+[2025-12-06 21:57:52.950] [INFO] Run 2 complete: accuracy=0.9411, time=5.41s, seed=44
+[2025-12-06 21:57:52.950] [INFO] Starting run 3 with seed 45
+[2025-12-06 21:57:58.457] [INFO] Run 3 complete: accuracy=0.9409, time=5.51s, seed=45
+[2025-12-06 21:57:58.457] [INFO] Starting run 4 with seed 46
+[2025-12-06 21:58:03.961] [INFO] Run 4 complete: accuracy=0.9411, time=5.50s, seed=46
+[2025-12-06 21:58:03.961] [INFO] Progress: 5/5 runs completed (5 successful)
+[2025-12-06 21:58:03.961] [INFO] ================================================================================
+[2025-12-06 21:58:03.961] [INFO] All runs completed: 5/5 successful
+[2025-12-06 21:58:03.961] [INFO] ================================================================================
+[2025-12-06 21:58:03.961] [INFO] Computing statistics...
+[2025-12-06 21:58:04.458] [INFO] Accuracy: 0.9405 ± 0.0008 (std)
+[2025-12-06 21:58:04.458] [INFO] Accuracy 95% CI: [0.9396, 0.9415]
+[2025-12-06 21:58:04.458] [INFO] Accuracy range: [0.9393, 0.9411]
+[2025-12-06 21:58:04.458] [INFO] Median accuracy: 0.9409
+[2025-12-06 21:58:04.458] [INFO] Mean time per run: 5.44s ± 0.07s
+[2025-12-06 21:58:04.458] [INFO] Total training time: 27.18s (0.01 hours)
+[2025-12-06 21:58:04.458] [INFO] Target accuracy: 0.9400
+[2025-12-06 21:58:04.458] [INFO] ✓ Target accuracy ACHIEVED: 0.9405 >= 0.9400
