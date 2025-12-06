@@ -1,0 +1,62 @@
+{
+  "experiment_name": "deterministic_translate",
+  "end_time": "2025-12-05T23:57:10.175540",
+  "git_info": {
+    "commit": "46ad22fcaabd91b2411763776d219fd2e4a69ab9",
+    "branch": "main",
+    "dirty": true,
+    "diff": "",
+    "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+    "status": "?? cifar10/cifar-10-batches-py/\n?? cifar10/cifar-10-python.tar.gz\n?? cifar10/cifar10/\n?? cifar10/experiment_logs/deterministic_translate_20251205_232737/\n?? cifar10/experiment_logs/deterministic_translate_20251205_233253/\n?? cifar10/experiment_logs/deterministic_translate_20251205_234217/\n?? cifar10/test.pt\n?? cifar10/train.pt\n"
+  },
+  "gpu_info": {
+    "available": true,
+    "device_count": 1,
+    "cuda_version": "12.8",
+    "pytorch_version": "2.8.0+cu128",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA A100 80GB PCIe",
+        "capability": [
+          8,
+          0
+        ],
+        "total_memory_gb": 85.09587456
+      }
+    ]
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-58-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64"
+  },
+  "statistics": {
+    "n_runs": 5,
+    "accuracy": {
+      "mean": 0.9400599718093872,
+      "std": 0.0010382690025890092,
+      "min": 0.9386999607086182,
+      "max": 0.9409999847412109,
+      "median": 0.9405999779701233,
+      "ci_95": [
+        0.9387707905684215,
+        0.9413491530503528
+      ]
+    },
+    "time": {
+      "mean": 4.319378280639649,
+      "std": 0.02845507453385048,
+      "min": 4.297424554824829,
+      "max": 4.369013547897339,
+      "total": 21.596891403198242
+    }
+  },
+  "additional_info": {
+    "config_path": "configs/deterministic_translate.json",
+    "module_name": "airbench94_deterministic_translate",
+    "n_runs": 5,
+    "successful_runs": 5,
+    "failed_runs": 0
+  }
+}

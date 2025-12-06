@@ -1,0 +1,120 @@
+
+================================================================================
+EXPERIMENT LOG
+================================================================================
+Experiment Name: deterministic_translate
+Start Time: 2025-12-05T23:56:26.866125
+
+GIT INFORMATION:
+  Commit:  46ad22fcaabd91b2411763776d219fd2e4a69ab9
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+  
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA A100 80GB PCIe (85.1 GB)
+
+================================================================================
+
+[2025-12-05 23:56:26.866] [INFO] Starting experiment: deterministic_translate
+[2025-12-05 23:56:26.866] [INFO] Configuration file: configs/deterministic_translate.json
+[2025-12-05 23:56:26.866] [INFO] Module: airbench94_deterministic_translate
+[2025-12-05 23:56:26.866] [INFO] Number of runs: 5
+[2025-12-05 23:56:26.866] [INFO] Base seed: 42
+[2025-12-05 23:56:26.866] [INFO] Hypothesis: Deterministic cycling through translation positions reduces redundancy (like alternating flip) and speeds up training convergence
+[2025-12-05 23:56:26.866] [INFO] Modification: Replace random 2-pixel translation with deterministic position cycling based on hash(image_index) + epoch. Similar to how alternating flip removes randomness while preserving data diversity, cycling through translation positions should provide consistent augmentation without redundancy.
+[2025-12-05 23:56:26.866] [INFO] Hyperparameters saved to hyperparameters.json
+[2025-12-05 23:56:26.866] [INFO] Hyperparameters: {
+  "experiment_name": "deterministic_translate",
+  "hypothesis": "Deterministic cycling through translation positions reduces redundancy (like alternating flip) and speeds up training convergence",
+  "modification": "Replace random 2-pixel translation with deterministic position cycling based on hash(image_index) + epoch. Similar to how alternating flip removes randomness while preserving data diversity, cycling through translation positions should provide consistent augmentation without redundancy.",
+  "description": "The baseline uses random translation which can cause redundancy - the same image might get similar translations across epochs. By deterministically cycling through translation positions based on hash(image_index) + epoch, we ensure each image sees different translations across epochs while maintaining reproducibility. This is analogous to the alternating flip strategy that's already part of airbench94.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2,
+    "deterministic_translate": true
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": 0.9401369762420654,
+  "baseline_std": 0.001366604202900286,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "Modify the CifarLoader class in airbench94.py",
+    "Replace random translation with deterministic cycling",
+    "Use hash(image_index) + epoch to generate consistent translation offsets",
+    "Cycle through the 25 possible translation positions (5x5 grid for 2-pixel translation)",
+    "Maintain same translation magnitude (2 pixels) as baseline"
+  ],
+  "expected_impact": {
+    "accuracy_change": "0.0% to +0.3%",
+    "speed_improvement": "5-10%",
+    "justification": "Removing randomness should slightly speed up training by reducing redundant similar augmentations. Similar to how alternating flip improved over random flip."
+  },
+  "ablations_planned": [
+    "deterministic cycling (this experiment)",
+    "random translation (baseline)",
+    "no translation",
+    "deterministic but fixed per image (no epoch variation)"
+  ],
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "estimated_runs": 100,
+    "estimated_total_time_minutes": 7
+  }
+}
+[2025-12-05 23:56:26.866] [INFO] Loading and configuring airbench94_deterministic_translate...
+[2025-12-05 23:56:27.523] [INFO] Effective augmentation config: {'flip': True, 'translate': 2, 'deterministic_translate': True}
+[2025-12-05 23:56:27.523] [INFO] Running warmup...
+[2025-12-05 23:56:48.195] [INFO] Warmup complete
+[2025-12-05 23:56:48.196] [INFO] ================================================================================
+[2025-12-05 23:56:48.196] [INFO] Starting 5 training runs...
+[2025-12-05 23:56:48.196] [INFO] ================================================================================
+[2025-12-05 23:56:48.196] [INFO] Starting run 0 with seed 42
+[2025-12-05 23:56:52.505] [INFO] Run 0 complete: accuracy=0.9408, time=4.31s, seed=42
+[2025-12-05 23:56:52.505] [INFO] Starting run 1 with seed 43
+[2025-12-05 23:56:56.803] [INFO] Run 1 complete: accuracy=0.9392, time=4.30s, seed=43
+[2025-12-05 23:56:56.803] [INFO] Starting run 2 with seed 44
+[2025-12-05 23:57:01.119] [INFO] Run 2 complete: accuracy=0.9410, time=4.32s, seed=44
+[2025-12-05 23:57:01.119] [INFO] Starting run 3 with seed 45
+[2025-12-05 23:57:05.427] [INFO] Run 3 complete: accuracy=0.9406, time=4.31s, seed=45
+[2025-12-05 23:57:05.427] [INFO] Starting run 4 with seed 46
+[2025-12-05 23:57:09.797] [INFO] Run 4 complete: accuracy=0.9387, time=4.37s, seed=46
+[2025-12-05 23:57:09.797] [INFO] Progress: 5/5 runs completed (5 successful)
+[2025-12-05 23:57:09.797] [INFO] ================================================================================
+[2025-12-05 23:57:09.797] [INFO] All runs completed: 5/5 successful
+[2025-12-05 23:57:09.797] [INFO] ================================================================================
+[2025-12-05 23:57:09.797] [INFO] Computing statistics...
+[2025-12-05 23:57:10.174] [INFO] Accuracy: 0.9401 ± 0.0010 (std)
+[2025-12-05 23:57:10.174] [INFO] Accuracy 95% CI: [0.9388, 0.9413]
+[2025-12-05 23:57:10.174] [INFO] Accuracy range: [0.9387, 0.9410]
+[2025-12-05 23:57:10.174] [INFO] Median accuracy: 0.9406
+[2025-12-05 23:57:10.174] [INFO] Mean time per run: 4.32s ± 0.03s
+[2025-12-05 23:57:10.174] [INFO] Total training time: 21.60s (0.01 hours)
+[2025-12-05 23:57:10.174] [INFO] Target accuracy: 0.9400
+[2025-12-05 23:57:10.174] [INFO] ✓ Target accuracy ACHIEVED: 0.9401 >= 0.9400
+[2025-12-05 23:57:10.174] [INFO] Baseline accuracy: 0.9401
+[2025-12-05 23:57:10.174] [INFO] Improvement: -0.01%
+[2025-12-05 23:57:10.174] [INFO] Statistical significance: t=-0.159, p=0.8802
+[2025-12-05 23:57:10.174] [INFO] Result is NOT statistically significant (p >= 0.05)
+[2025-12-05 23:57:10.174] [INFO] ================================================================================
+[2025-12-05 23:57:10.174] [INFO] FINALIZING EXPERIMENT
+[2025-12-05 23:57:10.174] [INFO] ================================================================================
+[2025-12-05 23:57:10.175] [INFO] Experiment completed with 5 runs
+[2025-12-05 23:57:10.175] [INFO] Mean accuracy: 0.9401 ± 0.0010
+[2025-12-05 23:57:10.175] [INFO] 95% CI: [0.9388, 0.9413]
+[2025-12-05 23:57:10.175] [INFO] Summary saved to summary.json
+[2025-12-05 23:57:10.175] [INFO] End Time: 2025-12-05 23:57:10.175927
+[2025-12-05 23:57:10.175] [INFO] ================================================================================
