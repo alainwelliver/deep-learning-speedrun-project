@@ -157,9 +157,17 @@ class CifarLoader:
             hashed = (base_indices * 2654435761) % (2**32)
             self.base_positions = hashed % self.num_positions
         else:
-            self.translate_pad = self.translate_pad
             self.num_positions = 0
             self.base_positions = None
+
+        # Group image indices by their base position (only once)
+        if self.base_positions is not None:
+            self.position_groups = []
+            for pos in range(self.num_positions):
+                idx = torch.nonzero(self.base_positions == pos, as_tuple=False).squeeze(1)
+                self.position_groups.append(idx)
+        else:
+            self.position_groups = None
 
         self.batch_size = batch_size
         self.drop_last = train if drop_last is None else drop_last
@@ -182,15 +190,32 @@ class CifarLoader:
         pad = self.aug.get('translate', 0)
         if pad > 0:
             if self.aug.get('deterministic_translate', False):
-                # MODIFICATION: Use deterministic positions based on epoch
-                assert self.base_positions is not None, "base_positions must be precomputed when deterministic_translate is True"
-                positions = (self.base_positions + self.epoch) % self.num_positions
-                images = batch_crop_deterministic_all(
-                    self.proc_images['pad'],
-                    self.images.shape[-2],
-                    positions,
-                    self.translate_pad,
+                # Use precomputed groups; rotate which shift they get each epoch
+                assert self.position_groups is not None, "position_groups must be precomputed when deterministic_translate is True"
+                crop_size = self.images.shape[-2]  # 32 for CIFAR-10
+                grid_size = 2 * pad + 1            # e.g., 5 when pad=2
+                padded = self.proc_images['pad']
+
+                images = torch.empty(
+                    (len(self.images), 3, crop_size, crop_size),
+                    device=padded.device,
+                    dtype=padded.dtype,
                 )
+
+                epoch_offset = self.epoch % self.num_positions
+
+                for base_pos in range(self.num_positions):
+                    idx = self.position_groups[base_pos]
+                    if idx.numel() == 0:
+                        continue
+
+                    shifted_pos = (base_pos + epoch_offset) % self.num_positions
+                    sy = (shifted_pos // grid_size) - pad
+                    sx = (shifted_pos %  grid_size) - pad
+
+                    images[idx] = padded[idx, :,
+                                          pad + sy: pad + sy + crop_size,
+                                          pad + sx: pad + sx + crop_size]
             else:
                 # Original: random crop
                 images = batch_crop(self.proc_images['pad'], self.images.shape[-2])
