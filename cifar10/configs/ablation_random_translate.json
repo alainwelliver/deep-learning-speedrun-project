@@ -26,8 +26,8 @@
 
     "target_accuracy": 0.94,
 
-    "baseline_accuracy": null,
-    "baseline_std": null,
+    "baseline_accuracy": 0.9401369762420654,
+    "baseline_std": 0.001366604202900286,
     "baseline_n": 100,
 
     "implementation_notes": [
