@@ -1,0 +1,38 @@
+{
+    "experiment_name": "deterministic_translate_backoff",
+    "hypothesis": "Using deterministic translation only in the early epochs and backing off to flip-only augmentation later reduces per-epoch compute while preserving accuracy.",
+    "modification": "Deterministic 2-pixel translation for epochs 0–6, then turn off translation (flip-only) from epoch 7 onward using a backoff schedule in the CifarLoader.",
+    "description": "This experiment extends deterministic translation augmentation with a simple curriculum: early in training, each epoch uses deterministic translation based on hash(image_index) + epoch with grouped indices for efficiency. After a fixed backoff epoch (7), the loader no longer applies translation, only flip (with alternating flip between epochs). This aims to retain the benefits of stronger augmentation early while reducing augmentation overhead late in training, potentially lowering average runtime per run.",
+  
+    "base_seed": 42,
+  
+    "batch_size": 1024,
+    "learning_rate": 11.5,
+    "epochs": 9.9,
+    "momentum": 0.85,
+    "weight_decay": 0.0153,
+    "bias_scaler": 64.0,
+    "label_smoothing": 0.2,
+    "whiten_bias_epochs": 3,
+  
+    "augmentation": {
+      "flip": true,
+      "translate": 2,
+      "deterministic_translate": true,
+      "translate_backoff_epoch": 7
+    },
+  
+    "target_accuracy": 0.94,
+  
+    "baseline_accuracy": 0.9401,
+    "baseline_std": 0.0014,
+    "baseline_n": 100,
+  
+    "implementation_notes": [
+      "Uses experiments/airbench94_deterministic_with_backoff.py as the module.",
+      "Data loader applies deterministic translation only while epoch < translate_backoff_epoch.",
+      "After backoff, only flip augmentation is used (still with alternating flip per epoch).",
+      "Grouped index implementation is reused from deterministic_translate_opt1 for efficiency."
+    ]
+  }
+  

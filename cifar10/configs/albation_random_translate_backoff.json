@@ -1,0 +1,30 @@
+{
+    "experiment_name": "ablation_random_translate_backoff",
+    "hypothesis": "Using the same translation backoff schedule but with random translation instead of deterministic will clarify whether gains are due to the schedule itself or the deterministic cycling.",
+    "modification": "Apply random 2-pixel translation for epochs 0–6, then turn off translation after epoch 7, using the same backoff schedule but with deterministic_translate=false.",
+    "description": "Control experiment for deterministic_translate_backoff. Uses the same backoff schedule (translation on for early epochs, off later), but sets deterministic_translate=false so that the loader uses standard random translation rather than deterministic grouped translation. This helps disentangle the effect of the backoff schedule from the effect of deterministic translation.",
+    "base_seed": 42,
+  
+    "batch_size": 1024,
+    "learning_rate": 11.5,
+    "epochs": 9.9,
+    "momentum": 0.85,
+    "weight_decay": 0.0153,
+    "bias_scaler": 64.0,
+    "label_smoothing": 0.2,
+    "whiten_bias_epochs": 3,
+  
+    "augmentation": {
+      "flip": true,
+      "translate": 2,
+      "deterministic_translate": false,
+      "translate_backoff_epoch": 7
+    },
+  
+    "target_accuracy": 0.94,
+  
+    "baseline_accuracy": 0.9401,
+    "baseline_std": 0.0014,
+    "baseline_n": 100
+  }
+  
