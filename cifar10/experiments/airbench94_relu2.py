@@ -48,7 +48,7 @@ hyp = {
     'opt': {
         'train_epochs': 9.9,
         'batch_size': 1024,
-        'lr': 11.5,                 # learning rate per 1024 examples
+        'lr': 5.75,                 # learning rate per 1024 examples (reduced from 11.5 for ReLU² stability)
         'momentum': 0.85,
         'weight_decay': 0.0153,     # weight decay per 1024 examples (decoupled from learning rate)
         'bias_scaler': 64.0,        # scales up learning rate (but not weight decay) for BatchNorm biases
@@ -253,6 +253,8 @@ def make_net():
     widths = hyp['net']['widths']
     batchnorm_momentum = hyp['net']['batchnorm_momentum']
     activation = hyp['net'].get('activation', 'gelu')
+    
+    print(f"[DEBUG] Building network with activation: {activation}")
 
     whiten_kernel_size = 2
     whiten_width = 2 * 3 * whiten_kernel_size**2
@@ -464,6 +466,8 @@ def main(run):
             loss = loss_fn(outputs, labels).sum()
             optimizer.zero_grad(set_to_none=True)
             loss.backward()
+            # Gradient clipping for ReLU² stability
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
             scheduler.step()
 
