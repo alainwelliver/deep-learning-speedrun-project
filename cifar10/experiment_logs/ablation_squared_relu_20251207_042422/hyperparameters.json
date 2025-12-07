@@ -1,0 +1,45 @@
+{
+  "experiment_name": "ablation_squared_relu",
+  "hypothesis": "Control: Using airbench94_relu2 module with activation='gelu' should match baseline exactly",
+  "modification": "Using airbench94_relu2 module with activation='gelu' flag to verify no bugs introduced",
+  "description": "Control experiment to verify the parameterized activation framework works correctly when set to GELU. Should produce identical results to baseline.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2
+  },
+  "network": {
+    "activation": "gelu"
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": 0.9401369762420654,
+  "baseline_std": 0.001366604202900286,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "Same airbench94_relu2.py module as main experiment",
+    "activation='gelu' to test GELU path",
+    "Should behave identically to original airbench94.py"
+  ],
+  "expected_impact": {
+    "accuracy_change": "0.0%",
+    "speed_improvement": "0%"
+  },
+  "validation_criteria": [
+    "Mean accuracy within \u00b10.002 of baseline (94.01%)",
+    "No statistically significant difference from baseline",
+    "Verifies implementation correctness"
+  ],
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "estimated_runs": 100,
+    "estimated_total_time_minutes": 7
+  }
+}

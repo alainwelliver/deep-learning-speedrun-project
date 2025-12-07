@@ -1,0 +1,78 @@
+
+================================================================================
+EXPERIMENT LOG
+================================================================================
+Experiment Name: ablation_squared_relu
+Start Time: 2025-12-07T04:23:24.726149
+
+GIT INFORMATION:
+  Commit:  b4f1a818b0333b58fb76cb7d4a2890071f330203
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+  
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA A100 80GB PCIe (85.1 GB)
+
+================================================================================
+
+[2025-12-07 04:23:24.726] [INFO] Starting experiment: ablation_squared_relu
+[2025-12-07 04:23:24.726] [INFO] Configuration file: configs/ablation_squared_relu.json
+[2025-12-07 04:23:24.726] [INFO] Module: airbench94_relu2
+[2025-12-07 04:23:24.726] [INFO] Number of runs: 100
+[2025-12-07 04:23:24.726] [INFO] Base seed: 42
+[2025-12-07 04:23:24.726] [INFO] Hypothesis: Control: Using airbench94_relu2 module with activation='gelu' should match baseline exactly
+[2025-12-07 04:23:24.726] [INFO] Modification: Using airbench94_relu2 module with activation='gelu' flag to verify no bugs introduced
+[2025-12-07 04:23:24.727] [INFO] Hyperparameters saved to hyperparameters.json
+[2025-12-07 04:23:24.727] [INFO] Hyperparameters: {
+  "experiment_name": "ablation_squared_relu",
+  "hypothesis": "Control: Using airbench94_relu2 module with activation='gelu' should match baseline exactly",
+  "modification": "Using airbench94_relu2 module with activation='gelu' flag to verify no bugs introduced",
+  "description": "Control experiment to verify the parameterized activation framework works correctly when set to GELU. Should produce identical results to baseline.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2
+  },
+  "network": {
+    "activation": "gelu"
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": 0.9401369762420654,
+  "baseline_std": 0.001366604202900286,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "Same airbench94_relu2.py module as main experiment",
+    "activation='gelu' to test GELU path",
+    "Should behave identically to original airbench94.py"
+  ],
+  "expected_impact": {
+    "accuracy_change": "0.0%",
+    "speed_improvement": "0%"
+  },
+  "validation_criteria": [
+    "Mean accuracy within \u00b10.002 of baseline (94.01%)",
+    "No statistically significant difference from baseline",
+    "Verifies implementation correctness"
+  ],
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "estimated_runs": 100,
+    "estimated_total_time_minutes": 7
+  }
+}
+[2025-12-07 04:23:24.727] [INFO] Loading and configuring airbench94_relu2...
+[2025-12-07 04:23:25.634] [INFO] Effective augmentation config: {'flip': True, 'translate': 2}
+[2025-12-07 04:23:25.634] [INFO] Running warmup...

@@ -1,0 +1,40 @@
+{
+  "experiment_name": "squared_relu",
+  "hypothesis": "ReLU\u00b2 activation provides faster convergence than GELU, as demonstrated in the NanoGPT speedrun",
+  "modification": "Replace all nn.GELU() activations with F.relu(x).square() (SquaredReLU)",
+  "description": "Test whether ReLU\u00b2 activation, which showed ~4% speedup in NanoGPT speedrun, can improve CIFAR-10 training. Replace all 7 GELU activations (1 whitening + 6 in ConvGroups) with ReLU\u00b2.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2
+  },
+  "network": {
+    "activation": "relu2"
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": 0.9401369762420654,
+  "baseline_std": 0.001366604202900286,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "airbench94_relu2.py with activation='relu2'",
+    "SquaredReLU: def forward(x): return F.relu(x).square()",
+    "Applied at 7 locations: 1 whitening + 6 ConvGroup activations"
+  ],
+  "expected_impact": {
+    "accuracy_change": "-0.5% to +0.5%",
+    "speed_improvement": "3-8%"
+  },
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "estimated_runs": 100,
+    "estimated_total_time_minutes": 8
+  }
+}
