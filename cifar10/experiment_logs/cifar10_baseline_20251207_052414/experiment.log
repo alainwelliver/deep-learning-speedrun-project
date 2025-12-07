@@ -1,0 +1,154 @@
+
+================================================================================
+EXPERIMENT LOG
+================================================================================
+Experiment Name: cifar10_baseline
+Start Time: 2025-12-07T05:24:15.127612
+
+GIT INFORMATION:
+  Commit:  564309a811be04ac9dc8aca60edc44fada0c8d27
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   False
+  
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA A100 80GB PCIe (85.0 GB)
+
+================================================================================
+
+[2025-12-07 05:24:15.127] [INFO] Starting experiment: cifar10_baseline
+[2025-12-07 05:24:15.127] [INFO] Configuration file: configs/baseline.json
+[2025-12-07 05:24:15.128] [INFO] Module: airbench94
+[2025-12-07 05:24:15.128] [INFO] Number of runs: 100
+[2025-12-07 05:24:15.128] [INFO] Base seed: 42
+[2025-12-07 05:24:15.128] [INFO] Hypothesis: Baseline performance measurement using original airbench94 configuration
+[2025-12-07 05:24:15.128] [INFO] Modification: None - using original airbench94.py without modifications
+[2025-12-07 05:24:15.128] [INFO] Hyperparameters saved to hyperparameters.json
+[2025-12-07 05:24:15.128] [INFO] Hyperparameters: {
+  "experiment_name": "cifar10_baseline",
+  "hypothesis": "Baseline performance measurement using original airbench94 configuration",
+  "modification": "None - using original airbench94.py without modifications",
+  "description": "This is the baseline experiment to establish performance benchmarks. We use the default airbench94 hyperparameters to train a VGG-style model on CIFAR-10. Results from this experiment will serve as the reference point for evaluating modifications.",
+  "base_seed": 42,
+  "hyperparameters": {
+    "note": "These are the default airbench94 hyperparameters. They can be overridden by setting them at the top level of this config.",
+    "batch_size": 1024,
+    "learning_rate": 11.5,
+    "epochs": 9.9,
+    "momentum": 0.85,
+    "weight_decay": 0.0153,
+    "bias_scaler": 64.0,
+    "label_smoothing": 0.2,
+    "whiten_bias_epochs": 3,
+    "augmentation": {
+      "flip": true,
+      "translate": 2
+    },
+    "network": {
+      "widths": {
+        "block1": 64,
+        "block2": 256,
+        "block3": 256
+      },
+      "batchnorm_momentum": 0.6,
+      "scaling_factor": 0.1111111,
+      "tta_level": 2
+    }
+  },
+  "target_accuracy": 0.94,
+  "expected_results": {
+    "note": "Based on airbench94 paper, we expect ~94% accuracy in ~3.8 seconds on A100",
+    "mean_accuracy": 0.9401,
+    "std_accuracy": 0.0014,
+    "mean_time_seconds": 3.83
+  },
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "gpu_memory_gb": 40,
+    "estimated_time_per_run_seconds": 4,
+    "estimated_total_time_minutes": 1.5
+  },
+  "notes": [
+    "This baseline uses all the optimizations from the airbench94 paper:",
+    "- Frozen patch-whitening initialization",
+    "- Identity initialization for conv layers",
+    "- Scaled bias learning rates",
+    "- Lookahead optimizer",
+    "- Multi-crop test-time augmentation",
+    "- Alternating flip augmentation",
+    "Run this first to establish your baseline before testing modifications."
+  ]
+}
+[2025-12-07 05:24:15.128] [INFO] Loading and configuring airbench94...
+[2025-12-07 05:24:15.789] [INFO] Effective augmentation config: {'flip': True, 'translate': 2}
+[2025-12-07 05:24:15.789] [INFO] Running warmup...
+[2025-12-07 05:24:37.161] [INFO] Warmup complete
+[2025-12-07 05:24:37.161] [INFO] ================================================================================
+[2025-12-07 05:24:37.161] [INFO] Starting 100 training runs...
+[2025-12-07 05:24:37.161] [INFO] ================================================================================
+[2025-12-07 05:24:37.161] [INFO] Starting run 0 with seed 42
+[2025-12-07 05:24:41.486] [INFO] Run 0 complete: accuracy=0.9393, time=4.32s, seed=42
+[2025-12-07 05:24:41.486] [INFO] Starting run 1 with seed 43
+[2025-12-07 05:24:45.824] [INFO] Run 1 complete: accuracy=0.9402, time=4.34s, seed=43
+[2025-12-07 05:24:45.824] [INFO] Starting run 2 with seed 44
+[2025-12-07 05:24:50.151] [INFO] Run 2 complete: accuracy=0.9411, time=4.33s, seed=44
+[2025-12-07 05:24:50.151] [INFO] Starting run 3 with seed 45
+[2025-12-07 05:24:54.489] [INFO] Run 3 complete: accuracy=0.9409, time=4.34s, seed=45
+[2025-12-07 05:24:54.489] [INFO] Starting run 4 with seed 46
+[2025-12-07 05:24:58.868] [INFO] Run 4 complete: accuracy=0.9411, time=4.38s, seed=46
+[2025-12-07 05:24:58.868] [INFO] Progress: 5/100 runs completed (5 successful)
+[2025-12-07 05:24:58.868] [INFO] Starting run 5 with seed 47
+[2025-12-07 05:25:03.300] [INFO] Run 5 complete: accuracy=0.9390, time=4.43s, seed=47
+[2025-12-07 05:25:03.300] [INFO] Starting run 6 with seed 48
+[2025-12-07 05:25:07.652] [INFO] Run 6 complete: accuracy=0.9392, time=4.35s, seed=48
+[2025-12-07 05:25:07.652] [INFO] Starting run 7 with seed 49
+[2025-12-07 05:25:12.033] [INFO] Run 7 complete: accuracy=0.9388, time=4.38s, seed=49
+[2025-12-07 05:25:12.033] [INFO] Starting run 8 with seed 50
+[2025-12-07 05:25:16.406] [INFO] Run 8 complete: accuracy=0.9418, time=4.37s, seed=50
+[2025-12-07 05:25:16.406] [INFO] Starting run 9 with seed 51
+[2025-12-07 05:25:20.770] [INFO] Run 9 complete: accuracy=0.9390, time=4.36s, seed=51
+[2025-12-07 05:25:20.770] [INFO] Progress: 10/100 runs completed (10 successful)
+[2025-12-07 05:25:20.770] [INFO] Starting run 10 with seed 52
+[2025-12-07 05:25:25.149] [INFO] Run 10 complete: accuracy=0.9410, time=4.38s, seed=52
+[2025-12-07 05:25:25.149] [INFO] Starting run 11 with seed 53
+[2025-12-07 05:25:29.532] [INFO] Run 11 complete: accuracy=0.9401, time=4.38s, seed=53
+[2025-12-07 05:25:29.532] [INFO] Starting run 12 with seed 54
+[2025-12-07 05:25:33.938] [INFO] Run 12 complete: accuracy=0.9407, time=4.41s, seed=54
+[2025-12-07 05:25:33.938] [INFO] Starting run 13 with seed 55
+[2025-12-07 05:25:38.336] [INFO] Run 13 complete: accuracy=0.9422, time=4.40s, seed=55
+[2025-12-07 05:25:38.336] [INFO] Starting run 14 with seed 56
+[2025-12-07 05:25:42.728] [INFO] Run 14 complete: accuracy=0.9416, time=4.39s, seed=56
+[2025-12-07 05:25:42.728] [INFO] Progress: 15/100 runs completed (15 successful)
+[2025-12-07 05:25:42.728] [INFO] Starting run 15 with seed 57
+[2025-12-07 05:25:47.122] [INFO] Run 15 complete: accuracy=0.9396, time=4.39s, seed=57
+[2025-12-07 05:25:47.122] [INFO] Starting run 16 with seed 58
+[2025-12-07 05:25:51.513] [INFO] Run 16 complete: accuracy=0.9393, time=4.39s, seed=58
+[2025-12-07 05:25:51.513] [INFO] Starting run 17 with seed 59
+[2025-12-07 05:25:55.901] [INFO] Run 17 complete: accuracy=0.9417, time=4.39s, seed=59
+[2025-12-07 05:25:55.901] [INFO] Starting run 18 with seed 60
+[2025-12-07 05:26:00.303] [INFO] Run 18 complete: accuracy=0.9389, time=4.40s, seed=60
+[2025-12-07 05:26:00.303] [INFO] Starting run 19 with seed 61
+[2025-12-07 05:26:04.700] [INFO] Run 19 complete: accuracy=0.9411, time=4.40s, seed=61
+[2025-12-07 05:26:04.700] [INFO] Progress: 20/100 runs completed (20 successful)
+[2025-12-07 05:26:04.700] [INFO] Starting run 20 with seed 62
+[2025-12-07 05:26:09.138] [INFO] Run 20 complete: accuracy=0.9420, time=4.44s, seed=62
+[2025-12-07 05:26:09.138] [INFO] Starting run 21 with seed 63
+[2025-12-07 05:26:13.550] [INFO] Run 21 complete: accuracy=0.9393, time=4.41s, seed=63
+[2025-12-07 05:26:13.550] [INFO] Starting run 22 with seed 64
+[2025-12-07 05:26:17.955] [INFO] Run 22 complete: accuracy=0.9404, time=4.40s, seed=64
+[2025-12-07 05:26:17.955] [INFO] Starting run 23 with seed 65
+[2025-12-07 05:26:22.365] [INFO] Run 23 complete: accuracy=0.9402, time=4.41s, seed=65
+[2025-12-07 05:26:22.365] [INFO] Starting run 24 with seed 66
+[2025-12-07 05:26:26.810] [INFO] Run 24 complete: accuracy=0.9384, time=4.44s, seed=66
+[2025-12-07 05:26:26.810] [INFO] Progress: 25/100 runs completed (25 successful)
+[2025-12-07 05:26:26.810] [INFO] Starting run 25 with seed 67
+[2025-12-07 05:26:31.225] [INFO] Run 25 complete: accuracy=0.9399, time=4.41s, seed=67
+[2025-12-07 05:26:31.225] [INFO] Starting run 26 with seed 68
+[2025-12-07 05:26:35.634] [INFO] Run 26 complete: accuracy=0.9400, time=4.41s, seed=68
+[2025-12-07 05:26:35.635] [INFO] Starting run 27 with seed 69
+[2025-12-07 05:26:40.055] [INFO] Run 27 complete: accuracy=0.9405, time=4.42s, seed=69
+[2025-12-07 05:26:40.055] [INFO] Starting run 28 with seed 70

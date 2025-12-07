@@ -1,0 +1,48 @@
+{
+  "experiment_name": "deterministic_translate_opt1",
+  "hypothesis": "Deterministic cycling through translation positions, with pre-grouped index sets per position, reduces augmentation overhead while preserving the benefits of deterministic translation.",
+  "modification": "Keep deterministic 2-pixel translation, but micro-optimize the implementation by pre-grouping image indices by base translation position and rotating these groups each epoch instead of recomputing boolean masks over all images.",
+  "description": "The original deterministic_translate experiment replaces random translation with a deterministic schedule based on hash(image_index) + epoch, ensuring each image cycles through all translation positions over time. This opt1 variant keeps the same augmentation policy but changes the implementation: images are grouped once by their base translation position, and each epoch simply rotates which position each group maps to. This removes per-epoch boolean mask construction over the full dataset and should slightly reduce augmentation overhead without changing the effective data seen by the model.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2,
+    "deterministic_translate": true
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": 0.9401369762420654,
+  "baseline_std": 0.001366604202900286,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "Based on deterministic_translate.json but with a micro-optimized implementation.",
+    "In CifarLoader, precompute base_positions via hash(image_index) and then group image indices by base translation position once at initialization.",
+    "Store these groups in position_groups and, each epoch, rotate which translation offset each group receives using (base_pos + epoch_offset) % num_positions.",
+    "Remove per-epoch boolean mask construction over all images; instead use direct indexed assignment per group.",
+    "Maintain the same 5x5 grid of 2-pixel translations and the same deterministic cycling schedule as deterministic_translate."
+  ],
+  "expected_impact": {
+    "accuracy_change": "\u22480.0%",
+    "speed_improvement": "1-5% vs deterministic_translate; runtime closer to baseline airbench94 while keeping deterministic augmentation",
+    "justification": "The high-level augmentation policy is unchanged, so accuracy should match deterministic_translate. Pre-grouping indices eliminates repeated boolean mask work each epoch, slightly reducing CUDA kernel overhead in the data pipeline."
+  },
+  "ablations_planned": [
+    "deterministic_translate (original implementation with boolean masks)",
+    "deterministic_translate_opt1 (this grouped-index implementation)",
+    "random translation (baseline airbench94)",
+    "no translation",
+    "deterministic but fixed per image (no epoch variation)"
+  ],
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "estimated_runs": 100,
+    "estimated_total_time_minutes": 7
+  }
+}
