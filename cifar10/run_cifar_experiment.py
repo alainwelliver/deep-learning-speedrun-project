@@ -77,7 +77,12 @@ def modify_airbench_hyperparameters(airbench_module, config):
     # NEW: Support for deterministic_translate flag
     if 'deterministic_translate' in config:
         airbench_module.hyp['aug']['deterministic_translate'] = config['deterministic_translate']
-    
+
+    # NEW: Support for network config
+    if 'network' in config:
+        for key, value in config['network'].items():
+            airbench_module.hyp['net'][key] = value
+
     return airbench_module
 
 
