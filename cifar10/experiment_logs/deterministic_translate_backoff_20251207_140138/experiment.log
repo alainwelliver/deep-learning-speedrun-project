@@ -1,0 +1,130 @@
+
+================================================================================
+EXPERIMENT LOG
+================================================================================
+Experiment Name: deterministic_translate_backoff
+Start Time: 2025-12-07T14:01:38.283935
+
+GIT INFORMATION:
+  Commit:  f50706e3b2fc3bb2d641fdcef52ab32d6c62af24
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   False
+  
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA A100 80GB PCIe (85.0 GB)
+
+================================================================================
+
+[2025-12-07 14:01:38.284] [INFO] Starting experiment: deterministic_translate_backoff
+[2025-12-07 14:01:38.284] [INFO] Configuration file: configs/deterministic_translate_backoff.json
+[2025-12-07 14:01:38.284] [INFO] Module: airbench94_deterministic_with_backoff
+[2025-12-07 14:01:38.284] [INFO] Number of runs: 100
+[2025-12-07 14:01:38.284] [INFO] Base seed: 42
+[2025-12-07 14:01:38.284] [INFO] Hypothesis: Using deterministic translation only in the early epochs and backing off to flip-only augmentation later reduces per-epoch compute while preserving accuracy.
+[2025-12-07 14:01:38.284] [INFO] Modification: Deterministic 2-pixel translation for epochs 0–6, then turn off translation (flip-only) from epoch 7 onward using a backoff schedule in the CifarLoader.
+[2025-12-07 14:01:38.284] [INFO] Hyperparameters saved to hyperparameters.json
+[2025-12-07 14:01:38.284] [INFO] Hyperparameters: {
+  "experiment_name": "deterministic_translate_backoff",
+  "hypothesis": "Using deterministic translation only in the early epochs and backing off to flip-only augmentation later reduces per-epoch compute while preserving accuracy.",
+  "modification": "Deterministic 2-pixel translation for epochs 0\u20136, then turn off translation (flip-only) from epoch 7 onward using a backoff schedule in the CifarLoader.",
+  "description": "This experiment extends deterministic translation augmentation with a simple curriculum: early in training, each epoch uses deterministic translation based on hash(image_index) + epoch with grouped indices for efficiency. After a fixed backoff epoch (7), the loader no longer applies translation, only flip (with alternating flip between epochs). This aims to retain the benefits of stronger augmentation early while reducing augmentation overhead late in training, potentially lowering average runtime per run.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2,
+    "deterministic_translate": true,
+    "translate_backoff_epoch": 7
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": 0.9401,
+  "baseline_std": 0.0014,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "Uses experiments/airbench94_deterministic_with_backoff.py as the module.",
+    "Data loader applies deterministic translation only while epoch < translate_backoff_epoch.",
+    "After backoff, only flip augmentation is used (still with alternating flip per epoch).",
+    "Grouped index implementation is reused from deterministic_translate_opt1 for efficiency."
+  ]
+}
+[2025-12-07 14:01:38.284] [INFO] Loading and configuring airbench94_deterministic_with_backoff...
+[2025-12-07 14:01:38.934] [INFO] Effective augmentation config: {'flip': True, 'translate': 2, 'deterministic_translate': True, 'translate_backoff_epoch': 7}
+[2025-12-07 14:01:38.934] [INFO] Running warmup...
+[2025-12-07 14:01:59.824] [INFO] Warmup complete
+[2025-12-07 14:01:59.824] [INFO] ================================================================================
+[2025-12-07 14:01:59.824] [INFO] Starting 100 training runs...
+[2025-12-07 14:01:59.824] [INFO] ================================================================================
+[2025-12-07 14:01:59.824] [INFO] Starting run 0 with seed 42
+[2025-12-07 14:02:04.188] [INFO] Run 0 complete: accuracy=0.9400, time=4.36s, seed=42
+[2025-12-07 14:02:04.188] [INFO] Starting run 1 with seed 43
+[2025-12-07 14:02:08.497] [INFO] Run 1 complete: accuracy=0.9418, time=4.31s, seed=43
+[2025-12-07 14:02:08.497] [INFO] Starting run 2 with seed 44
+[2025-12-07 14:02:12.804] [INFO] Run 2 complete: accuracy=0.9395, time=4.31s, seed=44
+[2025-12-07 14:02:12.804] [INFO] Starting run 3 with seed 45
+[2025-12-07 14:02:17.175] [INFO] Run 3 complete: accuracy=0.9402, time=4.37s, seed=45
+[2025-12-07 14:02:17.175] [INFO] Starting run 4 with seed 46
+[2025-12-07 14:02:21.508] [INFO] Run 4 complete: accuracy=0.9402, time=4.33s, seed=46
+[2025-12-07 14:02:21.508] [INFO] Progress: 5/100 runs completed (5 successful)
+[2025-12-07 14:02:21.508] [INFO] Starting run 5 with seed 47
+[2025-12-07 14:02:25.891] [INFO] Run 5 complete: accuracy=0.9400, time=4.38s, seed=47
+[2025-12-07 14:02:25.891] [INFO] Starting run 6 with seed 48
+[2025-12-07 14:02:30.215] [INFO] Run 6 complete: accuracy=0.9409, time=4.32s, seed=48
+[2025-12-07 14:02:30.215] [INFO] Starting run 7 with seed 49
+[2025-12-07 14:02:34.602] [INFO] Run 7 complete: accuracy=0.9427, time=4.39s, seed=49
+[2025-12-07 14:02:34.602] [INFO] Starting run 8 with seed 50
+[2025-12-07 14:02:38.945] [INFO] Run 8 complete: accuracy=0.9397, time=4.34s, seed=50
+[2025-12-07 14:02:38.945] [INFO] Starting run 9 with seed 51
+[2025-12-07 14:02:43.313] [INFO] Run 9 complete: accuracy=0.9398, time=4.37s, seed=51
+[2025-12-07 14:02:43.313] [INFO] Progress: 10/100 runs completed (10 successful)
+[2025-12-07 14:02:43.314] [INFO] Starting run 10 with seed 52
+[2025-12-07 14:02:47.734] [INFO] Run 10 complete: accuracy=0.9387, time=4.42s, seed=52
+[2025-12-07 14:02:47.734] [INFO] Starting run 11 with seed 53
+[2025-12-07 14:02:52.124] [INFO] Run 11 complete: accuracy=0.9384, time=4.39s, seed=53
+[2025-12-07 14:02:52.124] [INFO] Starting run 12 with seed 54
+[2025-12-07 14:02:56.544] [INFO] Run 12 complete: accuracy=0.9402, time=4.42s, seed=54
+[2025-12-07 14:02:56.544] [INFO] Starting run 13 with seed 55
+[2025-12-07 14:03:00.931] [INFO] Run 13 complete: accuracy=0.9406, time=4.39s, seed=55
+[2025-12-07 14:03:00.931] [INFO] Starting run 14 with seed 56
+[2025-12-07 14:03:05.318] [INFO] Run 14 complete: accuracy=0.9378, time=4.39s, seed=56
+[2025-12-07 14:03:05.318] [INFO] Progress: 15/100 runs completed (15 successful)
+[2025-12-07 14:03:05.318] [INFO] Starting run 15 with seed 57
+[2025-12-07 14:03:09.716] [INFO] Run 15 complete: accuracy=0.9392, time=4.40s, seed=57
+[2025-12-07 14:03:09.717] [INFO] Starting run 16 with seed 58
+[2025-12-07 14:03:14.123] [INFO] Run 16 complete: accuracy=0.9390, time=4.41s, seed=58
+[2025-12-07 14:03:14.123] [INFO] Starting run 17 with seed 59
+[2025-12-07 14:03:18.532] [INFO] Run 17 complete: accuracy=0.9392, time=4.41s, seed=59
+[2025-12-07 14:03:18.532] [INFO] Starting run 18 with seed 60
+[2025-12-07 14:03:22.944] [INFO] Run 18 complete: accuracy=0.9446, time=4.41s, seed=60
+[2025-12-07 14:03:22.944] [INFO] Starting run 19 with seed 61
+[2025-12-07 14:03:27.342] [INFO] Run 19 complete: accuracy=0.9408, time=4.40s, seed=61
+[2025-12-07 14:03:27.342] [INFO] Progress: 20/100 runs completed (20 successful)
+[2025-12-07 14:03:27.342] [INFO] Starting run 20 with seed 62
+[2025-12-07 14:03:31.731] [INFO] Run 20 complete: accuracy=0.9395, time=4.39s, seed=62
+[2025-12-07 14:03:31.731] [INFO] Starting run 21 with seed 63
+[2025-12-07 14:03:36.135] [INFO] Run 21 complete: accuracy=0.9393, time=4.40s, seed=63
+[2025-12-07 14:03:36.135] [INFO] Starting run 22 with seed 64
+[2025-12-07 14:03:40.540] [INFO] Run 22 complete: accuracy=0.9402, time=4.40s, seed=64
+[2025-12-07 14:03:40.540] [INFO] Starting run 23 with seed 65
+[2025-12-07 14:03:44.937] [INFO] Run 23 complete: accuracy=0.9389, time=4.40s, seed=65
+[2025-12-07 14:03:44.937] [INFO] Starting run 24 with seed 66
+[2025-12-07 14:03:49.344] [INFO] Run 24 complete: accuracy=0.9376, time=4.41s, seed=66
+[2025-12-07 14:03:49.344] [INFO] Progress: 25/100 runs completed (25 successful)
+[2025-12-07 14:03:49.344] [INFO] Starting run 25 with seed 67
+[2025-12-07 14:03:53.741] [INFO] Run 25 complete: accuracy=0.9415, time=4.40s, seed=67
+[2025-12-07 14:03:53.741] [INFO] Starting run 26 with seed 68
+[2025-12-07 14:03:58.142] [INFO] Run 26 complete: accuracy=0.9397, time=4.40s, seed=68
+[2025-12-07 14:03:58.142] [INFO] Starting run 27 with seed 69
+[2025-12-07 14:04:02.555] [INFO] Run 27 complete: accuracy=0.9396, time=4.41s, seed=69
+[2025-12-07 14:04:02.556] [INFO] Starting run 28 with seed 70
