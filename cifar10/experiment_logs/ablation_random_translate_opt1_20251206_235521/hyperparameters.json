@@ -1,0 +1,46 @@
+{
+  "experiment_name": "ablation_random_translate_opt1",
+  "hypothesis": "Control experiment for the micro-optimized deterministic translation implementation: with deterministic_translate=false, behavior and performance should match the baseline and the original ablation_random_translate config.",
+  "modification": "Use the micro-optimized deterministic translation module (with pre-grouped position indices) but keep deterministic_translate=false so the loader falls back to random translation. This verifies that the additional precomputation and data structures do not introduce bugs or performance regressions when deterministic translation is disabled.",
+  "description": "This ablation is the control for the deterministic_translate_opt1 experiment. It uses the same CifarLoader implementation that precomputes base_positions and position_groups, but with deterministic_translate=false so training uses standard random translation. The goal is to confirm that adding the micro-opt code path does not alter behavior when deterministic translation is disabled and that accuracy and runtime remain statistically indistinguishable from the baseline and from ablation_random_translate.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2,
+    "deterministic_translate": false
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": 0.9401369762420654,
+  "baseline_std": 0.001366604202900286,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "Uses the same micro-optimized CifarLoader as deterministic_translate_opt1 (with base_positions and position_groups).",
+    "deterministic_translate flag set to false so the loader uses random translation.",
+    "Should behave identically to baseline and to ablation_random_translate in terms of accuracy and runtime.",
+    "Any deviation indicates that the additional precomputation or data structures introduced by the opt1 implementation are affecting behavior even when deterministic_translate=false."
+  ],
+  "expected_impact": {
+    "accuracy_change": "0.0%",
+    "speed_improvement": "0%",
+    "justification": "When deterministic_translate=false, the training loop should follow the random translation path exactly as in the baseline. The only change is extra one-time precomputation of base_positions and position_groups, which should be negligible and not affect numerical behavior."
+  },
+  "validation_criteria": [
+    "Mean accuracy should match baseline and ablation_random_translate within error bars (\u00b10.002).",
+    "Distribution of results should be statistically indistinguishable from baseline and ablation_random_translate.",
+    "Training time should not show systematic slowdown versus baseline (differences within noise).",
+    "If significant differences appear, they indicate a bug or unintended side effect in the micro-optimized implementation."
+  ],
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "estimated_runs": 100,
+    "estimated_total_time_minutes": 7
+  }
+}

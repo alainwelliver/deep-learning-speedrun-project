@@ -1,0 +1,328 @@
+
+================================================================================
+EXPERIMENT LOG
+================================================================================
+Experiment Name: ablation_random_translate
+Start Time: 2025-12-06T22:59:25.665895
+
+GIT INFORMATION:
+  Commit:  753074661ebdcef1a74e3e7b7472afdb9911c09c
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+  
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA A100 80GB PCIe (85.1 GB)
+
+================================================================================
+
+[2025-12-06 22:59:25.666] [INFO] Starting experiment: ablation_random_translate
+[2025-12-06 22:59:25.666] [INFO] Configuration file: configs/ablation_random_translate.json
+[2025-12-06 22:59:25.666] [INFO] Module: airbench94_deterministic_translate
+[2025-12-06 22:59:25.666] [INFO] Number of runs: 100
+[2025-12-06 22:59:25.666] [INFO] Base seed: 42
+[2025-12-06 22:59:25.666] [INFO] Hypothesis: Control experiment: Using the modified module with deterministic_translate=false should match baseline performance exactly
+[2025-12-06 22:59:25.666] [INFO] Modification: Using the modified translation module but with deterministic_translate flag disabled. This serves as a control to verify the implementation doesn't introduce bugs or performance regressions when operating in baseline mode.
+[2025-12-06 22:59:25.666] [INFO] Hyperparameters saved to hyperparameters.json
+[2025-12-06 22:59:25.666] [INFO] Hyperparameters: {
+  "experiment_name": "ablation_random_translate",
+  "hypothesis": "Control experiment: Using the modified module with deterministic_translate=false should match baseline performance exactly",
+  "modification": "Using the modified translation module but with deterministic_translate flag disabled. This serves as a control to verify the implementation doesn't introduce bugs or performance regressions when operating in baseline mode.",
+  "description": "This ablation experiment verifies that our deterministic translation module works correctly when the flag is disabled. It should produce identical results to the baseline, confirming that: (1) the module correctly falls back to random translation when deterministic_translate=false, and (2) no unintended side effects were introduced during implementation.",
+  "base_seed": 42,
+  "batch_size": 1024,
+  "learning_rate": 11.5,
+  "epochs": 9.9,
+  "momentum": 0.85,
+  "weight_decay": 0.0153,
+  "bias_scaler": 64.0,
+  "label_smoothing": 0.2,
+  "whiten_bias_epochs": 3,
+  "augmentation": {
+    "flip": true,
+    "translate": 2,
+    "deterministic_translate": false
+  },
+  "target_accuracy": 0.94,
+  "baseline_accuracy": 0.9401369762420654,
+  "baseline_std": 0.001366604202900286,
+  "baseline_n": 100,
+  "implementation_notes": [
+    "Uses the same modified CifarLoader class as deterministic_translate",
+    "deterministic_translate flag set to false",
+    "Should behave identically to baseline",
+    "Statistical test will verify no significant difference from baseline"
+  ],
+  "expected_impact": {
+    "accuracy_change": "0.0%",
+    "speed_improvement": "0%",
+    "justification": "This is a control experiment. With deterministic_translate=false, the module should use random translation exactly like the baseline. Any deviation would indicate a bug in the implementation."
+  },
+  "validation_criteria": [
+    "Mean accuracy should match baseline within error bars (\u00b10.002)",
+    "Distribution of results should be statistically indistinguishable from baseline",
+    "Training time should match baseline",
+    "If significant differences appear, indicates bug in implementation"
+  ],
+  "compute_requirements": {
+    "gpu": "NVIDIA A100",
+    "estimated_runs": 100,
+    "estimated_total_time_minutes": 7
+  }
+}
+[2025-12-06 22:59:25.667] [INFO] Loading and configuring airbench94_deterministic_translate...
+[2025-12-06 22:59:26.603] [INFO] Effective augmentation config: {'flip': True, 'translate': 2, 'deterministic_translate': True}
+[2025-12-06 22:59:26.603] [INFO] Running warmup...
+[2025-12-06 22:59:42.266] [INFO] Warmup complete
+[2025-12-06 22:59:42.267] [INFO] ================================================================================
+[2025-12-06 22:59:42.267] [INFO] Starting 100 training runs...
+[2025-12-06 22:59:42.267] [INFO] ================================================================================
+[2025-12-06 22:59:42.267] [INFO] Starting run 0 with seed 42
+[2025-12-06 22:59:47.696] [INFO] Run 0 complete: accuracy=0.9408, time=5.43s, seed=42
+[2025-12-06 22:59:47.697] [INFO] Starting run 1 with seed 43
+[2025-12-06 22:59:53.015] [INFO] Run 1 complete: accuracy=0.9392, time=5.32s, seed=43
+[2025-12-06 22:59:53.015] [INFO] Starting run 2 with seed 44
+[2025-12-06 22:59:58.504] [INFO] Run 2 complete: accuracy=0.9410, time=5.49s, seed=44
+[2025-12-06 22:59:58.504] [INFO] Starting run 3 with seed 45
+[2025-12-06 23:00:03.815] [INFO] Run 3 complete: accuracy=0.9406, time=5.31s, seed=45
+[2025-12-06 23:00:03.815] [INFO] Starting run 4 with seed 46
+[2025-12-06 23:00:09.120] [INFO] Run 4 complete: accuracy=0.9387, time=5.30s, seed=46
+[2025-12-06 23:00:09.120] [INFO] Progress: 5/100 runs completed (5 successful)
+[2025-12-06 23:00:09.121] [INFO] Starting run 5 with seed 47
+[2025-12-06 23:00:14.447] [INFO] Run 5 complete: accuracy=0.9388, time=5.33s, seed=47
+[2025-12-06 23:00:14.447] [INFO] Starting run 6 with seed 48
+[2025-12-06 23:00:19.819] [INFO] Run 6 complete: accuracy=0.9387, time=5.37s, seed=48
+[2025-12-06 23:00:19.819] [INFO] Starting run 7 with seed 49
+[2025-12-06 23:00:25.014] [INFO] Run 7 complete: accuracy=0.9428, time=5.19s, seed=49
+[2025-12-06 23:00:25.014] [INFO] Starting run 8 with seed 50
+[2025-12-06 23:00:30.607] [INFO] Run 8 complete: accuracy=0.9397, time=5.59s, seed=50
+[2025-12-06 23:00:30.607] [INFO] Starting run 9 with seed 51
+[2025-12-06 23:00:36.116] [INFO] Run 9 complete: accuracy=0.9387, time=5.51s, seed=51
+[2025-12-06 23:00:36.117] [INFO] Progress: 10/100 runs completed (10 successful)
+[2025-12-06 23:00:36.117] [INFO] Starting run 10 with seed 52
+[2025-12-06 23:00:41.618] [INFO] Run 10 complete: accuracy=0.9396, time=5.50s, seed=52
+[2025-12-06 23:00:41.618] [INFO] Starting run 11 with seed 53
+[2025-12-06 23:00:47.110] [INFO] Run 11 complete: accuracy=0.9399, time=5.49s, seed=53
+[2025-12-06 23:00:47.110] [INFO] Starting run 12 with seed 54
+[2025-12-06 23:00:52.716] [INFO] Run 12 complete: accuracy=0.9398, time=5.61s, seed=54
+[2025-12-06 23:00:52.716] [INFO] Starting run 13 with seed 55
+[2025-12-06 23:00:58.209] [INFO] Run 13 complete: accuracy=0.9396, time=5.49s, seed=55
+[2025-12-06 23:00:58.209] [INFO] Starting run 14 with seed 56
+[2025-12-06 23:01:03.616] [INFO] Run 14 complete: accuracy=0.9386, time=5.41s, seed=56
+[2025-12-06 23:01:03.617] [INFO] Progress: 15/100 runs completed (15 successful)
+[2025-12-06 23:01:03.617] [INFO] Starting run 15 with seed 57
+[2025-12-06 23:01:09.018] [INFO] Run 15 complete: accuracy=0.9398, time=5.40s, seed=57
+[2025-12-06 23:01:09.018] [INFO] Starting run 16 with seed 58
+[2025-12-06 23:01:14.420] [INFO] Run 16 complete: accuracy=0.9371, time=5.40s, seed=58
+[2025-12-06 23:01:14.420] [INFO] Starting run 17 with seed 59
+[2025-12-06 23:01:19.904] [INFO] Run 17 complete: accuracy=0.9407, time=5.48s, seed=59
+[2025-12-06 23:01:19.905] [INFO] Starting run 18 with seed 60
+[2025-12-06 23:01:25.291] [INFO] Run 18 complete: accuracy=0.9421, time=5.39s, seed=60
+[2025-12-06 23:01:25.292] [INFO] Starting run 19 with seed 61
+[2025-12-06 23:01:30.719] [INFO] Run 19 complete: accuracy=0.9397, time=5.43s, seed=61
+[2025-12-06 23:01:30.719] [INFO] Progress: 20/100 runs completed (20 successful)
+[2025-12-06 23:01:30.719] [INFO] Starting run 20 with seed 62
+[2025-12-06 23:01:36.132] [INFO] Run 20 complete: accuracy=0.9377, time=5.41s, seed=62
+[2025-12-06 23:01:36.132] [INFO] Starting run 21 with seed 63
+[2025-12-06 23:01:41.807] [INFO] Run 21 complete: accuracy=0.9401, time=5.67s, seed=63
+[2025-12-06 23:01:41.808] [INFO] Starting run 22 with seed 64
+[2025-12-06 23:01:47.318] [INFO] Run 22 complete: accuracy=0.9405, time=5.51s, seed=64
+[2025-12-06 23:01:47.318] [INFO] Starting run 23 with seed 65
+[2025-12-06 23:01:52.819] [INFO] Run 23 complete: accuracy=0.9398, time=5.50s, seed=65
+[2025-12-06 23:01:52.820] [INFO] Starting run 24 with seed 66
+[2025-12-06 23:01:58.522] [INFO] Run 24 complete: accuracy=0.9379, time=5.70s, seed=66
+[2025-12-06 23:01:58.522] [INFO] Progress: 25/100 runs completed (25 successful)
+[2025-12-06 23:01:58.522] [INFO] Starting run 25 with seed 67
+[2025-12-06 23:02:03.927] [INFO] Run 25 complete: accuracy=0.9404, time=5.40s, seed=67
+[2025-12-06 23:02:03.927] [INFO] Starting run 26 with seed 68
+[2025-12-06 23:02:09.322] [INFO] Run 26 complete: accuracy=0.9391, time=5.39s, seed=68
+[2025-12-06 23:02:09.322] [INFO] Starting run 27 with seed 69
+[2025-12-06 23:02:14.720] [INFO] Run 27 complete: accuracy=0.9401, time=5.40s, seed=69
+[2025-12-06 23:02:14.720] [INFO] Starting run 28 with seed 70
+[2025-12-06 23:02:20.022] [INFO] Run 28 complete: accuracy=0.9401, time=5.30s, seed=70
+[2025-12-06 23:02:20.022] [INFO] Starting run 29 with seed 71
+[2025-12-06 23:02:25.623] [INFO] Run 29 complete: accuracy=0.9400, time=5.60s, seed=71
+[2025-12-06 23:02:25.624] [INFO] Progress: 30/100 runs completed (30 successful)
+[2025-12-06 23:02:25.624] [INFO] Starting run 30 with seed 72
+[2025-12-06 23:02:31.017] [INFO] Run 30 complete: accuracy=0.9411, time=5.39s, seed=72
+[2025-12-06 23:02:31.018] [INFO] Starting run 31 with seed 73
+[2025-12-06 23:02:36.531] [INFO] Run 31 complete: accuracy=0.9401, time=5.51s, seed=73
+[2025-12-06 23:02:36.531] [INFO] Starting run 32 with seed 74
+[2025-12-06 23:02:42.025] [INFO] Run 32 complete: accuracy=0.9397, time=5.49s, seed=74
+[2025-12-06 23:02:42.025] [INFO] Starting run 33 with seed 75
+[2025-12-06 23:02:47.518] [INFO] Run 33 complete: accuracy=0.9388, time=5.49s, seed=75
+[2025-12-06 23:02:47.518] [INFO] Starting run 34 with seed 76
+[2025-12-06 23:02:53.027] [INFO] Run 34 complete: accuracy=0.9362, time=5.51s, seed=76
+[2025-12-06 23:02:53.027] [INFO] Progress: 35/100 runs completed (35 successful)
+[2025-12-06 23:02:53.027] [INFO] Starting run 35 with seed 77
+[2025-12-06 23:02:58.520] [INFO] Run 35 complete: accuracy=0.9390, time=5.49s, seed=77
+[2025-12-06 23:02:58.521] [INFO] Starting run 36 with seed 78
+[2025-12-06 23:03:03.817] [INFO] Run 36 complete: accuracy=0.9400, time=5.30s, seed=78
+[2025-12-06 23:03:03.817] [INFO] Starting run 37 with seed 79
+[2025-12-06 23:03:09.320] [INFO] Run 37 complete: accuracy=0.9403, time=5.50s, seed=79
+[2025-12-06 23:03:09.320] [INFO] Starting run 38 with seed 80
+[2025-12-06 23:03:14.716] [INFO] Run 38 complete: accuracy=0.9388, time=5.40s, seed=80
+[2025-12-06 23:03:14.716] [INFO] Starting run 39 with seed 81
+[2025-12-06 23:03:19.923] [INFO] Run 39 complete: accuracy=0.9371, time=5.21s, seed=81
+[2025-12-06 23:03:19.923] [INFO] Progress: 40/100 runs completed (40 successful)
+[2025-12-06 23:03:19.923] [INFO] Starting run 40 with seed 82
+[2025-12-06 23:03:25.323] [INFO] Run 40 complete: accuracy=0.9389, time=5.40s, seed=82
+[2025-12-06 23:03:25.323] [INFO] Starting run 41 with seed 83
+[2025-12-06 23:03:30.709] [INFO] Run 41 complete: accuracy=0.9399, time=5.39s, seed=83
+[2025-12-06 23:03:30.709] [INFO] Starting run 42 with seed 84
+[2025-12-06 23:03:36.006] [INFO] Run 42 complete: accuracy=0.9390, time=5.30s, seed=84
+[2025-12-06 23:03:36.006] [INFO] Starting run 43 with seed 85
+[2025-12-06 23:03:41.423] [INFO] Run 43 complete: accuracy=0.9388, time=5.42s, seed=85
+[2025-12-06 23:03:41.423] [INFO] Starting run 44 with seed 86
+[2025-12-06 23:03:46.932] [INFO] Run 44 complete: accuracy=0.9407, time=5.51s, seed=86
+[2025-12-06 23:03:46.932] [INFO] Progress: 45/100 runs completed (45 successful)
+[2025-12-06 23:03:46.932] [INFO] Starting run 45 with seed 87
+[2025-12-06 23:03:52.324] [INFO] Run 45 complete: accuracy=0.9388, time=5.39s, seed=87
+[2025-12-06 23:03:52.324] [INFO] Starting run 46 with seed 88
+[2025-12-06 23:03:57.822] [INFO] Run 46 complete: accuracy=0.9394, time=5.50s, seed=88
+[2025-12-06 23:03:57.822] [INFO] Starting run 47 with seed 89
+[2025-12-06 23:04:03.421] [INFO] Run 47 complete: accuracy=0.9378, time=5.60s, seed=89
+[2025-12-06 23:04:03.421] [INFO] Starting run 48 with seed 90
+[2025-12-06 23:04:08.932] [INFO] Run 48 complete: accuracy=0.9417, time=5.51s, seed=90
+[2025-12-06 23:04:08.932] [INFO] Starting run 49 with seed 91
+[2025-12-06 23:04:14.402] [INFO] Run 49 complete: accuracy=0.9410, time=5.47s, seed=91
+[2025-12-06 23:04:14.402] [INFO] Progress: 50/100 runs completed (50 successful)
+[2025-12-06 23:04:14.402] [INFO] Starting run 50 with seed 92
+[2025-12-06 23:04:19.922] [INFO] Run 50 complete: accuracy=0.9401, time=5.52s, seed=92
+[2025-12-06 23:04:19.922] [INFO] Starting run 51 with seed 93
+[2025-12-06 23:04:25.310] [INFO] Run 51 complete: accuracy=0.9381, time=5.39s, seed=93
+[2025-12-06 23:04:25.310] [INFO] Starting run 52 with seed 94
+[2025-12-06 23:04:30.720] [INFO] Run 52 complete: accuracy=0.9414, time=5.41s, seed=94
+[2025-12-06 23:04:30.720] [INFO] Starting run 53 with seed 95
+[2025-12-06 23:04:36.337] [INFO] Run 53 complete: accuracy=0.9399, time=5.62s, seed=95
+[2025-12-06 23:04:36.337] [INFO] Starting run 54 with seed 96
+[2025-12-06 23:04:41.716] [INFO] Run 54 complete: accuracy=0.9393, time=5.38s, seed=96
+[2025-12-06 23:04:41.716] [INFO] Progress: 55/100 runs completed (55 successful)
+[2025-12-06 23:04:41.716] [INFO] Starting run 55 with seed 97
+[2025-12-06 23:04:47.017] [INFO] Run 55 complete: accuracy=0.9398, time=5.30s, seed=97
+[2025-12-06 23:04:47.017] [INFO] Starting run 56 with seed 98
+[2025-12-06 23:04:52.605] [INFO] Run 56 complete: accuracy=0.9373, time=5.59s, seed=98
+[2025-12-06 23:04:52.605] [INFO] Starting run 57 with seed 99
+[2025-12-06 23:04:57.920] [INFO] Run 57 complete: accuracy=0.9414, time=5.31s, seed=99
+[2025-12-06 23:04:57.920] [INFO] Starting run 58 with seed 100
+[2025-12-06 23:05:03.427] [INFO] Run 58 complete: accuracy=0.9420, time=5.51s, seed=100
+[2025-12-06 23:05:03.427] [INFO] Starting run 59 with seed 101
+[2025-12-06 23:05:09.015] [INFO] Run 59 complete: accuracy=0.9385, time=5.59s, seed=101
+[2025-12-06 23:05:09.015] [INFO] Progress: 60/100 runs completed (60 successful)
+[2025-12-06 23:05:09.015] [INFO] Starting run 60 with seed 102
+[2025-12-06 23:05:14.415] [INFO] Run 60 complete: accuracy=0.9416, time=5.40s, seed=102
+[2025-12-06 23:05:14.415] [INFO] Starting run 61 with seed 103
+[2025-12-06 23:05:19.813] [INFO] Run 61 complete: accuracy=0.9397, time=5.40s, seed=103
+[2025-12-06 23:05:19.814] [INFO] Starting run 62 with seed 104
+[2025-12-06 23:05:25.211] [INFO] Run 62 complete: accuracy=0.9407, time=5.40s, seed=104
+[2025-12-06 23:05:25.212] [INFO] Starting run 63 with seed 105
+[2025-12-06 23:05:30.494] [INFO] Run 63 complete: accuracy=0.9398, time=5.28s, seed=105
+[2025-12-06 23:05:30.494] [INFO] Starting run 64 with seed 106
+[2025-12-06 23:05:35.718] [INFO] Run 64 complete: accuracy=0.9386, time=5.22s, seed=106
+[2025-12-06 23:05:35.718] [INFO] Progress: 65/100 runs completed (65 successful)
+[2025-12-06 23:05:35.718] [INFO] Starting run 65 with seed 107
+[2025-12-06 23:05:40.916] [INFO] Run 65 complete: accuracy=0.9393, time=5.20s, seed=107
+[2025-12-06 23:05:40.917] [INFO] Starting run 66 with seed 108
+[2025-12-06 23:05:46.217] [INFO] Run 66 complete: accuracy=0.9381, time=5.30s, seed=108
+[2025-12-06 23:05:46.218] [INFO] Starting run 67 with seed 109
+[2025-12-06 23:05:51.513] [INFO] Run 67 complete: accuracy=0.9392, time=5.29s, seed=109
+[2025-12-06 23:05:51.513] [INFO] Starting run 68 with seed 110
+[2025-12-06 23:05:56.701] [INFO] Run 68 complete: accuracy=0.9419, time=5.19s, seed=110
+[2025-12-06 23:05:56.701] [INFO] Starting run 69 with seed 111
+[2025-12-06 23:06:01.914] [INFO] Run 69 complete: accuracy=0.9389, time=5.21s, seed=111
+[2025-12-06 23:06:01.915] [INFO] Progress: 70/100 runs completed (70 successful)
+[2025-12-06 23:06:01.915] [INFO] Starting run 70 with seed 112
+[2025-12-06 23:06:07.204] [INFO] Run 70 complete: accuracy=0.9394, time=5.29s, seed=112
+[2025-12-06 23:06:07.204] [INFO] Starting run 71 with seed 113
+[2025-12-06 23:06:12.512] [INFO] Run 71 complete: accuracy=0.9391, time=5.31s, seed=113
+[2025-12-06 23:06:12.513] [INFO] Starting run 72 with seed 114
+[2025-12-06 23:06:17.912] [INFO] Run 72 complete: accuracy=0.9390, time=5.40s, seed=114
+[2025-12-06 23:06:17.912] [INFO] Starting run 73 with seed 115
+[2025-12-06 23:06:23.203] [INFO] Run 73 complete: accuracy=0.9386, time=5.29s, seed=115
+[2025-12-06 23:06:23.203] [INFO] Starting run 74 with seed 116
+[2025-12-06 23:06:28.601] [INFO] Run 74 complete: accuracy=0.9374, time=5.40s, seed=116
+[2025-12-06 23:06:28.601] [INFO] Progress: 75/100 runs completed (75 successful)
+[2025-12-06 23:06:28.601] [INFO] Starting run 75 with seed 117
+[2025-12-06 23:06:33.889] [INFO] Run 75 complete: accuracy=0.9396, time=5.29s, seed=117
+[2025-12-06 23:06:33.889] [INFO] Starting run 76 with seed 118
+[2025-12-06 23:06:39.310] [INFO] Run 76 complete: accuracy=0.9356, time=5.42s, seed=118
+[2025-12-06 23:06:39.310] [INFO] Starting run 77 with seed 119
+[2025-12-06 23:06:44.511] [INFO] Run 77 complete: accuracy=0.9392, time=5.20s, seed=119
+[2025-12-06 23:06:44.511] [INFO] Starting run 78 with seed 120
+[2025-12-06 23:06:49.810] [INFO] Run 78 complete: accuracy=0.9391, time=5.30s, seed=120
+[2025-12-06 23:06:49.810] [INFO] Starting run 79 with seed 121
+[2025-12-06 23:06:55.208] [INFO] Run 79 complete: accuracy=0.9378, time=5.40s, seed=121
+[2025-12-06 23:06:55.208] [INFO] Progress: 80/100 runs completed (80 successful)
+[2025-12-06 23:06:55.208] [INFO] Starting run 80 with seed 122
+[2025-12-06 23:07:00.516] [INFO] Run 80 complete: accuracy=0.9384, time=5.31s, seed=122
+[2025-12-06 23:07:00.516] [INFO] Starting run 81 with seed 123
+[2025-12-06 23:07:05.706] [INFO] Run 81 complete: accuracy=0.9402, time=5.19s, seed=123
+[2025-12-06 23:07:05.706] [INFO] Starting run 82 with seed 124
+[2025-12-06 23:07:11.115] [INFO] Run 82 complete: accuracy=0.9402, time=5.41s, seed=124
+[2025-12-06 23:07:11.115] [INFO] Starting run 83 with seed 125
+[2025-12-06 23:07:16.411] [INFO] Run 83 complete: accuracy=0.9384, time=5.30s, seed=125
+[2025-12-06 23:07:16.411] [INFO] Starting run 84 with seed 126
+[2025-12-06 23:07:21.816] [INFO] Run 84 complete: accuracy=0.9414, time=5.40s, seed=126
+[2025-12-06 23:07:21.816] [INFO] Progress: 85/100 runs completed (85 successful)
+[2025-12-06 23:07:21.816] [INFO] Starting run 85 with seed 127
+[2025-12-06 23:07:27.212] [INFO] Run 85 complete: accuracy=0.9390, time=5.40s, seed=127
+[2025-12-06 23:07:27.212] [INFO] Starting run 86 with seed 128
+[2025-12-06 23:07:32.510] [INFO] Run 86 complete: accuracy=0.9383, time=5.30s, seed=128
+[2025-12-06 23:07:32.510] [INFO] Starting run 87 with seed 129
+[2025-12-06 23:07:37.716] [INFO] Run 87 complete: accuracy=0.9392, time=5.21s, seed=129
+[2025-12-06 23:07:37.716] [INFO] Starting run 88 with seed 130
+[2025-12-06 23:07:42.923] [INFO] Run 88 complete: accuracy=0.9397, time=5.21s, seed=130
+[2025-12-06 23:07:42.924] [INFO] Starting run 89 with seed 131
+[2025-12-06 23:07:48.111] [INFO] Run 89 complete: accuracy=0.9395, time=5.19s, seed=131
+[2025-12-06 23:07:48.111] [INFO] Progress: 90/100 runs completed (90 successful)
+[2025-12-06 23:07:48.111] [INFO] Starting run 90 with seed 132
+[2025-12-06 23:07:53.514] [INFO] Run 90 complete: accuracy=0.9386, time=5.40s, seed=132
+[2025-12-06 23:07:53.514] [INFO] Starting run 91 with seed 133
+[2025-12-06 23:07:58.718] [INFO] Run 91 complete: accuracy=0.9387, time=5.20s, seed=133
+[2025-12-06 23:07:58.718] [INFO] Starting run 92 with seed 134
+[2025-12-06 23:08:04.022] [INFO] Run 92 complete: accuracy=0.9406, time=5.30s, seed=134
+[2025-12-06 23:08:04.022] [INFO] Starting run 93 with seed 135
+[2025-12-06 23:08:09.411] [INFO] Run 93 complete: accuracy=0.9403, time=5.39s, seed=135
+[2025-12-06 23:08:09.411] [INFO] Starting run 94 with seed 136
+[2025-12-06 23:08:14.716] [INFO] Run 94 complete: accuracy=0.9406, time=5.30s, seed=136
+[2025-12-06 23:08:14.716] [INFO] Progress: 95/100 runs completed (95 successful)
+[2025-12-06 23:08:14.716] [INFO] Starting run 95 with seed 137
+[2025-12-06 23:08:19.975] [INFO] Run 95 complete: accuracy=0.9415, time=5.26s, seed=137
+[2025-12-06 23:08:19.975] [INFO] Starting run 96 with seed 138
+[2025-12-06 23:08:25.309] [INFO] Run 96 complete: accuracy=0.9381, time=5.33s, seed=138
+[2025-12-06 23:08:25.309] [INFO] Starting run 97 with seed 139
+[2025-12-06 23:08:30.612] [INFO] Run 97 complete: accuracy=0.9420, time=5.30s, seed=139
+[2025-12-06 23:08:30.613] [INFO] Starting run 98 with seed 140
+[2025-12-06 23:08:35.895] [INFO] Run 98 complete: accuracy=0.9407, time=5.28s, seed=140
+[2025-12-06 23:08:35.896] [INFO] Starting run 99 with seed 141
+[2025-12-06 23:08:41.221] [INFO] Run 99 complete: accuracy=0.9404, time=5.33s, seed=141
+[2025-12-06 23:08:41.221] [INFO] Progress: 100/100 runs completed (100 successful)
+[2025-12-06 23:08:41.221] [INFO] ================================================================================
+[2025-12-06 23:08:41.221] [INFO] All runs completed: 100/100 successful
+[2025-12-06 23:08:41.221] [INFO] ================================================================================
+[2025-12-06 23:08:41.221] [INFO] Computing statistics...
+[2025-12-06 23:08:41.726] [INFO] Accuracy: 0.9395 ± 0.0013 (std)
+[2025-12-06 23:08:41.727] [INFO] Accuracy 95% CI: [0.9393, 0.9398]
+[2025-12-06 23:08:41.727] [INFO] Accuracy range: [0.9356, 0.9428]
+[2025-12-06 23:08:41.727] [INFO] Median accuracy: 0.9396
+[2025-12-06 23:08:41.727] [INFO] Mean time per run: 5.39s ± 0.12s
+[2025-12-06 23:08:41.727] [INFO] Total training time: 538.87s (0.15 hours)
+[2025-12-06 23:08:41.727] [INFO] Target accuracy: 0.9400
+[2025-12-06 23:08:41.727] [WARNING] ✗ Target accuracy NOT achieved: 0.9395 < 0.9400
+[2025-12-06 23:08:41.727] [INFO] Baseline accuracy: 0.9401
+[2025-12-06 23:08:41.727] [INFO] Improvement: -0.06%
+[2025-12-06 23:08:41.727] [INFO] Statistical significance: t=-3.122, p=0.0021
+[2025-12-06 23:08:41.727] [INFO] Result is statistically significant (p < 0.05)
+[2025-12-06 23:08:41.727] [INFO] ================================================================================
+[2025-12-06 23:08:41.727] [INFO] FINALIZING EXPERIMENT
+[2025-12-06 23:08:41.727] [INFO] ================================================================================
+[2025-12-06 23:08:41.729] [INFO] Experiment completed with 100 runs
+[2025-12-06 23:08:41.729] [INFO] Mean accuracy: 0.9395 ± 0.0013
+[2025-12-06 23:08:41.729] [INFO] 95% CI: [0.9393, 0.9398]
+[2025-12-06 23:08:41.730] [INFO] Summary saved to summary.json
+[2025-12-06 23:08:41.730] [INFO] End Time: 2025-12-06 23:08:41.730147
+[2025-12-06 23:08:41.730] [INFO] ================================================================================
