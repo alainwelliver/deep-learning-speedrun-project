@@ -4,7 +4,10 @@
 # Evidence: 94.01 average accuracy in n=1000 runs.
 #
 # MODIFICATION: Squared ReLU Activation Function
-# Replace GELU with ReLU² (F.relu(x).square()) activation across the network.
+# Replace GELU with ReLU² (F.relu(x).square()) in ConvGroup layers.
+# Note: First activation (after whitening conv) remains GELU to avoid numerical instability,
+# as there's no BatchNorm to normalize values before squaring.
+#
 # Hypothesis: ReLU² provides faster convergence than GELU, as demonstrated in
 # the NanoGPT speedrun (~4% speedup).
 #
@@ -65,7 +68,7 @@ hyp = {
         'batchnorm_momentum': 0.6,
         'scaling_factor': 1/9,
         'tta_level': 2,         # the level of test-time augmentation: 0=none, 1=mirror, 2=mirror+translate
-        'activation': 'relu2',  # NEW: 'gelu' or 'relu2'
+        'activation': 'relu2',  # 'gelu' or 'relu2' - applies to ConvGroup layers only
     },
 }
 
@@ -255,7 +258,9 @@ def make_net():
     whiten_width = 2 * 3 * whiten_kernel_size**2
     net = nn.Sequential(
         Conv(3, whiten_width, whiten_kernel_size, padding=0, bias=True),
-        get_activation(activation),
+        # IMPORTANT: Always use GELU after whitening conv (no BatchNorm before it)
+        # ReLU² would cause numerical instability with unbounded whitened values
+        nn.GELU(),
         ConvGroup(whiten_width,     widths['block1'], batchnorm_momentum, activation),
         ConvGroup(widths['block1'], widths['block2'], batchnorm_momentum, activation),
         ConvGroup(widths['block2'], widths['block3'], batchnorm_momentum, activation),
