@@ -1,0 +1,69 @@
+{
+  "experiment_name": "nanogpt_baseline_screening",
+  "end_time": "2025-12-08T17:15:09.771883",
+  "git_info": {
+    "commit": "a8ac360eb39e396a9452c517c223bdcf70d6259f",
+    "branch": "main",
+    "dirty": true,
+    "diff": "",
+    "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+    "status": "?? nanogpt/fineweb10B/\n"
+  },
+  "gpu_info": {
+    "available": true,
+    "device_count": 1,
+    "cuda_version": "12.8",
+    "pytorch_version": "2.8.0+cu128",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA L40",
+        "capability": [
+          8,
+          9
+        ],
+        "total_memory_gb": 47.576711168
+      }
+    ]
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-5.15.0-122-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64"
+  },
+  "statistics": {
+    "n_runs": 1,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "val_loss": {
+      "mean": 3.8965,
+      "std": 0.0,
+      "min": 3.8965,
+      "max": 3.8965,
+      "median": 3.8965
+    },
+    "train_loss": {
+      "mean": 3.6948,
+      "std": 0.0,
+      "min": 3.6948,
+      "max": 3.6948,
+      "median": 3.6948
+    },
+    "time": {
+      "mean": 3108.461581468582,
+      "std": 0.0,
+      "min": 3108.461581468582,
+      "max": 3108.461581468582,
+      "total": 3108.461581468582
+    }
+  },
+  "additional_info": {
+    "config_path": "configs/stage_a_screening/baseline_screening.json",
+    "script_name": "experiments/train_gpt.py",
+    "n_gpus": 1,
+    "n_runs": 1,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "target_val_loss": 3.5
+  }
+}
