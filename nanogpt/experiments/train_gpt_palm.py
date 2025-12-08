@@ -323,6 +323,18 @@ class Hyperparameters:
     save_every : int = 0 # every how many steps to save the checkpoint? 0 for only at the end
 args = Hyperparameters()
 
+# Override hyperparameters from environment variables for staged experiments
+if 'STAGE_NUM_ITERATIONS' in os.environ:
+    args.num_iterations = int(os.environ['STAGE_NUM_ITERATIONS'])
+if 'STAGE_WARMDOWN_ITERS' in os.environ:
+    args.warmdown_iters = int(os.environ['STAGE_WARMDOWN_ITERS'])
+if 'STAGE_BATCH_SIZE' in os.environ:
+    args.batch_size = int(os.environ['STAGE_BATCH_SIZE'])
+if 'STAGE_DEVICE_BATCH_SIZE' in os.environ:
+    args.device_batch_size = int(os.environ['STAGE_DEVICE_BATCH_SIZE'])
+if 'STAGE_VAL_LOSS_EVERY' in os.environ:
+    args.val_loss_every = int(os.environ['STAGE_VAL_LOSS_EVERY'])
+
 # set up DDP (distributed data parallel). torchrun sets this env variable
 assert torch.cuda.is_available()
 dist.init_process_group(backend='nccl')

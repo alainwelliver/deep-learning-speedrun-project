@@ -1,0 +1,32 @@
+{
+  "experiment_name": "nanogpt_curriculum_screening",
+  "description": "Stage A: Curriculum learning screening (1000 iters, 1 L40)",
+  "script": "experiments/train_gpt_curriculum.py",
+  "stage": "A_screening",
+  "n_gpus": 1,
+  "base_seed": 42,
+  "target_val_loss": 3.50,
+  "modification_type": "training_method",
+  "stage_config": {
+    "num_iterations": 1000,
+    "warmdown_iters": 284,
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "val_loss_every": 25,
+    "recommended_runs": 2,
+    "notes": "~1/5 of full training (1000/5100 iters), batch scaled for 1 GPU, progressive sequence cropping"
+  },
+  "hyperparameters": {
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "sequence_length": 1024,
+    "num_iterations": 1000,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 284,
+    "weight_decay": 0,
+    "val_loss_every": 25,
+    "val_tokens": 10485760,
+    "modification": "Progressive sequence cropping (256→512→768→1024) with loss plateau detection"
+  }
+}

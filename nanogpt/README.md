@@ -73,6 +73,278 @@ python scripts/run_nanogpt_experiment.py \
 
 **Note**: Each run takes approximately 7 minutes on 8x H100 GPUs, so 5 runs will take ~35 minutes total.
 
+## 3-Stage Experimental Workflow
+
+For budget-constrained exploration, use the **staged workflow** to efficiently screen multiple variants before committing to expensive full runs.
+
+### Overview
+
+The staged approach progressively filters unpromising variants through 3 stages:
+
+- **Stage A (Screening)**: Quick, cheap runs to identify promising variants
+- **Stage B (Validation)**: Medium-length runs to confirm effects hold at scale
+- **Stage C (Full)**: Complete runs for statistical significance and final results
+
+**Budget Savings**: ~43% cost reduction vs. running all variants with full runs.
+
+### Stage Specifications
+
+| Stage | Iterations | GPUs | Cost/Run | Runs/Variant | Purpose |
+|-------|-----------|------|----------|--------------|---------|
+| **A** | 1000 (~1/5) | 1 L40 | ~$2 | 2 | Screen all variants |
+| **B** | 3000 (~3/5) | 4 A100s | ~$10 | 3 | Validate best variant |
+| **C** | 5100 (full) | 8 H100s | ~$8-9 | 5 | Final statistical proof |
+
+### Directory Structure
+
+All configs are organized by stage:
+
+```
+configs/
+├── stage_a_screening/
+│   ├── baseline_screening.json
+│   ├── palm_screening.json
+│   ├── curriculum_screening.json
+│   └── depth_warm_screening.json
+├── stage_b_validation/
+│   ├── baseline_validation.json
+│   ├── palm_validation.json
+│   ├── curriculum_validation.json
+│   └── depth_warm_validation.json
+└── stage_c_full/
+    ├── baseline.json
+    ├── palm_parallel.json
+    ├── curriculum_full.json
+    └── depth_warm.json
+```
+
+### How to Run
+
+#### Stage A: Screen All Variants
+
+Run all 4 variants with short, cheap runs to identify the best performer(s):
+
+```bash
+cd nanogpt
+
+# Screen baseline
+python run_nanogpt_experiment.py \
+    --config configs/stage_a_screening/baseline_screening.json \
+    --n_runs 2
+
+# Screen PaLM parallel architecture
+python run_nanogpt_experiment.py \
+    --config configs/stage_a_screening/palm_screening.json \
+    --n_runs 2
+
+# Screen curriculum learning
+python run_nanogpt_experiment.py \
+    --config configs/stage_a_screening/curriculum_screening.json \
+    --n_runs 2
+
+# Screen DepthWarm
+python run_nanogpt_experiment.py \
+    --config configs/stage_a_screening/depth_warm_screening.json \
+    --n_runs 2
+```
+
+**Time**: ~30 minutes per variant (2 runs × 2 min/run × some overhead)
+**Cost**: ~$4 per variant, ~$16 total for all 4
+**Output**: 4 experiment directories in `experiment_logs/`
+
+#### Compare Stage A Results
+
+After all Stage A runs complete, compare validation losses:
+
+```bash
+# Check mean validation loss for each variant
+for dir in experiment_logs/nanogpt_*_screening_*/; do
+    echo "=== $(basename $dir) ==="
+    jq '.statistics.val_loss.mean' "$dir/summary.json"
+done
+```
+
+Look for:
+- **Best mean validation loss** (lowest is best)
+- **Low variance** (smaller std is better)
+- **Promising trends** in training curves
+
+#### Stage B: Validate Best Variant
+
+Once you've identified the best 1-2 variants from Stage A, run Stage B to confirm the effect holds with more training:
+
+```bash
+# Replace 'palm' with your best Stage A variant
+python run_nanogpt_experiment.py \
+    --config configs/stage_b_validation/palm_validation.json \
+    --n_runs 3 \
+    --n_gpus 4
+```
+
+**Time**: ~15 minutes (3 runs × 5 min/run)
+**Cost**: ~$30
+**Output**: Single experiment directory
+
+**Decision Point**: If Stage B results look promising (lower val loss than baseline, consistent improvement), proceed to Stage C. If Stage B looks bad, pivot to your next-best Stage A variant.
+
+#### Stage C: Final Statistical Proof
+
+If Stage B confirms your variant is promising, run the full experiment for publication-quality statistics:
+
+```bash
+# Run full experiment on best variant
+python run_nanogpt_experiment.py \
+    --config configs/stage_c_full/palm_parallel.json \
+    --n_runs 5 \
+    --n_gpus 8
+```
+
+**Time**: ~35 minutes (5 runs × 7 min/run)
+**Cost**: ~$42
+**Output**: Final results with statistical significance
+
+### Example Workflow
+
+Here's a complete workflow showing how to use the staging approach:
+
+```bash
+# 1. Run Stage A on all 4 variants (~1 hour total, ~$16)
+for variant in baseline palm curriculum depth_warm; do
+    python run_nanogpt_experiment.py \
+        --config configs/stage_a_screening/${variant}_screening.json \
+        --n_runs 2
+done
+
+# 2. Analyze Stage A results
+echo "Stage A Results Summary:"
+for dir in experiment_logs/nanogpt_*_screening_*/; do
+    variant=$(basename "$dir" | cut -d_ -f2)
+    mean=$(jq -r '.statistics.val_loss.mean' "$dir/summary.json")
+    std=$(jq -r '.statistics.val_loss.std' "$dir/summary.json")
+    echo "$variant: $mean ± $std"
+done
+
+# 3. Manually identify best variant (let's say it's 'palm')
+# Run Stage B validation
+python run_nanogpt_experiment.py \
+    --config configs/stage_b_validation/palm_validation.json \
+    --n_runs 3 \
+    --n_gpus 4
+
+# 4. Check Stage B results
+cat experiment_logs/nanogpt_palm_validation_*/summary.json | jq '.statistics.val_loss'
+
+# 5. If promising, proceed to Stage C
+python run_nanogpt_experiment.py \
+    --config configs/stage_c_full/palm_parallel.json \
+    --n_runs 5 \
+    --n_gpus 8
+
+# 6. Final results
+cat experiment_logs/nanogpt_palm_parallel_*/summary.json | jq '.statistics'
+```
+
+### Decision Criteria
+
+**Stage A → Stage B**:
+- Pick the variant(s) with **lowest mean validation loss**
+- Consider **variance** - lower std is more reliable
+- Can advance 1-2 variants if multiple look promising
+- Budget allows for 1 pivot if first choice fails
+
+**Stage B → Stage C**:
+- Validate that **mean val loss < baseline** (or target threshold)
+- Check that **trend is consistent** across runs
+- Ensure **CI doesn't overlap** with baseline too much
+- If Stage B fails, pivot to next-best Stage A variant
+
+**Pivoting in Stage B**:
+If your first Stage B choice performs poorly, you have budget to try one more:
+
+```bash
+# If palm failed in Stage B, try curriculum
+python run_nanogpt_experiment.py \
+    --config configs/stage_b_validation/curriculum_validation.json \
+    --n_runs 3 \
+    --n_gpus 4
+```
+
+### Budget Summary
+
+**Total budget**: ~$95 (fits in $96 constraint)
+
+- Stage A: 4 variants × 2 runs × $2 = **$16**
+- Stage B: 1 variant × 3 runs × $10 = **$30**
+- Stage C: 1 variant × 5 runs × $8.40 = **$42**
+- **Reserve**: $7 for potential Stage B pivot
+
+**vs. Naive approach**: Running all 4 variants fully would cost ~$168 (4 × $42)
+
+**Savings**: 43% cost reduction
+
+### How Stage Configs Work
+
+The staging system uses **environment variable overrides** to modify hyperparameters without duplicating training scripts:
+
+**Stage A config example** (`baseline_screening.json`):
+```json
+{
+  "experiment_name": "nanogpt_baseline_screening",
+  "script": "experiments/train_gpt.py",
+  "stage": "A_screening",
+  "n_gpus": 1,
+  "stage_config": {
+    "num_iterations": 1000,
+    "warmdown_iters": 284,
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "val_loss_every": 25
+  }
+}
+```
+
+The `stage_config` section is passed to the training script via environment variables (`STAGE_NUM_ITERATIONS`, etc.), overriding the default values.
+
+### Interpreting Partial Runs
+
+**Stage A (1000 iters)**: Loss will be higher than full training, but relative rankings should hold. Focus on **comparing between variants**, not absolute loss values.
+
+**Stage B (3000 iters)**: Loss should be closer to final values (~85-90% of full training). More reliable for predicting Stage C outcomes.
+
+**Extrapolating**: If Stage A shows variant X is 0.05 better than baseline at 1000 iters, it's a good sign, but not guaranteed to hold at 5100 iters. Stage B confirms whether the advantage persists.
+
+### Variant Descriptions
+
+Your 4 variants to test:
+
+1. **Baseline** (`baseline_screening.json`)
+   - Unmodified `train_gpt.py`
+   - Reference point for comparisons
+
+2. **PaLM Parallel** (`palm_screening.json`)
+   - Parallel attention + MLP blocks
+   - Shared RMSNorm, 1/√2 scaling
+   - Architecture modification
+
+3. **Curriculum Learning** (`curriculum_screening.json`)
+   - Progressive sequence cropping (256→512→768→1024)
+   - Loss plateau detection
+   - Training methodology modification
+
+4. **DepthWarm** (`depth_warm_screening.json`)
+   - Progressive layer activation
+   - Stochastic depth warmup
+   - Architecture modification
+
+### Tips
+
+- **Run Stage A overnight** to save time
+- **Use `--dry_run`** to verify configs before expensive runs
+- **Monitor first run** of each stage to catch issues early
+- **Save experiment directories** - you'll need them for analysis
+- **Git commit** before each stage for reproducibility
+- **Track costs** to avoid budget overruns
+
 ## Configuration Files
 
 ### Baseline Configuration (`configs/baseline.json`)

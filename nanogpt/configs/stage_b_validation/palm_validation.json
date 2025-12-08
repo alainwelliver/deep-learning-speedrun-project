@@ -1,0 +1,32 @@
+{
+  "experiment_name": "nanogpt_palm_validation",
+  "description": "Stage B: PaLM parallel architecture validation (3000 iters, 4 A100s)",
+  "script": "experiments/train_gpt_palm.py",
+  "stage": "B_validation",
+  "n_gpus": 4,
+  "base_seed": 42,
+  "target_val_loss": 3.35,
+  "modification_type": "architecture",
+  "stage_config": {
+    "num_iterations": 3000,
+    "warmdown_iters": 853,
+    "batch_size": 512,
+    "device_batch_size": 64,
+    "val_loss_every": 74,
+    "recommended_runs": 3,
+    "notes": "~3/5 of full training (3000/5100 iters), full batch size for 4 GPUs, PaLM parallel blocks"
+  },
+  "hyperparameters": {
+    "batch_size": 512,
+    "device_batch_size": 64,
+    "sequence_length": 1024,
+    "num_iterations": 3000,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 853,
+    "weight_decay": 0,
+    "val_loss_every": 74,
+    "val_tokens": 10485760,
+    "modification": "Parallel attention+MLP with shared RMSNorm and 1/sqrt(2) scaling"
+  }
+}

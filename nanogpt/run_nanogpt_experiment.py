@@ -138,6 +138,20 @@ def run_single_trial(config, run_id, seed, n_gpus, logger, nanogpt_dir, dry_run=
     env['RUN_SEED'] = str(seed)
     env['PYTHONHASHSEED'] = str(seed)
 
+    # Add stage-specific hyperparameter overrides from config
+    if 'stage_config' in config:
+        stage_config = config['stage_config']
+        if 'num_iterations' in stage_config:
+            env['STAGE_NUM_ITERATIONS'] = str(stage_config['num_iterations'])
+        if 'warmdown_iters' in stage_config:
+            env['STAGE_WARMDOWN_ITERS'] = str(stage_config['warmdown_iters'])
+        if 'batch_size' in stage_config:
+            env['STAGE_BATCH_SIZE'] = str(stage_config['batch_size'])
+        if 'device_batch_size' in stage_config:
+            env['STAGE_DEVICE_BATCH_SIZE'] = str(stage_config['device_batch_size'])
+        if 'val_loss_every' in stage_config:
+            env['STAGE_VAL_LOSS_EVERY'] = str(stage_config['val_loss_every'])
+
     if dry_run:
         logger.log(f"DRY RUN - Would execute: {' '.join(cmd)}")
         logger.log(f"DRY RUN - With environment: RUN_SEED={seed}")
