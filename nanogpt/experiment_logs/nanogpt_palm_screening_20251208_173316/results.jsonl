@@ -1,0 +1,2 @@
+{"run_id": 0, "seed": 42, "final_val_loss": 3.9013, "final_train_loss": 3.7014, "time_seconds": 2975.2868394851685, "final_step": 1000, "success": true, "timestamp": "2025-12-08T18:22:51.860450", "peak_memory_mib": 8944}
+{"run_id": 1, "seed": 43, "final_val_loss": 3.9001, "final_train_loss": 3.7071, "time_seconds": 2928.2224929332733, "final_step": 1000, "success": true, "timestamp": "2025-12-08T19:11:40.084194", "peak_memory_mib": 8944}
