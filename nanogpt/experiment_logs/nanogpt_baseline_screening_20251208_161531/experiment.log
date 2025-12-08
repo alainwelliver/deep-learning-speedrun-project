@@ -1,0 +1,86 @@
+
+================================================================================
+NANOGPT EXPERIMENT LOG
+================================================================================
+Experiment Name: nanogpt_baseline_screening
+Start Time: 2025-12-08T16:15:31.547899
+
+GIT INFORMATION:
+  Commit:  5478db3d7052e0d9ae05177043cd7467f186c008
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA L40 (47.6 GB)
+
+================================================================================
+
+[2025-12-08 16:15:31.548] [INFO] Starting experiment: nanogpt_baseline_screening
+[2025-12-08 16:15:31.548] [INFO] Configuration file: configs/stage_a_screening/baseline_screening.json
+[2025-12-08 16:15:31.548] [INFO] Training script: experiments/train_gpt.py
+[2025-12-08 16:15:31.548] [INFO] Number of GPUs: 1
+[2025-12-08 16:15:31.548] [WARNING] WARNING: GPU count overridden from 1 to 1
+[2025-12-08 16:15:31.548] [INFO] Number of runs: 1
+[2025-12-08 16:15:31.548] [INFO] Base seed: 42
+[2025-12-08 16:15:31.548] [INFO] Description: Stage A: Baseline screening run (1000 iters, 1 L40)
+[2025-12-08 16:15:31.548] [INFO] Target validation loss: 3.5
+[2025-12-08 16:15:31.548] [INFO] Configuration saved to config.json
+[2025-12-08 16:15:31.549] [INFO] Configuration: {
+  "experiment_name": "nanogpt_baseline_screening",
+  "description": "Stage A: Baseline screening run (1000 iters, 1 L40)",
+  "script": "experiments/train_gpt.py",
+  "stage": "A_screening",
+  "n_gpus": 1,
+  "base_seed": 42,
+  "target_val_loss": 3.5,
+  "modification_type": "none",
+  "stage_config": {
+    "num_iterations": 1000,
+    "warmdown_iters": 284,
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "val_loss_every": 25,
+    "recommended_runs": 2,
+    "notes": "~1/5 of full training (1000/5100 iters), batch scaled for 1 GPU"
+  },
+  "hyperparameters": {
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "sequence_length": 1024,
+    "num_iterations": 1000,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 284,
+    "weight_decay": 0,
+    "val_loss_every": 25,
+    "val_tokens": 10485760
+  }
+}
+[2025-12-08 16:15:31.549] [INFO] ================================================================================
+[2025-12-08 16:15:31.549] [INFO] Starting 1 training runs...
+[2025-12-08 16:15:31.549] [INFO] ================================================================================
+[2025-12-08 16:15:31.549] [INFO] Starting run 0 with seed 42
+[2025-12-08 16:15:31.549] [INFO] Running: torchrun --standalone --nproc_per_node=1 experiments/train_gpt.py
+[2025-12-08 16:15:31.549] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-08 16:15:31.549] [INFO] Stdout log: experiment_logs/nanogpt_baseline_screening_20251208_161531/runs/run_0_seed_42/stdout.log
+[2025-12-08 16:15:41.060] [ERROR] ERROR in run 0: Process exited with code 1
+[2025-12-08 16:15:41.060] [INFO] Progress: 1/1 runs completed (0 successful)
+[2025-12-08 16:15:41.060] [INFO] --------------------------------------------------------------------------------
+[2025-12-08 16:15:41.061] [INFO] ================================================================================
+[2025-12-08 16:15:41.061] [INFO] All runs completed: 0/1 successful
+[2025-12-08 16:15:41.061] [INFO] ================================================================================
+[2025-12-08 16:15:41.061] [INFO] Computing statistics...
+[2025-12-08 16:15:41.061] [INFO] ================================================================================
+[2025-12-08 16:15:41.061] [INFO] FINALIZING EXPERIMENT
+[2025-12-08 16:15:41.061] [INFO] ================================================================================
+[2025-12-08 16:15:41.061] [INFO] Experiment completed with 0 runs
+[2025-12-08 16:15:41.061] [INFO] Successful runs: 0
+[2025-12-08 16:15:41.061] [INFO] Failed runs: 0
+[2025-12-08 16:15:41.062] [INFO] Summary saved to summary.json
+[2025-12-08 16:15:41.062] [INFO] End Time: 2025-12-08 16:15:41.062728
+[2025-12-08 16:15:41.062] [INFO] ================================================================================
