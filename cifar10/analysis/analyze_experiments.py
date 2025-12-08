@@ -97,6 +97,9 @@ class ExperimentAnalyzer:
         """
         Resolve path, handling glob patterns.
 
+        Also checks parent directory (cifar10/) if path not found in current directory,
+        allowing the script to be run from the analysis/ subdirectory.
+
         Args:
             path: Path or glob pattern
 
@@ -108,6 +111,10 @@ class ExperimentAnalyzer:
         # Check if it's a glob pattern
         if '*' in path_str or '?' in path_str:
             matches = sorted(glob.glob(path_str))
+            # If no matches, try from parent directory (cifar10/)
+            if not matches:
+                parent_path = str(Path(__file__).parent.parent / path_str)
+                matches = sorted(glob.glob(parent_path))
             if not matches:
                 raise FileNotFoundError(f"No matches found for pattern: {path}")
             if len(matches) > 1:
@@ -116,8 +123,14 @@ class ExperimentAnalyzer:
 
         resolved = Path(path_str).resolve()
 
+        # If path doesn't exist, try relative to cifar10/ directory (parent of analysis/)
         if not resolved.exists():
-            raise FileNotFoundError(f"Path does not exist: {path}")
+            cifar10_dir = Path(__file__).parent.parent
+            alt_resolved = (cifar10_dir / path_str).resolve()
+            if alt_resolved.exists():
+                resolved = alt_resolved
+            else:
+                raise FileNotFoundError(f"Path does not exist: {path}")
 
         return resolved
 

@@ -1,0 +1,7 @@
+comparison_name,metric,baseline_mean,modified_mean,improvement_pct,p_value,significant_at_0.05,test_used,cohens_d,effect_interpretation
+Instance 1,accuracy,0.940247,0.939642,-0.0643,0.00000000,True,Independent t-test,0.4779,small
+Instance 1,time,4.485093,4.399826,+1.9011,0.00000000,True,Mann-Whitney U,5.5994,large
+Instance 2,accuracy,0.940319,0.939718,-0.0639,0.00000000,True,Independent t-test,0.4816,small
+Instance 2,time,5.855255,5.650897,+3.4902,0.00000000,True,Mann-Whitney U,1.0949,large
+Pooled,accuracy,0.940283,0.939680,-0.0641,0.00000000,True,Welch's t-test,-0.4879,small
+Pooled,time,5.170174,5.025362,+2.8009,0.00011588,True,Welch's t-test,-0.2176,small
