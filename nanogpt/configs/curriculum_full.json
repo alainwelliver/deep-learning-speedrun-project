@@ -1,0 +1,18 @@
+{
+    "experiment_name": "nanogpt_curriculum_full",
+    "description": "Curriculum Progressive Sequence Cropping: 256->512->768->1024 tokens based on loss plateau",
+    "script": "train_gpt_curriculum.py",
+    "n_gpus": 8,
+    "base_seed": 42,
+    "target_val_loss": 3.28,
+    "modification_type": "architecture",
+    "modification_details": "Curriculum learning with dynamic sequence length adjustment. Start at T=256, advance based on loss plateau detection. Novel modification for NanoGPT speedrun.",
+    "baseline_val_loss": 3.30,
+    "baseline_std": 0.02,
+    "hyperparameters": {
+      "notes": "Using same hyperparameters as baseline, only changing training sequence length via curriculum",
+      "curriculum_schedule": "256->512->768->1024",
+      "plateau_detection_window": 50,
+      "plateau_thresholds": [0.0015, 0.0012, 0.0010, 0.0008]
+    }
+}

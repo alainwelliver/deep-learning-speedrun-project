@@ -1,0 +1,15 @@
+{
+    "experiment_name": "nanogpt_depthwarm",
+    "description": "DepthWarm: progressive layer skipping during early training",
+    "script": "train_gpt_depthwarm.py",
+    "n_gpus": 8,
+    "base_seed": 42,
+    "modification_type": "architecture",
+    "modification_details": "Dynamic depth warmup: early in training only shallow layers are always active, deeper layers are stochastically skipped; later in training all layers are active.",
+    "target_val_loss": 3.28,
+    "baseline_val_loss": 3.27,
+    "baseline_std": 0.02,
+    "hyperparameters": {
+      "notes": "Same hyperparameters as baseline train_gpt.py; only DepthWarm scheduling is new."
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "experiment_name": "nanogpt_palm_parallel",
+    "description": "PaLM-style Parallel Attention and MLP with Shared Norm",
+    "script": "train_gpt_palm.py",
+    "n_gpus": 8,
+    "base_seed": 42,
+    "target_val_loss": 3.28,
+    "modification_type": "architecture",
+    "modification_details": "Parallel Attn+MLP block structure with 1/sqrt(2) scaling and shared RMSNorm",
+    "hyperparameters": {
+      "notes": "Using default hyperparameters, only architecture changed"
+    }
+}
