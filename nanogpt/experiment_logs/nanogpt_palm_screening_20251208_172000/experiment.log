@@ -1,0 +1,93 @@
+
+================================================================================
+NANOGPT EXPERIMENT LOG
+================================================================================
+Experiment Name: nanogpt_palm_screening
+Start Time: 2025-12-08T17:20:00.861859
+
+GIT INFORMATION:
+  Commit:  bd1bf040abc73128c89a1e4029bdc4c1c7478f13
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA L40 (47.6 GB)
+
+================================================================================
+
+[2025-12-08 17:20:00.862] [INFO] Starting experiment: nanogpt_palm_screening
+[2025-12-08 17:20:00.862] [INFO] Configuration file: configs/stage_a_screening/palm_screening.json
+[2025-12-08 17:20:00.863] [INFO] Training script: experiments/train_gpt_palm.py
+[2025-12-08 17:20:00.863] [INFO] Number of GPUs: 1
+[2025-12-08 17:20:00.863] [INFO] Number of runs: 2
+[2025-12-08 17:20:00.863] [INFO] Base seed: 42
+[2025-12-08 17:20:00.863] [INFO] Description: Stage A: PaLM parallel architecture screening (1000 iters, 1 L40)
+[2025-12-08 17:20:00.863] [INFO] Target validation loss: 3.5
+[2025-12-08 17:20:00.864] [INFO] Configuration saved to config.json
+[2025-12-08 17:20:00.864] [INFO] Configuration: {
+  "experiment_name": "nanogpt_palm_screening",
+  "description": "Stage A: PaLM parallel architecture screening (1000 iters, 1 L40)",
+  "script": "experiments/train_gpt_palm.py",
+  "stage": "A_screening",
+  "n_gpus": 1,
+  "base_seed": 42,
+  "target_val_loss": 3.5,
+  "modification_type": "architecture",
+  "stage_config": {
+    "num_iterations": 1000,
+    "warmdown_iters": 284,
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "val_loss_every": 25,
+    "recommended_runs": 2,
+    "notes": "~1/5 of full training (1000/5100 iters), batch scaled for 1 GPU, PaLM parallel blocks"
+  },
+  "hyperparameters": {
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "sequence_length": 1024,
+    "num_iterations": 1000,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 284,
+    "weight_decay": 0,
+    "val_loss_every": 25,
+    "val_tokens": 10485760,
+    "modification": "Parallel attention+MLP with shared RMSNorm and 1/sqrt(2) scaling"
+  }
+}
+[2025-12-08 17:20:00.865] [INFO] ================================================================================
+[2025-12-08 17:20:00.865] [INFO] Starting 2 training runs...
+[2025-12-08 17:20:00.865] [INFO] ================================================================================
+[2025-12-08 17:20:00.865] [INFO] Starting run 0 with seed 42
+[2025-12-08 17:20:00.866] [INFO] Running: torchrun --standalone --nproc_per_node=1 experiments/train_gpt_palm.py
+[2025-12-08 17:20:00.866] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-08 17:20:00.866] [INFO] Stdout log: experiment_logs/nanogpt_palm_screening_20251208_172000/runs/run_0_seed_42/stdout.log
+[2025-12-08 17:20:10.738] [ERROR] ERROR in run 0: Process exited with code 1
+[2025-12-08 17:20:10.738] [INFO] Progress: 1/2 runs completed (0 successful)
+[2025-12-08 17:20:10.738] [INFO] --------------------------------------------------------------------------------
+[2025-12-08 17:20:10.738] [INFO] Starting run 1 with seed 43
+[2025-12-08 17:20:10.739] [INFO] Running: torchrun --standalone --nproc_per_node=1 experiments/train_gpt_palm.py
+[2025-12-08 17:20:10.739] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-08 17:20:10.739] [INFO] Stdout log: experiment_logs/nanogpt_palm_screening_20251208_172000/runs/run_1_seed_43/stdout.log
+[2025-12-08 17:20:20.947] [ERROR] ERROR in run 1: Process exited with code 1
+[2025-12-08 17:20:20.947] [INFO] Progress: 2/2 runs completed (0 successful)
+[2025-12-08 17:20:20.947] [INFO] --------------------------------------------------------------------------------
+[2025-12-08 17:20:20.947] [INFO] ================================================================================
+[2025-12-08 17:20:20.947] [INFO] All runs completed: 0/2 successful
+[2025-12-08 17:20:20.947] [INFO] ================================================================================
+[2025-12-08 17:20:20.947] [INFO] Computing statistics...
+[2025-12-08 17:20:20.948] [INFO] ================================================================================
+[2025-12-08 17:20:20.948] [INFO] FINALIZING EXPERIMENT
+[2025-12-08 17:20:20.948] [INFO] ================================================================================
+[2025-12-08 17:20:20.948] [INFO] Experiment completed with 0 runs
+[2025-12-08 17:20:20.948] [INFO] Successful runs: 0
+[2025-12-08 17:20:20.948] [INFO] Failed runs: 0
+[2025-12-08 17:20:20.948] [INFO] Summary saved to summary.json
+[2025-12-08 17:20:20.949] [INFO] End Time: 2025-12-08 17:20:20.949020
+[2025-12-08 17:20:20.949] [INFO] ================================================================================
