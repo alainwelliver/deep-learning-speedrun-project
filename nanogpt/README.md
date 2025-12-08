@@ -17,15 +17,15 @@ pip install torch numpy scipy
 For quick testing (first 900M tokens):
 ```bash
 cd ..  # Go to project root
-python data/cached_fineweb10B.py 9
+python nanogpt/cached_fineweb10B.py 9
 ```
 
 For full dataset (needed for actual runs):
 ```bash
-python data/cached_fineweb10B.py 8
+python nanogpt/cached_fineweb10B.py 8
 ```
 
-This will download data to `data/fineweb10B/fineweb_train_*.bin` and `fineweb_val_*.bin`.
+This will download data to `nanogpt/fineweb10B/fineweb_train_*.bin` and `fineweb_val_*.bin`.
 
 ### 3. Verify Installation
 
@@ -42,8 +42,8 @@ python experiment_logger.py
 Test the infrastructure without using expensive multi-GPU resources:
 
 ```bash
-python scripts/run_nanogpt_experiment.py \
-    --config configs/baseline.json \
+python run_nanogpt_experiment.py \
+    --config configs/stage_a_screening/baseline_screening.json \
     --n_runs 1 \
     --n_gpus 1
 ```
@@ -55,8 +55,8 @@ This runs a single training run on 1 GPU for testing purposes.
 Preview the commands that will be executed without actually running:
 
 ```bash
-python scripts/run_nanogpt_experiment.py \
-    --config configs/baseline.json \
+python run_nanogpt_experiment.py \
+    --config configs/stage_c_full/baseline.json \
     --dry_run
 ```
 
@@ -65,8 +65,8 @@ python scripts/run_nanogpt_experiment.py \
 Run the full baseline experiment with statistical significance:
 
 ```bash
-python scripts/run_nanogpt_experiment.py \
-    --config configs/baseline.json \
+python run_nanogpt_experiment.py \
+    --config configs/stage_c_full/baseline.json \
     --n_runs 5 \
     --n_gpus 8
 ```
@@ -318,7 +318,7 @@ The `stage_config` section is passed to the training script via environment vari
 Your 4 variants to test:
 
 1. **Baseline** (`baseline_screening.json`)
-   - Unmodified `train_gpt.py`
+   - Unmodified `experiments/train_gpt.py`
    - Reference point for comparisons
 
 2. **PaLM Parallel** (`palm_screening.json`)
@@ -347,19 +347,19 @@ Your 4 variants to test:
 
 ## Configuration Files
 
-### Baseline Configuration (`configs/baseline.json`)
+### Baseline Configuration (`configs/stage_c_full/baseline.json`)
 
 ```json
 {
   "experiment_name": "nanogpt_baseline",
   "description": "Baseline NanoGPT training - unmodified train_gpt.py",
-  "script": "train_gpt.py",
+  "script": "experiments/train_gpt.py",
   "n_gpus": 8,
   "base_seed": 42,
   "target_val_loss": 3.28,
   "modification_type": "none",
   "hyperparameters": {
-    "notes": "Using default hyperparameters from train_gpt.py"
+    "notes": "Using default hyperparameters from experiments/train_gpt.py"
   }
 }
 ```
@@ -368,7 +368,7 @@ Your 4 variants to test:
 
 To test a modification:
 
-1. Create a modified version of the training script (e.g., `train_gpt_modified.py`)
+1. Create a modified version of the training script (e.g., `experiments/train_gpt_modified.py`)
 2. Edit hyperparameters or make code changes in the new file
 3. Create a new config file pointing to it:
 
@@ -376,7 +376,7 @@ To test a modification:
 {
   "experiment_name": "nanogpt_lr_high",
   "description": "Higher learning rate experiment",
-  "script": "train_gpt_modified.py",
+  "script": "experiments/train_gpt_modified.py",
   "n_gpus": 8,
   "base_seed": 42,
   "modification_type": "hyperparameter",
@@ -389,7 +389,7 @@ To test a modification:
 
 4. Run the experiment:
 ```bash
-python scripts/run_nanogpt_experiment.py --config configs/your_config.json --n_runs 5
+python run_nanogpt_experiment.py --config configs/stage_c_full/your_config.json --n_runs 5
 ```
 
 ## Experiment Outputs
@@ -487,7 +487,7 @@ cat experiment_logs/nanogpt_baseline_*/summary.json | jq '.statistics.val_loss.m
 cat experiment_logs/nanogpt_your_mod_*/summary.json | jq '.statistics.val_loss.mean'
 ```
 
-For statistical testing (Phase 2 - if time permits), use `scripts/analyze_results.py` and `scripts/compare_experiments.py`.
+For statistical testing (Phase 2 - if time permits), use `analysis/analyze_results.py` and `analysis/compare_experiments.py`.
 
 ## Statistical Requirements
 
@@ -509,7 +509,7 @@ pip install torch torchvision torchaudio
 
 ### "Training script not found"
 
-Make sure you're running from the project root or the nanogpt/ directory, and that `train_gpt.py` exists in the nanogpt/ directory.
+Make sure you're running from the nanogpt/ directory, and that the training script exists in the `experiments/` directory.
 
 ### "No validation loss captured"
 
@@ -523,14 +523,14 @@ This can happen if:
 If running on single GPU for debugging and hitting OOM:
 - The baseline uses batch_size=512 which requires 8 GPUs
 - Single GPU runs may need reduced batch size
-- Consider modifying train_gpt.py to reduce batch_size for debugging
+- Consider modifying the training script in experiments/ to reduce batch_size for debugging
 
 ## Development Workflow
 
 1. **Test locally** with `--dry_run` to verify configuration
 2. **Debug** with `--n_runs 1 --n_gpus 1` on cheaper instance
 3. **Run baseline** with full settings on 8x H100
-4. **Create modification** by copying and editing train_gpt.py
+4. **Create modification** by copying and editing a training script in experiments/
 5. **Run experiment** with new config pointing to modified script
 6. **Compare results** using summary.json files
 7. **Iterate** based on results
@@ -538,10 +538,13 @@ If running on single GPU for debugging and hitting OOM:
 ## File Reference
 
 - [experiment_logger.py](experiment_logger.py) - Logging infrastructure
-- [scripts/run_nanogpt_experiment.py](scripts/run_nanogpt_experiment.py) - Main experiment runner
-- [configs/baseline.json](configs/baseline.json) - Baseline configuration
-- [train_gpt.py](train_gpt.py) - Original training script (do not modify)
-- `train_gpt_modified.py` - Create this for your modifications
+- [run_nanogpt_experiment.py](run_nanogpt_experiment.py) - Main experiment runner
+- [configs/stage_c_full/baseline.json](configs/stage_c_full/baseline.json) - Baseline configuration (full run)
+- [configs/stage_a_screening/](configs/stage_a_screening/) - Stage A screening configs
+- [configs/stage_b_validation/](configs/stage_b_validation/) - Stage B validation configs
+- [configs/stage_c_full/](configs/stage_c_full/) - Stage C full run configs
+- [experiments/train_gpt.py](experiments/train_gpt.py) - Original training script (do not modify)
+- `experiments/train_gpt_modified.py` - Create this for your modifications
 
 ## Tips
 
@@ -555,6 +558,6 @@ If running on single GPU for debugging and hitting OOM:
 ## Next Steps (Phase 2 - Analysis Tools)
 
 If time permits, implement:
-- `scripts/analyze_results.py` - Statistical analysis and comparison
-- `scripts/compare_experiments.py` - Generate comparison reports
+- `analysis/analyze_results.py` - Statistical analysis and comparison
+- `analysis/compare_experiments.py` - Generate comparison reports
 - Training curve plotting from metrics.jsonl

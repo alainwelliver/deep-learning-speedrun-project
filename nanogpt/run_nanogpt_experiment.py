@@ -7,13 +7,13 @@ Wraps torchrun, parses stdout, runs multiple trials with different seeds, and co
 
 Usage:
     # Run baseline with default settings (8 GPUs, 5 runs)
-    python scripts/run_nanogpt_experiment.py --config configs/baseline.json --n_runs 5
+    python run_nanogpt_experiment.py --config configs/stage_c_full/baseline.json --n_runs 5
 
     # Debug with single GPU
-    python scripts/run_nanogpt_experiment.py --config configs/baseline.json --n_runs 1 --n_gpus 1
+    python run_nanogpt_experiment.py --config configs/stage_a_screening/baseline_screening.json --n_runs 1 --n_gpus 1
 
     # Dry run (print command without executing)
-    python scripts/run_nanogpt_experiment.py --config configs/baseline.json --dry_run
+    python run_nanogpt_experiment.py --config configs/stage_c_full/baseline.json --dry_run
 """
 
 import sys
@@ -25,8 +25,8 @@ import re
 import time
 from pathlib import Path
 
-# Add parent directory to path to import experiment_logger
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Add current directory to path to import experiment_logger
+sys.path.insert(0, str(Path(__file__).parent))
 from experiment_logger import GPTExperimentLogger
 
 
@@ -327,7 +327,7 @@ def run_experiment(config_path, n_runs, n_gpus_override=None, output_dir=None, d
 
     # Get path to nanogpt directory
     script_dir = Path(__file__).parent
-    nanogpt_dir = script_dir.parent  # Go up from scripts/ to nanogpt/
+    nanogpt_dir = script_dir  # This file is already in nanogpt/
 
     # Initialize logger
     log_dir = output_dir if output_dir else "experiment_logs"
@@ -426,13 +426,13 @@ def main():
         epilog="""
 Examples:
   # Run baseline with 5 runs on 8 GPUs
-  python scripts/run_nanogpt_experiment.py --config configs/baseline.json --n_runs 5
+  python run_nanogpt_experiment.py --config configs/stage_c_full/baseline.json --n_runs 5
 
   # Debug with 1 run on 1 GPU
-  python scripts/run_nanogpt_experiment.py --config configs/baseline.json --n_runs 1 --n_gpus 1
+  python run_nanogpt_experiment.py --config configs/stage_a_screening/baseline_screening.json --n_runs 1 --n_gpus 1
 
   # Dry run (print commands without executing)
-  python scripts/run_nanogpt_experiment.py --config configs/baseline.json --dry_run
+  python run_nanogpt_experiment.py --config configs/stage_c_full/baseline.json --dry_run
         """
     )
     parser.add_argument(
