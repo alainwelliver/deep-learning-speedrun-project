@@ -216,12 +216,12 @@ class Block(nn.Module):
         self.layer_idx = layer_idx
         self.n_layers = n_layers
 
-    def forward(self, x, global_step: int = 0, total_steps: int = 0):
+    def forward(self, x, global_step: int = 0, total_steps: int = 0, layer_idx: int = 0):
         # During training, optionally apply DepthWarm schedule.
         if self.training:
             max_depth, p_stoch = depthwarm_config(global_step, total_steps, self.n_layers)
 
-            if self.layer_idx >= max_depth:
+            if layer_idx >= max_depth:
                 # Deterministic skip if p_stoch == 0; otherwise stochastic depth.
                 if p_stoch == 0.0:
                     return x
@@ -270,8 +270,8 @@ class GPT(nn.Module):
 
         # forward the GPT model itself
         x = self.transformer.wte(idx) # token embeddings of shape (b, t, n_embd)
-        for block in self.transformer.h:
-            x = block(x, global_step=self.global_step, total_steps=self.total_steps)
+        for layer_idx, block in enumerate(self.transformer.h):
+            x = block(x, global_step=self.global_step, total_steps=self.total_steps, layer_idx=layer_idx)
         x = F.rms_norm(x, (x.size(-1),))
 
         if targets is not None:
@@ -442,7 +442,7 @@ if hasattr(config, "coordinate_descent_tuning"):
     config.coordinate_descent_tuning = True # suggested by @Chillee
 model = torch.compile(model)
 # here we wrap model into DDP container
-model = DDP(model, device_ids=[ddp_local_rank])
+model = DDP(model, device_ids=[ddp_local_rank], find_unused_parameters=True)
 raw_model = model.module # always contains the "raw" unwrapped model
 
 # DepthWarm: tell the raw model how many steps there will be
