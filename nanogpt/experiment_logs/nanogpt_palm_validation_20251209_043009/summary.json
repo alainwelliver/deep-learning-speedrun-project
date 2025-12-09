@@ -1,0 +1,100 @@
+{
+  "experiment_name": "nanogpt_palm_validation",
+  "end_time": "2025-12-09T06:01:13.395309",
+  "git_info": {
+    "commit": "2ac3a57e8aff853f2c37d5c696839c4737337296",
+    "branch": "main",
+    "dirty": true,
+    "diff": "",
+    "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+    "status": "?? nanogpt/fineweb10B/\n"
+  },
+  "gpu_info": {
+    "available": true,
+    "device_count": 4,
+    "cuda_version": "12.8",
+    "pytorch_version": "2.8.0+cu128",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA A100 80GB PCIe",
+        "capability": [
+          8,
+          0
+        ],
+        "total_memory_gb": 85.094825984
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA A100 80GB PCIe",
+        "capability": [
+          8,
+          0
+        ],
+        "total_memory_gb": 85.094825984
+      },
+      {
+        "index": 2,
+        "name": "NVIDIA A100 80GB PCIe",
+        "capability": [
+          8,
+          0
+        ],
+        "total_memory_gb": 85.094825984
+      },
+      {
+        "index": 3,
+        "name": "NVIDIA A100 80GB PCIe",
+        "capability": [
+          8,
+          0
+        ],
+        "total_memory_gb": 85.094825984
+      }
+    ]
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-40-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64"
+  },
+  "statistics": {
+    "n_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "val_loss": {
+      "mean": 3.3954500000000003,
+      "std": 0.0002121320343557839,
+      "min": 3.3953,
+      "max": 3.3956,
+      "median": 3.3954500000000003,
+      "ci_95": [
+        3.393544069289537,
+        3.3973559307104635
+      ]
+    },
+    "train_loss": {
+      "mean": 3.4974499999999997,
+      "std": 0.0002121320343557839,
+      "min": 3.4973,
+      "max": 3.4976,
+      "median": 3.4974499999999997
+    },
+    "time": {
+      "mean": 2597.5482207536697,
+      "std": 44.95721200213063,
+      "min": 2565.758671283722,
+      "max": 2629.3377702236176,
+      "total": 5195.0964415073395
+    }
+  },
+  "additional_info": {
+    "config_path": "configs/stage_b_validation/palm_validation.json",
+    "script_name": "experiments/train_gpt_palm.py",
+    "n_gpus": 4,
+    "n_runs": 3,
+    "successful_runs": 2,
+    "failed_runs": 1,
+    "target_val_loss": 3.35
+  }
+}
