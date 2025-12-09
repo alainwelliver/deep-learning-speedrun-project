@@ -138,6 +138,18 @@ def run_single_trial(config, run_id, seed, n_gpus, logger, nanogpt_dir, dry_run=
     env['RUN_SEED'] = str(seed)
     env['PYTHONHASHSEED'] = str(seed)
 
+    # Explicitly set CUDA_VISIBLE_DEVICES if not already set
+    # This ensures child processes can properly initialize CUDA
+    if 'CUDA_VISIBLE_DEVICES' not in env:
+        gpu_ids = ','.join(str(i) for i in range(n_gpus))
+        env['CUDA_VISIBLE_DEVICES'] = gpu_ids
+        logger.log(f"Setting CUDA_VISIBLE_DEVICES={gpu_ids}")
+
+    # Add NCCL environment variables for better multi-GPU support
+    if n_gpus > 1:
+        env.setdefault('NCCL_DEBUG', 'WARN')
+        env.setdefault('NCCL_IB_DISABLE', '1')  # Disable InfiniBand for cloud environments
+
     # Add stage-specific hyperparameter overrides from config
     if 'stage_config' in config:
         stage_config = config['stage_config']

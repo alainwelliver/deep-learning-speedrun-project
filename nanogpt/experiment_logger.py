@@ -10,7 +10,6 @@ import json
 import os
 import subprocess
 import datetime
-import torch
 from pathlib import Path
 import sys
 
@@ -112,6 +111,7 @@ class GPTExperimentLogger:
     def get_gpu_info(self):
         """Capture GPU information"""
         try:
+            import torch
             gpu_info = {
                 "available": torch.cuda.is_available(),
                 "device_count": torch.cuda.device_count(),
