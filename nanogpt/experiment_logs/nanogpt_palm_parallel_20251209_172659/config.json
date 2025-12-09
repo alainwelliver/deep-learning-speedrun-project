@@ -1,0 +1,28 @@
+{
+  "experiment_name": "nanogpt_palm_parallel",
+  "description": "Stage C: PaLM-style Parallel Attention and MLP - full run (5100 iters, 8 H100s)",
+  "script": "experiments/train_gpt_palm.py",
+  "stage": "C_full",
+  "n_gpus": 8,
+  "base_seed": 42,
+  "target_val_loss": 3.28,
+  "modification_type": "architecture",
+  "modification_details": "Parallel Attn+MLP block structure with 1/sqrt(2) scaling and shared RMSNorm",
+  "stage_config": {
+    "recommended_runs": 5,
+    "notes": "Full training (5100 iters) - uses default hyperparameters from training script"
+  },
+  "hyperparameters": {
+    "batch_size": 512,
+    "device_batch_size": 64,
+    "sequence_length": 1024,
+    "num_iterations": 5100,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 1450,
+    "weight_decay": 0,
+    "val_loss_every": 125,
+    "val_tokens": 10485760,
+    "notes": "Using default hyperparameters, only architecture changed"
+  }
+}

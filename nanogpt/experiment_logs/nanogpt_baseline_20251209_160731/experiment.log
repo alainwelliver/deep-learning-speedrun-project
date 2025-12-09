@@ -1,0 +1,235 @@
+
+================================================================================
+NANOGPT EXPERIMENT LOG
+================================================================================
+Experiment Name: nanogpt_baseline
+Start Time: 2025-12-09T16:07:34.176975
+
+GIT INFORMATION:
+  Commit:  99352aac39f7798169e163db866987ab1956a981
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   8
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA H100 PCIe (85.0 GB)
+  Device 1: NVIDIA H100 PCIe (85.0 GB)
+  Device 2: NVIDIA H100 PCIe (85.0 GB)
+  Device 3: NVIDIA H100 PCIe (85.0 GB)
+  Device 4: NVIDIA H100 PCIe (85.0 GB)
+  Device 5: NVIDIA H100 PCIe (85.0 GB)
+  Device 6: NVIDIA H100 PCIe (85.0 GB)
+  Device 7: NVIDIA H100 PCIe (85.0 GB)
+
+================================================================================
+
+[2025-12-09 16:07:34.177] [INFO] Starting experiment: nanogpt_baseline
+[2025-12-09 16:07:34.177] [INFO] Configuration file: configs/stage_c_full/baseline.json
+[2025-12-09 16:07:34.177] [INFO] Training script: experiments/train_gpt.py
+[2025-12-09 16:07:34.177] [INFO] Number of GPUs: 8
+[2025-12-09 16:07:34.177] [WARNING] WARNING: GPU count overridden from 8 to 8
+[2025-12-09 16:07:34.177] [INFO] Number of runs: 3
+[2025-12-09 16:07:34.177] [INFO] Base seed: 42
+[2025-12-09 16:07:34.177] [INFO] Description: Stage C: Baseline NanoGPT training - full run (5100 iters, 8 H100s)
+[2025-12-09 16:07:34.177] [INFO] Target validation loss: 3.28
+[2025-12-09 16:07:34.178] [INFO] Configuration saved to config.json
+[2025-12-09 16:07:34.178] [INFO] Configuration: {
+  "experiment_name": "nanogpt_baseline",
+  "description": "Stage C: Baseline NanoGPT training - full run (5100 iters, 8 H100s)",
+  "script": "experiments/train_gpt.py",
+  "stage": "C_full",
+  "n_gpus": 8,
+  "base_seed": 42,
+  "target_val_loss": 3.28,
+  "modification_type": "none",
+  "stage_config": {
+    "recommended_runs": 5,
+    "notes": "Full training (5100 iters) - uses default hyperparameters from training script"
+  },
+  "hyperparameters": {
+    "batch_size": 512,
+    "device_batch_size": 64,
+    "sequence_length": 1024,
+    "num_iterations": 5100,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 1450,
+    "weight_decay": 0,
+    "val_loss_every": 125,
+    "val_tokens": 10485760,
+    "notes": "Using default hyperparameters from train_gpt.py Hyperparameters dataclass"
+  }
+}
+[2025-12-09 16:07:34.178] [INFO] ================================================================================
+[2025-12-09 16:07:34.178] [INFO] Starting 3 training runs...
+[2025-12-09 16:07:34.178] [INFO] ================================================================================
+[2025-12-09 16:07:34.178] [INFO] Starting run 0 with seed 42
+[2025-12-09 16:07:34.178] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 16:07:34.179] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt.py
+[2025-12-09 16:07:34.179] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 16:07:34.179] [INFO] Stdout log: experiment_logs/nanogpt_baseline_20251209_160731/runs/run_0_seed_42/stdout.log
+[2025-12-09 16:09:55.126] [INFO] Run 0 - Step 125: val_loss=4.9584
+[2025-12-09 16:10:31.119] [INFO] Run 0 - Step 250: val_loss=4.3333
+[2025-12-09 16:11:06.684] [INFO] Run 0 - Step 375: val_loss=4.0563
+[2025-12-09 16:11:42.643] [INFO] Run 0 - Step 500: val_loss=3.9187
+[2025-12-09 16:12:18.566] [INFO] Run 0 - Step 625: val_loss=3.8304
+[2025-12-09 16:12:54.344] [INFO] Run 0 - Step 750: val_loss=3.7731
+[2025-12-09 16:13:31.149] [INFO] Run 0 - Step 875: val_loss=3.7248
+[2025-12-09 16:14:08.678] [INFO] Run 0 - Step 1000: val_loss=3.6832
+[2025-12-09 16:14:46.127] [INFO] Run 0 - Step 1125: val_loss=3.6549
+[2025-12-09 16:15:24.048] [INFO] Run 0 - Step 1250: val_loss=3.6257
+[2025-12-09 16:16:01.254] [INFO] Run 0 - Step 1375: val_loss=3.6049
+[2025-12-09 16:16:38.067] [INFO] Run 0 - Step 1500: val_loss=3.5815
+[2025-12-09 16:17:14.929] [INFO] Run 0 - Step 1625: val_loss=3.5624
+[2025-12-09 16:17:50.951] [INFO] Run 0 - Step 1750: val_loss=3.5435
+[2025-12-09 16:18:26.733] [INFO] Run 0 - Step 1875: val_loss=3.5311
+[2025-12-09 16:19:02.848] [INFO] Run 0 - Step 2000: val_loss=3.5179
+[2025-12-09 16:19:38.812] [INFO] Run 0 - Step 2125: val_loss=3.5063
+[2025-12-09 16:20:14.361] [INFO] Run 0 - Step 2250: val_loss=3.4983
+[2025-12-09 16:20:50.309] [INFO] Run 0 - Step 2375: val_loss=3.4897
+[2025-12-09 16:21:26.251] [INFO] Run 0 - Step 2500: val_loss=3.4824
+[2025-12-09 16:22:01.837] [INFO] Run 0 - Step 2625: val_loss=3.4717
+[2025-12-09 16:22:37.803] [INFO] Run 0 - Step 2750: val_loss=3.4657
+[2025-12-09 16:23:13.755] [INFO] Run 0 - Step 2875: val_loss=3.4587
+[2025-12-09 16:23:49.312] [INFO] Run 0 - Step 3000: val_loss=3.4507
+[2025-12-09 16:24:25.274] [INFO] Run 0 - Step 3125: val_loss=3.4478
+[2025-12-09 16:25:01.240] [INFO] Run 0 - Step 3250: val_loss=3.4372
+[2025-12-09 16:25:36.795] [INFO] Run 0 - Step 3375: val_loss=3.4335
+[2025-12-09 16:26:12.718] [INFO] Run 0 - Step 3500: val_loss=3.4290
+[2025-12-09 16:26:48.661] [INFO] Run 0 - Step 3625: val_loss=3.4239
+[2025-12-09 16:27:24.204] [INFO] Run 0 - Step 3750: val_loss=3.4158
+[2025-12-09 16:28:00.155] [INFO] Run 0 - Step 3875: val_loss=3.4094
+[2025-12-09 16:28:36.117] [INFO] Run 0 - Step 4000: val_loss=3.3923
+[2025-12-09 16:29:11.677] [INFO] Run 0 - Step 4125: val_loss=3.3779
+[2025-12-09 16:29:47.620] [INFO] Run 0 - Step 4250: val_loss=3.3670
+[2025-12-09 16:30:23.582] [INFO] Run 0 - Step 4375: val_loss=3.3552
+[2025-12-09 16:30:59.176] [INFO] Run 0 - Step 4500: val_loss=3.3429
+[2025-12-09 16:31:35.124] [INFO] Run 0 - Step 4625: val_loss=3.3313
+[2025-12-09 16:32:11.083] [INFO] Run 0 - Step 4750: val_loss=3.3213
+[2025-12-09 16:32:46.637] [INFO] Run 0 - Step 4875: val_loss=3.3120
+[2025-12-09 16:33:22.605] [INFO] Run 0 - Step 5000: val_loss=3.3043
+[2025-12-09 16:33:51.408] [INFO] Run 0 - Step 5100: val_loss=3.3011
+[2025-12-09 16:34:04.434] [INFO] Run 0 complete: val_loss=3.3011, train_loss=3.6432, time=1590.25s, seed=42
+[2025-12-09 16:34:04.435] [INFO] Progress: 1/3 runs completed (1 successful)
+[2025-12-09 16:34:04.435] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 16:34:04.435] [INFO] Starting run 1 with seed 43
+[2025-12-09 16:34:04.435] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 16:34:04.435] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt.py
+[2025-12-09 16:34:04.435] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 16:34:04.435] [INFO] Stdout log: experiment_logs/nanogpt_baseline_20251209_160731/runs/run_1_seed_43/stdout.log
+[2025-12-09 16:36:40.414] [INFO] Run 1 - Step 125: val_loss=4.9561
+[2025-12-09 16:37:16.570] [INFO] Run 1 - Step 250: val_loss=4.3317
+[2025-12-09 16:37:52.247] [INFO] Run 1 - Step 375: val_loss=4.0559
+[2025-12-09 16:38:28.268] [INFO] Run 1 - Step 500: val_loss=3.9179
+[2025-12-09 16:39:04.311] [INFO] Run 1 - Step 625: val_loss=3.8317
+[2025-12-09 16:39:39.968] [INFO] Run 1 - Step 750: val_loss=3.7724
+[2025-12-09 16:40:16.012] [INFO] Run 1 - Step 875: val_loss=3.7250
+[2025-12-09 16:40:52.036] [INFO] Run 1 - Step 1000: val_loss=3.6843
+[2025-12-09 16:41:27.671] [INFO] Run 1 - Step 1125: val_loss=3.6551
+[2025-12-09 16:42:03.713] [INFO] Run 1 - Step 1250: val_loss=3.6258
+[2025-12-09 16:42:39.734] [INFO] Run 1 - Step 1375: val_loss=3.6061
+[2025-12-09 16:43:15.418] [INFO] Run 1 - Step 1500: val_loss=3.5892
+[2025-12-09 16:43:51.438] [INFO] Run 1 - Step 1625: val_loss=3.5656
+[2025-12-09 16:44:27.475] [INFO] Run 1 - Step 1750: val_loss=3.5471
+[2025-12-09 16:45:03.137] [INFO] Run 1 - Step 1875: val_loss=3.5312
+[2025-12-09 16:45:39.175] [INFO] Run 1 - Step 2000: val_loss=3.5193
+[2025-12-09 16:46:15.221] [INFO] Run 1 - Step 2125: val_loss=3.5058
+[2025-12-09 16:46:50.863] [INFO] Run 1 - Step 2250: val_loss=3.4984
+[2025-12-09 16:47:26.916] [INFO] Run 1 - Step 2375: val_loss=3.4895
+[2025-12-09 16:48:02.978] [INFO] Run 1 - Step 2500: val_loss=3.4818
+[2025-12-09 16:48:38.641] [INFO] Run 1 - Step 2625: val_loss=3.4727
+[2025-12-09 16:49:14.745] [INFO] Run 1 - Step 2750: val_loss=3.4649
+[2025-12-09 16:49:50.797] [INFO] Run 1 - Step 2875: val_loss=3.4587
+[2025-12-09 16:50:26.478] [INFO] Run 1 - Step 3000: val_loss=3.4499
+[2025-12-09 16:51:02.541] [INFO] Run 1 - Step 3125: val_loss=3.4484
+[2025-12-09 16:51:38.603] [INFO] Run 1 - Step 3250: val_loss=3.4382
+[2025-12-09 16:52:14.283] [INFO] Run 1 - Step 3375: val_loss=3.4337
+[2025-12-09 16:52:50.325] [INFO] Run 1 - Step 3500: val_loss=3.4276
+[2025-12-09 16:53:26.375] [INFO] Run 1 - Step 3625: val_loss=3.4227
+[2025-12-09 16:54:02.046] [INFO] Run 1 - Step 3750: val_loss=3.4168
+[2025-12-09 16:54:38.107] [INFO] Run 1 - Step 3875: val_loss=3.4076
+[2025-12-09 16:55:14.190] [INFO] Run 1 - Step 4000: val_loss=3.3925
+[2025-12-09 16:55:49.870] [INFO] Run 1 - Step 4125: val_loss=3.3775
+[2025-12-09 16:56:25.929] [INFO] Run 1 - Step 4250: val_loss=3.3666
+[2025-12-09 16:57:02.008] [INFO] Run 1 - Step 4375: val_loss=3.3546
+[2025-12-09 16:57:37.687] [INFO] Run 1 - Step 4500: val_loss=3.3425
+[2025-12-09 16:58:13.788] [INFO] Run 1 - Step 4625: val_loss=3.3311
+[2025-12-09 16:58:49.909] [INFO] Run 1 - Step 4750: val_loss=3.3212
+[2025-12-09 16:59:25.593] [INFO] Run 1 - Step 4875: val_loss=3.3117
+[2025-12-09 17:00:01.669] [INFO] Run 1 - Step 5000: val_loss=3.3042
+[2025-12-09 17:00:30.593] [INFO] Run 1 - Step 5100: val_loss=3.3009
+[2025-12-09 17:00:43.416] [INFO] Run 1 complete: val_loss=3.3009, train_loss=3.6303, time=1598.98s, seed=43
+[2025-12-09 17:00:43.417] [INFO] Progress: 2/3 runs completed (2 successful)
+[2025-12-09 17:00:43.417] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 17:00:43.417] [INFO] Starting run 2 with seed 44
+[2025-12-09 17:00:43.417] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 17:00:43.417] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt.py
+[2025-12-09 17:00:43.417] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 17:00:43.418] [INFO] Stdout log: experiment_logs/nanogpt_baseline_20251209_160731/runs/run_2_seed_44/stdout.log
+[2025-12-09 17:02:55.393] [INFO] Run 2 - Step 125: val_loss=4.9626
+[2025-12-09 17:03:32.767] [INFO] Run 2 - Step 250: val_loss=4.3358
+[2025-12-09 17:04:08.420] [INFO] Run 2 - Step 375: val_loss=4.0587
+[2025-12-09 17:04:45.415] [INFO] Run 2 - Step 500: val_loss=3.9223
+[2025-12-09 17:05:22.785] [INFO] Run 2 - Step 625: val_loss=3.8314
+[2025-12-09 17:05:58.959] [INFO] Run 2 - Step 750: val_loss=3.7737
+[2025-12-09 17:06:34.938] [INFO] Run 2 - Step 875: val_loss=3.7261
+[2025-12-09 17:07:10.902] [INFO] Run 2 - Step 1000: val_loss=3.6854
+[2025-12-09 17:07:46.498] [INFO] Run 2 - Step 1125: val_loss=3.6554
+[2025-12-09 17:08:22.417] [INFO] Run 2 - Step 1250: val_loss=3.6261
+[2025-12-09 17:08:58.353] [INFO] Run 2 - Step 1375: val_loss=3.6038
+[2025-12-09 17:09:33.920] [INFO] Run 2 - Step 1500: val_loss=3.5807
+[2025-12-09 17:10:09.864] [INFO] Run 2 - Step 1625: val_loss=3.5628
+[2025-12-09 17:10:45.781] [INFO] Run 2 - Step 1750: val_loss=3.5436
+[2025-12-09 17:11:21.339] [INFO] Run 2 - Step 1875: val_loss=3.5292
+[2025-12-09 17:11:57.258] [INFO] Run 2 - Step 2000: val_loss=3.5179
+[2025-12-09 17:12:33.204] [INFO] Run 2 - Step 2125: val_loss=3.5046
+[2025-12-09 17:13:08.761] [INFO] Run 2 - Step 2250: val_loss=3.4965
+[2025-12-09 17:13:44.686] [INFO] Run 2 - Step 2375: val_loss=3.4878
+[2025-12-09 17:14:20.606] [INFO] Run 2 - Step 2500: val_loss=3.4798
+[2025-12-09 17:14:56.145] [INFO] Run 2 - Step 2625: val_loss=3.4694
+[2025-12-09 17:15:32.079] [INFO] Run 2 - Step 2750: val_loss=3.4635
+[2025-12-09 17:16:07.994] [INFO] Run 2 - Step 2875: val_loss=3.4571
+[2025-12-09 17:16:43.546] [INFO] Run 2 - Step 3000: val_loss=3.4507
+[2025-12-09 17:17:19.463] [INFO] Run 2 - Step 3125: val_loss=3.4494
+[2025-12-09 17:17:55.398] [INFO] Run 2 - Step 3250: val_loss=3.4365
+[2025-12-09 17:18:30.961] [INFO] Run 2 - Step 3375: val_loss=3.4327
+[2025-12-09 17:19:06.907] [INFO] Run 2 - Step 3500: val_loss=3.4286
+[2025-12-09 17:19:42.844] [INFO] Run 2 - Step 3625: val_loss=3.4230
+[2025-12-09 17:20:18.392] [INFO] Run 2 - Step 3750: val_loss=3.4142
+[2025-12-09 17:20:54.322] [INFO] Run 2 - Step 3875: val_loss=3.4039
+[2025-12-09 17:21:30.283] [INFO] Run 2 - Step 4000: val_loss=3.3903
+[2025-12-09 17:22:05.851] [INFO] Run 2 - Step 4125: val_loss=3.3764
+[2025-12-09 17:22:41.796] [INFO] Run 2 - Step 4250: val_loss=3.3655
+[2025-12-09 17:23:17.735] [INFO] Run 2 - Step 4375: val_loss=3.3542
+[2025-12-09 17:23:53.295] [INFO] Run 2 - Step 4500: val_loss=3.3417
+[2025-12-09 17:24:29.233] [INFO] Run 2 - Step 4625: val_loss=3.3295
+[2025-12-09 17:25:05.191] [INFO] Run 2 - Step 4750: val_loss=3.3200
+[2025-12-09 17:25:40.755] [INFO] Run 2 - Step 4875: val_loss=3.3105
+[2025-12-09 17:26:16.723] [INFO] Run 2 - Step 5000: val_loss=3.3030
+[2025-12-09 17:26:45.537] [INFO] Run 2 - Step 5100: val_loss=3.2996
+[2025-12-09 17:26:58.190] [INFO] Run 2 complete: val_loss=3.2996, train_loss=3.6365, time=1574.77s, seed=44
+[2025-12-09 17:26:58.190] [INFO] Progress: 3/3 runs completed (3 successful)
+[2025-12-09 17:26:58.190] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 17:26:58.190] [INFO] ================================================================================
+[2025-12-09 17:26:58.190] [INFO] All runs completed: 3/3 successful
+[2025-12-09 17:26:58.190] [INFO] ================================================================================
+[2025-12-09 17:26:58.190] [INFO] Computing statistics...
+[2025-12-09 17:26:58.190] [INFO] ================================================================================
+[2025-12-09 17:26:58.191] [INFO] FINALIZING EXPERIMENT
+[2025-12-09 17:26:58.191] [INFO] ================================================================================
+[2025-12-09 17:26:58.646] [INFO] Experiment completed with 3 runs
+[2025-12-09 17:26:58.646] [INFO] Successful runs: 3
+[2025-12-09 17:26:58.646] [INFO] Failed runs: 0
+[2025-12-09 17:26:58.646] [INFO] Mean validation loss: 3.3005 ± 0.0008
+[2025-12-09 17:26:58.646] [INFO] 95% CI: [3.2985, 3.3026]
+[2025-12-09 17:26:58.646] [INFO] Best validation loss: 3.2996
+[2025-12-09 17:26:58.646] [INFO] Mean time per run: 1588.00s
+[2025-12-09 17:26:58.646] [INFO] Total training time: 4764.01s (79.40 minutes)
+[2025-12-09 17:26:58.647] [INFO] Summary saved to summary.json
+[2025-12-09 17:26:58.647] [INFO] End Time: 2025-12-09 17:26:58.647081
+[2025-12-09 17:26:58.647] [INFO] ================================================================================
+[2025-12-09 17:26:58.647] [WARNING] ✗ Target validation loss NOT achieved: 3.3005 > 3.2800

@@ -1,0 +1,105 @@
+
+================================================================================
+NANOGPT EXPERIMENT LOG
+================================================================================
+Experiment Name: nanogpt_baseline
+Start Time: 2025-12-09T15:55:37.528156
+
+GIT INFORMATION:
+  Commit:  99352aac39f7798169e163db866987ab1956a981
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   8
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA H100 PCIe (85.0 GB)
+  Device 1: NVIDIA H100 PCIe (85.0 GB)
+  Device 2: NVIDIA H100 PCIe (85.0 GB)
+  Device 3: NVIDIA H100 PCIe (85.0 GB)
+  Device 4: NVIDIA H100 PCIe (85.0 GB)
+  Device 5: NVIDIA H100 PCIe (85.0 GB)
+  Device 6: NVIDIA H100 PCIe (85.0 GB)
+  Device 7: NVIDIA H100 PCIe (85.0 GB)
+
+================================================================================
+
+[2025-12-09 15:55:37.528] [INFO] Starting experiment: nanogpt_baseline
+[2025-12-09 15:55:37.528] [INFO] Configuration file: configs/stage_c_full/baseline.json
+[2025-12-09 15:55:37.528] [INFO] Training script: experiments/train_gpt.py
+[2025-12-09 15:55:37.528] [INFO] Number of GPUs: 8
+[2025-12-09 15:55:37.528] [WARNING] WARNING: GPU count overridden from 8 to 8
+[2025-12-09 15:55:37.528] [INFO] Number of runs: 5
+[2025-12-09 15:55:37.528] [INFO] Base seed: 42
+[2025-12-09 15:55:37.528] [INFO] Description: Stage C: Baseline NanoGPT training - full run (5100 iters, 8 H100s)
+[2025-12-09 15:55:37.528] [INFO] Target validation loss: 3.28
+[2025-12-09 15:55:37.529] [INFO] Configuration saved to config.json
+[2025-12-09 15:55:37.529] [INFO] Configuration: {
+  "experiment_name": "nanogpt_baseline",
+  "description": "Stage C: Baseline NanoGPT training - full run (5100 iters, 8 H100s)",
+  "script": "experiments/train_gpt.py",
+  "stage": "C_full",
+  "n_gpus": 8,
+  "base_seed": 42,
+  "target_val_loss": 3.28,
+  "modification_type": "none",
+  "stage_config": {
+    "recommended_runs": 5,
+    "notes": "Full training (5100 iters) - uses default hyperparameters from training script"
+  },
+  "hyperparameters": {
+    "batch_size": 512,
+    "device_batch_size": 64,
+    "sequence_length": 1024,
+    "num_iterations": 5100,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 1450,
+    "weight_decay": 0,
+    "val_loss_every": 125,
+    "val_tokens": 10485760,
+    "notes": "Using default hyperparameters from train_gpt.py Hyperparameters dataclass"
+  }
+}
+[2025-12-09 15:55:37.529] [INFO] ================================================================================
+[2025-12-09 15:55:37.529] [INFO] Starting 5 training runs...
+[2025-12-09 15:55:37.529] [INFO] ================================================================================
+[2025-12-09 15:55:37.529] [INFO] Starting run 0 with seed 42
+[2025-12-09 15:55:37.529] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 15:55:37.529] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt.py
+[2025-12-09 15:55:37.529] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 15:55:37.530] [INFO] Stdout log: experiment_logs/nanogpt_baseline_20251209_155534/runs/run_0_seed_42/stdout.log
+[2025-12-09 15:59:04.338] [INFO] Run 0 - Step 125: val_loss=4.9643
+[2025-12-09 15:59:40.398] [INFO] Run 0 - Step 250: val_loss=4.3423
+[2025-12-09 16:00:16.055] [INFO] Run 0 - Step 375: val_loss=4.0582
+[2025-12-09 16:00:52.057] [INFO] Run 0 - Step 500: val_loss=3.9223
+[2025-12-09 16:01:28.056] [INFO] Run 0 - Step 625: val_loss=3.8351
+[2025-12-09 16:02:03.697] [INFO] Run 0 - Step 750: val_loss=3.7756
+[2025-12-09 16:02:39.678] [INFO] Run 0 - Step 875: val_loss=3.7279
+[2025-12-09 16:03:15.660] [INFO] Run 0 - Step 1000: val_loss=3.6886
+[2025-12-09 16:03:51.279] [INFO] Run 0 - Step 1125: val_loss=3.6597
+[2025-12-09 16:04:27.241] [INFO] Run 0 - Step 1250: val_loss=3.6286
+[2025-12-09 16:05:03.263] [INFO] Run 0 - Step 1375: val_loss=3.6091
+[2025-12-09 16:05:38.897] [INFO] Run 0 - Step 1500: val_loss=3.5859
+[2025-12-09 16:06:14.984] [INFO] Run 0 - Step 1625: val_loss=3.5666
+[2025-12-09 16:06:38.491] [WARNING] Run 0 interrupted by user
+[2025-12-09 16:06:41.608] [WARNING] ================================================================================
+[2025-12-09 16:06:41.608] [WARNING] Experiment interrupted by user
+[2025-12-09 16:06:41.608] [WARNING] Saving partial results...
+[2025-12-09 16:06:41.608] [WARNING] ================================================================================
+[2025-12-09 16:06:41.608] [INFO] ================================================================================
+[2025-12-09 16:06:41.608] [INFO] All runs completed: 0/5 successful
+[2025-12-09 16:06:41.608] [INFO] ================================================================================
+[2025-12-09 16:06:41.608] [INFO] Computing statistics...
+[2025-12-09 16:06:41.608] [INFO] ================================================================================
+[2025-12-09 16:06:41.608] [INFO] FINALIZING EXPERIMENT
+[2025-12-09 16:06:41.608] [INFO] ================================================================================
+[2025-12-09 16:06:41.608] [INFO] Experiment completed with 0 runs
+[2025-12-09 16:06:41.609] [INFO] Successful runs: 0
+[2025-12-09 16:06:41.609] [INFO] Failed runs: 0
+[2025-12-09 16:06:41.609] [INFO] Summary saved to summary.json
+[2025-12-09 16:06:41.609] [INFO] End Time: 2025-12-09 16:06:41.609538
+[2025-12-09 16:06:41.609] [INFO] ================================================================================

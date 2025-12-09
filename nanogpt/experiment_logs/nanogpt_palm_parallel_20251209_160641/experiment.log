@@ -1,0 +1,123 @@
+
+================================================================================
+NANOGPT EXPERIMENT LOG
+================================================================================
+Experiment Name: nanogpt_palm_parallel
+Start Time: 2025-12-09T16:06:52.238087
+
+GIT INFORMATION:
+  Commit:  99352aac39f7798169e163db866987ab1956a981
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   8
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA H100 PCIe (85.0 GB)
+  Device 1: NVIDIA H100 PCIe (85.0 GB)
+  Device 2: NVIDIA H100 PCIe (85.0 GB)
+  Device 3: NVIDIA H100 PCIe (85.0 GB)
+  Device 4: NVIDIA H100 PCIe (85.0 GB)
+  Device 5: NVIDIA H100 PCIe (85.0 GB)
+  Device 6: NVIDIA H100 PCIe (85.0 GB)
+  Device 7: NVIDIA H100 PCIe (85.0 GB)
+
+================================================================================
+
+[2025-12-09 16:06:52.238] [INFO] Starting experiment: nanogpt_palm_parallel
+[2025-12-09 16:06:52.238] [INFO] Configuration file: configs/stage_c_full/palm_parallel.json
+[2025-12-09 16:06:52.238] [INFO] Training script: experiments/train_gpt_palm.py
+[2025-12-09 16:06:52.238] [INFO] Number of GPUs: 8
+[2025-12-09 16:06:52.238] [WARNING] WARNING: GPU count overridden from 8 to 8
+[2025-12-09 16:06:52.238] [INFO] Number of runs: 5
+[2025-12-09 16:06:52.238] [INFO] Base seed: 42
+[2025-12-09 16:06:52.238] [INFO] Description: Stage C: PaLM-style Parallel Attention and MLP - full run (5100 iters, 8 H100s)
+[2025-12-09 16:06:52.238] [INFO] Target validation loss: 3.28
+[2025-12-09 16:06:52.239] [INFO] Configuration saved to config.json
+[2025-12-09 16:06:52.239] [INFO] Configuration: {
+  "experiment_name": "nanogpt_palm_parallel",
+  "description": "Stage C: PaLM-style Parallel Attention and MLP - full run (5100 iters, 8 H100s)",
+  "script": "experiments/train_gpt_palm.py",
+  "stage": "C_full",
+  "n_gpus": 8,
+  "base_seed": 42,
+  "target_val_loss": 3.28,
+  "modification_type": "architecture",
+  "modification_details": "Parallel Attn+MLP block structure with 1/sqrt(2) scaling and shared RMSNorm",
+  "stage_config": {
+    "recommended_runs": 5,
+    "notes": "Full training (5100 iters) - uses default hyperparameters from training script"
+  },
+  "hyperparameters": {
+    "batch_size": 512,
+    "device_batch_size": 64,
+    "sequence_length": 1024,
+    "num_iterations": 5100,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 1450,
+    "weight_decay": 0,
+    "val_loss_every": 125,
+    "val_tokens": 10485760,
+    "notes": "Using default hyperparameters, only architecture changed"
+  }
+}
+[2025-12-09 16:06:52.239] [INFO] ================================================================================
+[2025-12-09 16:06:52.239] [INFO] Starting 5 training runs...
+[2025-12-09 16:06:52.239] [INFO] ================================================================================
+[2025-12-09 16:06:52.239] [INFO] Starting run 0 with seed 42
+[2025-12-09 16:06:52.239] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 16:06:52.239] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt_palm.py
+[2025-12-09 16:06:52.239] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 16:06:52.239] [INFO] Stdout log: experiment_logs/nanogpt_palm_parallel_20251209_160641/runs/run_0_seed_42/stdout.log
+[2025-12-09 16:06:53.902] [WARNING] Run 0 interrupted by user
+[2025-12-09 16:06:54.367] [INFO] Progress: 1/5 runs completed (0 successful)
+[2025-12-09 16:06:54.367] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 16:06:54.367] [INFO] Starting run 1 with seed 43
+[2025-12-09 16:06:54.367] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 16:06:54.368] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt_palm.py
+[2025-12-09 16:06:54.368] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 16:06:54.368] [INFO] Stdout log: experiment_logs/nanogpt_palm_parallel_20251209_160641/runs/run_1_seed_43/stdout.log
+[2025-12-09 16:06:55.102] [WARNING] Run 1 interrupted by user
+[2025-12-09 16:06:55.134] [INFO] Progress: 2/5 runs completed (0 successful)
+[2025-12-09 16:06:55.134] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 16:06:55.135] [INFO] Starting run 2 with seed 44
+[2025-12-09 16:06:55.135] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 16:06:55.135] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt_palm.py
+[2025-12-09 16:06:55.135] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 16:06:55.135] [INFO] Stdout log: experiment_logs/nanogpt_palm_parallel_20251209_160641/runs/run_2_seed_44/stdout.log
+[2025-12-09 16:06:55.573] [WARNING] Run 2 interrupted by user
+[2025-12-09 16:06:55.605] [INFO] Progress: 3/5 runs completed (0 successful)
+[2025-12-09 16:06:55.605] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 16:06:55.605] [INFO] Starting run 3 with seed 45
+[2025-12-09 16:06:55.605] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 16:06:55.605] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt_palm.py
+[2025-12-09 16:06:55.605] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 16:06:55.606] [INFO] Stdout log: experiment_logs/nanogpt_palm_parallel_20251209_160641/runs/run_3_seed_45/stdout.log
+[2025-12-09 16:06:56.143] [WARNING] Run 3 interrupted by user
+[2025-12-09 16:06:56.175] [INFO] Progress: 4/5 runs completed (0 successful)
+[2025-12-09 16:06:56.175] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 16:06:56.175] [INFO] Starting run 4 with seed 46
+[2025-12-09 16:06:56.175] [INFO] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+[2025-12-09 16:06:56.175] [INFO] Running: torchrun --standalone --nproc_per_node=8 experiments/train_gpt_palm.py
+[2025-12-09 16:06:56.175] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 16:06:56.176] [INFO] Stdout log: experiment_logs/nanogpt_palm_parallel_20251209_160641/runs/run_4_seed_46/stdout.log
+[2025-12-09 16:06:56.823] [WARNING] Run 4 interrupted by user
+[2025-12-09 16:06:56.888] [INFO] Progress: 5/5 runs completed (0 successful)
+[2025-12-09 16:06:56.888] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 16:06:56.888] [INFO] ================================================================================
+[2025-12-09 16:06:56.888] [INFO] All runs completed: 0/5 successful
+[2025-12-09 16:06:56.888] [INFO] ================================================================================
+[2025-12-09 16:06:56.888] [INFO] Computing statistics...
+[2025-12-09 16:06:56.888] [INFO] ================================================================================
+[2025-12-09 16:06:56.888] [INFO] FINALIZING EXPERIMENT
+[2025-12-09 16:06:56.888] [INFO] ================================================================================
+[2025-12-09 16:06:56.888] [INFO] Experiment completed with 0 runs
+[2025-12-09 16:06:56.888] [INFO] Successful runs: 0
+[2025-12-09 16:06:56.888] [INFO] Failed runs: 0
+[2025-12-09 16:06:56.889] [INFO] Summary saved to summary.json
+[2025-12-09 16:06:56.889] [INFO] End Time: 2025-12-09 16:06:56.889149
+[2025-12-09 16:06:56.889] [INFO] ================================================================================
