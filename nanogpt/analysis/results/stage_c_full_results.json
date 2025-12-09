@@ -1,0 +1,627 @@
+{
+  "baseline": {
+    "summary": {
+      "experiment_name": "nanogpt_baseline",
+      "end_time": "2025-12-09T17:26:58.646689",
+      "git_info": {
+        "commit": "99352aac39f7798169e163db866987ab1956a981",
+        "branch": "main",
+        "dirty": true,
+        "diff": "",
+        "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+        "status": "?? nanogpt/experiment_logs/nanogpt_baseline_20251209_155502/\n?? nanogpt/experiment_logs/nanogpt_baseline_20251209_155534/\n?? nanogpt/experiment_logs/nanogpt_palm_parallel_20251209_160641/\n?? nanogpt/fineweb10B/\n?? nanogpt/logs/\n"
+      },
+      "gpu_info": {
+        "available": true,
+        "device_count": 8,
+        "cuda_version": "12.8",
+        "pytorch_version": "2.8.0+cu128",
+        "devices": [
+          {
+            "index": 0,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 1,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 2,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 3,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 4,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 5,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 6,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 7,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          }
+        ]
+      },
+      "system_info": {
+        "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+        "platform": "Linux-6.14.0-24-generic-x86_64-with-glibc2.39",
+        "processor": "x86_64"
+      },
+      "statistics": {
+        "n_runs": 3,
+        "successful_runs": 3,
+        "failed_runs": 0,
+        "val_loss": {
+          "mean": 3.3005333333333335,
+          "std": 0.0008144527815247453,
+          "min": 3.2996,
+          "max": 3.3011,
+          "median": 3.3009,
+          "ci_95": [
+            3.298510120464333,
+            3.302556546202334
+          ]
+        },
+        "train_loss": {
+          "mean": 3.6366666666666667,
+          "std": 0.006451614784946032,
+          "min": 3.6303,
+          "max": 3.6432,
+          "median": 3.6365
+        },
+        "time": {
+          "mean": 1588.002547899882,
+          "std": 12.260437962297745,
+          "min": 1574.7720761299133,
+          "max": 1598.9806156158447,
+          "total": 4764.007643699646
+        }
+      },
+      "additional_info": {
+        "config_path": "configs/stage_c_full/baseline.json",
+        "script_name": "experiments/train_gpt.py",
+        "n_gpus": 8,
+        "n_runs": 3,
+        "successful_runs": 3,
+        "failed_runs": 0,
+        "target_val_loss": 3.28
+      }
+    },
+    "config": {
+      "experiment_name": "nanogpt_baseline",
+      "description": "Stage C: Baseline NanoGPT training - full run (5100 iters, 8 H100s)",
+      "script": "experiments/train_gpt.py",
+      "stage": "C_full",
+      "n_gpus": 8,
+      "base_seed": 42,
+      "target_val_loss": 3.28,
+      "modification_type": "none",
+      "stage_config": {
+        "recommended_runs": 5,
+        "notes": "Full training (5100 iters) - uses default hyperparameters from training script"
+      },
+      "hyperparameters": {
+        "batch_size": 512,
+        "device_batch_size": 64,
+        "sequence_length": 1024,
+        "num_iterations": 5100,
+        "learning_rate": 0.0036,
+        "warmup_iters": 0,
+        "warmdown_iters": 1450,
+        "weight_decay": 0,
+        "val_loss_every": 125,
+        "val_tokens": 10485760,
+        "notes": "Using default hyperparameters from train_gpt.py Hyperparameters dataclass"
+      }
+    },
+    "statistics": {
+      "val_loss": {
+        "n": 3,
+        "mean": 3.3005333333333335,
+        "std": 0.0008144527815247453,
+        "median": 3.3009,
+        "min": 3.2996,
+        "max": 3.3011,
+        "range": 0.0015000000000000568,
+        "cv": 0.000246763992140082,
+        "ci_95": [
+          3.298510120464333,
+          3.302556546202334
+        ],
+        "ci_99": [
+          3.295866428577502,
+          3.305200238089165
+        ],
+        "percentiles": {
+          "p25": 3.30025,
+          "p50": 3.3009,
+          "p75": 3.301,
+          "p90": 3.30106,
+          "p95": 3.30108,
+          "p99": 3.301096
+        }
+      },
+      "train_loss": {
+        "n": 3,
+        "mean": 3.6366666666666667,
+        "std": 0.006451614784946032,
+        "median": 3.6365,
+        "min": 3.6303,
+        "max": 3.6432,
+        "range": 0.012900000000000134,
+        "cv": 0.001774046228674436,
+        "ci_95": [
+          3.620639967077895,
+          3.6526933662554386
+        ],
+        "ci_99": [
+          3.5996981985053953,
+          3.673635134827938
+        ],
+        "percentiles": {
+          "p25": 3.6334,
+          "p50": 3.6365,
+          "p75": 3.63985,
+          "p90": 3.6418600000000003,
+          "p95": 3.6425300000000003,
+          "p99": 3.643066
+        }
+      },
+      "time": {
+        "n": 3,
+        "mean": 1588.002547899882,
+        "std": 12.260437962297745,
+        "median": 1590.254951953888,
+        "min": 1574.7720761299133,
+        "max": 1598.9806156158447,
+        "range": 24.208539485931396,
+        "cv": 0.007720666429982782,
+        "ci_95": [
+          1557.5459315955402,
+          1618.459164204224
+        ],
+        "ci_99": [
+          1517.7488787704044,
+          1658.2562170293597
+        ],
+        "percentiles": {
+          "p25": 1582.5135140419006,
+          "p50": 1590.254951953888,
+          "p75": 1594.6177837848663,
+          "p90": 1597.2354828834534,
+          "p95": 1598.108049249649,
+          "p99": 1598.8061023426055
+        }
+      },
+      "memory": {
+        "n": 3,
+        "mean": 30602.0,
+        "std": 0.0,
+        "median": 30602.0,
+        "min": 30602.0,
+        "max": 30602.0,
+        "range": 0.0,
+        "cv": 0.0,
+        "ci_95": [
+          30602.0,
+          30602.0
+        ],
+        "ci_99": [
+          30602.0,
+          30602.0
+        ],
+        "percentiles": {
+          "p25": 30602.0,
+          "p50": 30602.0,
+          "p75": 30602.0,
+          "p90": 30602.0,
+          "p95": 30602.0,
+          "p99": 30602.0
+        }
+      }
+    }
+  },
+  "palm_parallel": {
+    "summary": {
+      "experiment_name": "nanogpt_palm_parallel",
+      "end_time": "2025-12-09T14:30:08.177204",
+      "git_info": {
+        "commit": "99352aac39f7798169e163db866987ab1956a981",
+        "branch": "main",
+        "dirty": true,
+        "diff": "",
+        "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+        "status": "?? nanogpt/experiment_logs/nanogpt_baseline_20251209_155502/\n?? nanogpt/experiment_logs/nanogpt_baseline_20251209_155534/\n?? nanogpt/experiment_logs/nanogpt_baseline_20251209_160731/\n?? nanogpt/experiment_logs/nanogpt_palm_parallel_20251209_160641/\n?? nanogpt/experiment_logs/nanogpt_palm_parallel_20251209_172659/\n?? nanogpt/fineweb10B/\n?? nanogpt/logs/\n"
+      },
+      "gpu_info": {
+        "available": true,
+        "device_count": 8,
+        "cuda_version": "12.8",
+        "pytorch_version": "2.8.0+cu128",
+        "devices": [
+          {
+            "index": 0,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 1,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 2,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 3,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 4,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 5,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 6,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          },
+          {
+            "index": 7,
+            "name": "NVIDIA H100 PCIe",
+            "capability": [
+              9,
+              0
+            ],
+            "total_memory_gb": 85.02837248
+          }
+        ]
+      },
+      "system_info": {
+        "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+        "platform": "Linux-6.14.0-24-generic-x86_64-with-glibc2.39",
+        "processor": "x86_64"
+      },
+      "statistics": {
+        "n_runs": 3,
+        "successful_runs": 3,
+        "failed_runs": 0,
+        "val_loss": {
+          "mean": 3.3348,
+          "std": 0.0013453624047074374,
+          "min": 3.3333,
+          "max": 3.3359,
+          "median": 3.3352,
+          "ci_95": [
+            3.3314579345145368,
+            3.338142065485463
+          ]
+        },
+        "train_loss": {
+          "mean": 3.669866666666666,
+          "std": 0.001850225211517236,
+          "min": 3.6687,
+          "max": 3.672,
+          "median": 3.6689
+        },
+        "time": {
+          "mean": 1545.6881958643596,
+          "std": 20.086186389418526,
+          "min": 1532.6732168197632,
+          "max": 1568.8213469982147,
+          "total": 4637.064587593079
+        }
+      },
+      "additional_info": {
+        "config_path": "experiment_logs/stage_c_nanogpt_palm_parallel_20251209_172659/config.json",
+        "script_name": "experiments/train_gpt_palm.py",
+        "n_gpus": 8,
+        "n_runs": 3,
+        "successful_runs": 3,
+        "failed_runs": 0,
+        "target_val_loss": 3.28
+      }
+    },
+    "config": {
+      "experiment_name": "nanogpt_palm_parallel",
+      "description": "Stage C: PaLM-style Parallel Attention and MLP - full run (5100 iters, 8 H100s)",
+      "script": "experiments/train_gpt_palm.py",
+      "stage": "C_full",
+      "n_gpus": 8,
+      "base_seed": 42,
+      "target_val_loss": 3.28,
+      "modification_type": "architecture",
+      "modification_details": "Parallel Attn+MLP block structure with 1/sqrt(2) scaling and shared RMSNorm",
+      "stage_config": {
+        "recommended_runs": 5,
+        "notes": "Full training (5100 iters) - uses default hyperparameters from training script"
+      },
+      "hyperparameters": {
+        "batch_size": 512,
+        "device_batch_size": 64,
+        "sequence_length": 1024,
+        "num_iterations": 5100,
+        "learning_rate": 0.0036,
+        "warmup_iters": 0,
+        "warmdown_iters": 1450,
+        "weight_decay": 0,
+        "val_loss_every": 125,
+        "val_tokens": 10485760,
+        "notes": "Using default hyperparameters, only architecture changed"
+      }
+    },
+    "statistics": {
+      "val_loss": {
+        "n": 3,
+        "mean": 3.3348,
+        "std": 0.0013453624047074374,
+        "median": 3.3352,
+        "min": 3.3333,
+        "max": 3.3359,
+        "range": 0.0026000000000001577,
+        "cv": 0.00040343121167909243,
+        "ci_95": [
+          3.3314579345145368,
+          3.338142065485463
+        ],
+        "ci_99": [
+          3.3270909242287914,
+          3.3425090757712086
+        ],
+        "percentiles": {
+          "p25": 3.33425,
+          "p50": 3.3352,
+          "p75": 3.33555,
+          "p90": 3.33576,
+          "p95": 3.33583,
+          "p99": 3.335886
+        }
+      },
+      "train_loss": {
+        "n": 3,
+        "mean": 3.669866666666666,
+        "std": 0.001850225211517236,
+        "median": 3.6689,
+        "min": 3.6687,
+        "max": 3.672,
+        "range": 0.0033000000000003027,
+        "cv": 0.0005041668756859204,
+        "ci_95": [
+          3.6652704524435618,
+          3.6744628808897706
+        ],
+        "ci_99": [
+          3.6592646710263255,
+          3.680468662307007
+        ],
+        "percentiles": {
+          "p25": 3.6688,
+          "p50": 3.6689,
+          "p75": 3.6704499999999998,
+          "p90": 3.67138,
+          "p95": 3.67169,
+          "p99": 3.671938
+        }
+      },
+      "time": {
+        "n": 3,
+        "mean": 1545.6881958643596,
+        "std": 20.086186389418526,
+        "median": 1535.5700237751007,
+        "min": 1532.6732168197632,
+        "max": 1568.8213469982147,
+        "range": 36.14813017845154,
+        "cv": 0.012994979481088804,
+        "ci_95": [
+          1495.7913427697772,
+          1595.585048958942
+        ],
+        "ci_99": [
+          1430.592120421165,
+          1660.7842713075543
+        ],
+        "percentiles": {
+          "p25": 1534.121620297432,
+          "p50": 1535.5700237751007,
+          "p75": 1552.1956853866577,
+          "p90": 1562.1710823535918,
+          "p95": 1565.4962146759033,
+          "p99": 1568.1563205337525
+        }
+      },
+      "memory": {
+        "n": 3,
+        "mean": 28295.0,
+        "std": 0.0,
+        "median": 28295.0,
+        "min": 28295.0,
+        "max": 28295.0,
+        "range": 0.0,
+        "cv": 0.0,
+        "ci_95": [
+          28295.0,
+          28295.0
+        ],
+        "ci_99": [
+          28295.0,
+          28295.0
+        ],
+        "percentiles": {
+          "p25": 28295.0,
+          "p50": 28295.0,
+          "p75": 28295.0,
+          "p90": 28295.0,
+          "p95": 28295.0,
+          "p99": 28295.0
+        }
+      }
+    }
+  },
+  "comparisons": {
+    "val_loss": {
+      "metric": "Validation Loss",
+      "baseline_mean": 3.3005333333333335,
+      "modified_mean": 3.3348,
+      "absolute_diff": 0.034266666666666445,
+      "percent_diff": 1.0382160458915664,
+      "improvement": -1.0382160458915664,
+      "ttest_statistic": -37.73906724821563,
+      "ttest_p_value": 1.8615903830764437e-05,
+      "permutation_p_value": 0.1029,
+      "cohens_d": -30.81381937556959,
+      "bootstrap_ci_diff": [
+        NaN,
+        NaN
+      ],
+      "normality_baseline_p": 0.2350892342420141,
+      "normality_modified_p": 0.5026379305886751,
+      "levene_p_value": 0.6215073000936366,
+      "lower_is_better": true
+    },
+    "train_loss": {
+      "metric": "Training Loss",
+      "baseline_mean": 3.6366666666666667,
+      "modified_mean": 3.669866666666666,
+      "absolute_diff": 0.03319999999999945,
+      "percent_diff": 0.912923923006401,
+      "improvement": -0.912923923006401,
+      "ttest_statistic": -8.56776174765066,
+      "ttest_p_value": 0.008262032197207822,
+      "permutation_p_value": 0.1029,
+      "cohens_d": -6.995548173160123,
+      "bootstrap_ci_diff": [
+        NaN,
+        NaN
+      ],
+      "normality_baseline_p": 0.957268457892329,
+      "normality_modified_p": 0.10327339363875124,
+      "levene_p_value": 0.2493364915543931,
+      "lower_is_better": true
+    },
+    "time": {
+      "metric": "Training Time",
+      "baseline_mean": 1588.002547899882,
+      "modified_mean": 1545.6881958643596,
+      "absolute_diff": -42.31435203552246,
+      "percent_diff": -2.6646274649548123,
+      "improvement": 2.6646274649548123,
+      "ttest_statistic": 3.1144570511288725,
+      "ttest_p_value": 0.04619011248517575,
+      "permutation_p_value": 0.1029,
+      "cohens_d": 2.542943533692972,
+      "bootstrap_ci_diff": [
+        NaN,
+        NaN
+      ],
+      "normality_baseline_p": 0.6948440930521237,
+      "normality_modified_p": 0.13783850044542012,
+      "levene_p_value": 0.7475519784951135,
+      "lower_is_better": true
+    },
+    "memory": {
+      "metric": "Peak Memory",
+      "baseline_mean": 30602.0,
+      "modified_mean": 28295.0,
+      "absolute_diff": -2307.0,
+      "percent_diff": -7.5387229592837075,
+      "improvement": 7.5387229592837075,
+      "ttest_statistic": Infinity,
+      "ttest_p_value": 0.0,
+      "permutation_p_value": 0.1029,
+      "cohens_d": Infinity,
+      "bootstrap_ci_diff": [
+        NaN,
+        NaN
+      ],
+      "normality_baseline_p": 1.0,
+      "normality_modified_p": 1.0,
+      "levene_p_value": NaN,
+      "lower_is_better": true
+    }
+  }
+}

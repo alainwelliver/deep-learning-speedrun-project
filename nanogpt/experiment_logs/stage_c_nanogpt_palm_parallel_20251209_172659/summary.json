@@ -1,0 +1,136 @@
+{
+  "experiment_name": "nanogpt_palm_parallel",
+  "end_time": "2025-12-09T14:30:08.177204",
+  "git_info": {
+    "commit": "99352aac39f7798169e163db866987ab1956a981",
+    "branch": "main",
+    "dirty": true,
+    "diff": "",
+    "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+    "status": "?? nanogpt/experiment_logs/nanogpt_baseline_20251209_155502/\n?? nanogpt/experiment_logs/nanogpt_baseline_20251209_155534/\n?? nanogpt/experiment_logs/nanogpt_baseline_20251209_160731/\n?? nanogpt/experiment_logs/nanogpt_palm_parallel_20251209_160641/\n?? nanogpt/experiment_logs/nanogpt_palm_parallel_20251209_172659/\n?? nanogpt/fineweb10B/\n?? nanogpt/logs/\n"
+  },
+  "gpu_info": {
+    "available": true,
+    "device_count": 8,
+    "cuda_version": "12.8",
+    "pytorch_version": "2.8.0+cu128",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA H100 PCIe",
+        "capability": [
+          9,
+          0
+        ],
+        "total_memory_gb": 85.02837248
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA H100 PCIe",
+        "capability": [
+          9,
+          0
+        ],
+        "total_memory_gb": 85.02837248
+      },
+      {
+        "index": 2,
+        "name": "NVIDIA H100 PCIe",
+        "capability": [
+          9,
+          0
+        ],
+        "total_memory_gb": 85.02837248
+      },
+      {
+        "index": 3,
+        "name": "NVIDIA H100 PCIe",
+        "capability": [
+          9,
+          0
+        ],
+        "total_memory_gb": 85.02837248
+      },
+      {
+        "index": 4,
+        "name": "NVIDIA H100 PCIe",
+        "capability": [
+          9,
+          0
+        ],
+        "total_memory_gb": 85.02837248
+      },
+      {
+        "index": 5,
+        "name": "NVIDIA H100 PCIe",
+        "capability": [
+          9,
+          0
+        ],
+        "total_memory_gb": 85.02837248
+      },
+      {
+        "index": 6,
+        "name": "NVIDIA H100 PCIe",
+        "capability": [
+          9,
+          0
+        ],
+        "total_memory_gb": 85.02837248
+      },
+      {
+        "index": 7,
+        "name": "NVIDIA H100 PCIe",
+        "capability": [
+          9,
+          0
+        ],
+        "total_memory_gb": 85.02837248
+      }
+    ]
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-6.14.0-24-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64"
+  },
+  "statistics": {
+    "n_runs": 3,
+    "successful_runs": 3,
+    "failed_runs": 0,
+    "val_loss": {
+      "mean": 3.3348,
+      "std": 0.0013453624047074374,
+      "min": 3.3333,
+      "max": 3.3359,
+      "median": 3.3352,
+      "ci_95": [
+        3.3314579345145368,
+        3.338142065485463
+      ]
+    },
+    "train_loss": {
+      "mean": 3.669866666666666,
+      "std": 0.001850225211517236,
+      "min": 3.6687,
+      "max": 3.672,
+      "median": 3.6689
+    },
+    "time": {
+      "mean": 1545.6881958643596,
+      "std": 20.086186389418526,
+      "min": 1532.6732168197632,
+      "max": 1568.8213469982147,
+      "total": 4637.064587593079
+    }
+  },
+  "additional_info": {
+    "config_path": "experiment_logs/stage_c_nanogpt_palm_parallel_20251209_172659/config.json",
+    "script_name": "experiments/train_gpt_palm.py",
+    "n_gpus": 8,
+    "n_runs": 3,
+    "successful_runs": 3,
+    "failed_runs": 0,
+    "target_val_loss": 3.28
+  }
+}

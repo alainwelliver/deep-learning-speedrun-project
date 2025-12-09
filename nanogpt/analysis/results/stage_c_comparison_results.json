@@ -1,0 +1,82 @@
+{
+  "val_loss": {
+    "metric": "Validation Loss",
+    "baseline_mean": 3.3005333333333335,
+    "modified_mean": 3.3348,
+    "absolute_diff": 0.034266666666666445,
+    "percent_diff": 1.0382160458915664,
+    "improvement": -1.0382160458915664,
+    "ttest_statistic": -37.73906724821563,
+    "ttest_p_value": 1.8615903830764437e-05,
+    "permutation_p_value": 0.1029,
+    "cohens_d": -30.81381937556959,
+    "bootstrap_ci_diff": [
+      NaN,
+      NaN
+    ],
+    "normality_baseline_p": 0.2350892342420141,
+    "normality_modified_p": 0.5026379305886751,
+    "levene_p_value": 0.6215073000936366,
+    "lower_is_better": true
+  },
+  "train_loss": {
+    "metric": "Training Loss",
+    "baseline_mean": 3.6366666666666667,
+    "modified_mean": 3.669866666666666,
+    "absolute_diff": 0.03319999999999945,
+    "percent_diff": 0.912923923006401,
+    "improvement": -0.912923923006401,
+    "ttest_statistic": -8.56776174765066,
+    "ttest_p_value": 0.008262032197207822,
+    "permutation_p_value": 0.1029,
+    "cohens_d": -6.995548173160123,
+    "bootstrap_ci_diff": [
+      NaN,
+      NaN
+    ],
+    "normality_baseline_p": 0.957268457892329,
+    "normality_modified_p": 0.10327339363875124,
+    "levene_p_value": 0.2493364915543931,
+    "lower_is_better": true
+  },
+  "time": {
+    "metric": "Training Time",
+    "baseline_mean": 1588.002547899882,
+    "modified_mean": 1545.6881958643596,
+    "absolute_diff": -42.31435203552246,
+    "percent_diff": -2.6646274649548123,
+    "improvement": 2.6646274649548123,
+    "ttest_statistic": 3.1144570511288725,
+    "ttest_p_value": 0.04619011248517575,
+    "permutation_p_value": 0.1029,
+    "cohens_d": 2.542943533692972,
+    "bootstrap_ci_diff": [
+      NaN,
+      NaN
+    ],
+    "normality_baseline_p": 0.6948440930521237,
+    "normality_modified_p": 0.13783850044542012,
+    "levene_p_value": 0.7475519784951135,
+    "lower_is_better": true
+  },
+  "memory": {
+    "metric": "Peak Memory",
+    "baseline_mean": 30602.0,
+    "modified_mean": 28295.0,
+    "absolute_diff": -2307.0,
+    "percent_diff": -7.5387229592837075,
+    "improvement": 7.5387229592837075,
+    "ttest_statistic": Infinity,
+    "ttest_p_value": 0.0,
+    "permutation_p_value": 0.1029,
+    "cohens_d": Infinity,
+    "bootstrap_ci_diff": [
+      NaN,
+      NaN
+    ],
+    "normality_baseline_p": 1.0,
+    "normality_modified_p": 1.0,
+    "levene_p_value": NaN,
+    "lower_is_better": true
+  }
+}
