@@ -1,0 +1,101 @@
+
+================================================================================
+NANOGPT EXPERIMENT LOG
+================================================================================
+Experiment Name: nanogpt_depth_warm_screening
+Start Time: 2025-12-09T01:06:51.380719
+
+GIT INFORMATION:
+  Commit:  7271ad3faae6abb942f7c413fda978bf82d87138
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA L40 (47.6 GB)
+
+================================================================================
+
+[2025-12-09 01:06:51.381] [INFO] Starting experiment: nanogpt_depth_warm_screening
+[2025-12-09 01:06:51.381] [INFO] Configuration file: configs/stage_a_screening/depth_warm_screening.json
+[2025-12-09 01:06:51.381] [INFO] Training script: experiments/train_gpt_depth_warn.py
+[2025-12-09 01:06:51.381] [INFO] Number of GPUs: 1
+[2025-12-09 01:06:51.381] [INFO] Number of runs: 2
+[2025-12-09 01:06:51.381] [INFO] Base seed: 42
+[2025-12-09 01:06:51.381] [INFO] Description: Stage A: DepthWarm layer skipping screening (1000 iters, 1 L40)
+[2025-12-09 01:06:51.381] [INFO] Target validation loss: 3.5
+[2025-12-09 01:06:51.381] [INFO] Configuration saved to config.json
+[2025-12-09 01:06:51.382] [INFO] Configuration: {
+  "experiment_name": "nanogpt_depth_warm_screening",
+  "description": "Stage A: DepthWarm layer skipping screening (1000 iters, 1 L40)",
+  "script": "experiments/train_gpt_depth_warn.py",
+  "stage": "A_screening",
+  "n_gpus": 1,
+  "base_seed": 42,
+  "target_val_loss": 3.5,
+  "modification_type": "architecture",
+  "stage_config": {
+    "num_iterations": 1000,
+    "warmdown_iters": 284,
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "val_loss_every": 25,
+    "recommended_runs": 2,
+    "notes": "~1/5 of full training (1000/5100 iters), batch scaled for 1 GPU, progressive layer activation"
+  },
+  "hyperparameters": {
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "sequence_length": 1024,
+    "num_iterations": 1000,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 284,
+    "weight_decay": 0,
+    "val_loss_every": 25,
+    "val_tokens": 10485760,
+    "modification": "Progressive layer skipping during early training with stochastic depth warmup"
+  }
+}
+[2025-12-09 01:06:51.382] [INFO] ================================================================================
+[2025-12-09 01:06:51.382] [INFO] Starting 2 training runs...
+[2025-12-09 01:06:51.382] [INFO] ================================================================================
+[2025-12-09 01:06:51.382] [INFO] Starting run 0 with seed 42
+[2025-12-09 01:06:51.382] [INFO] Running: torchrun --standalone --nproc_per_node=1 experiments/train_gpt_depth_warn.py
+[2025-12-09 01:06:51.382] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 01:06:51.382] [INFO] Stdout log: experiment_logs/nanogpt_depth_warm_screening_20251209_010651/runs/run_0_seed_42/stdout.log
+[2025-12-09 01:10:05.346] [INFO] Run 0 - Step 25: val_loss=6.4624
+[2025-12-09 01:11:27.797] [INFO] Run 0 - Step 50: val_loss=6.0450
+[2025-12-09 01:12:50.251] [INFO] Run 0 - Step 75: val_loss=5.7531
+[2025-12-09 01:14:12.356] [INFO] Run 0 - Step 100: val_loss=5.5264
+[2025-12-09 01:15:34.506] [INFO] Run 0 - Step 125: val_loss=5.3542
+[2025-12-09 01:16:56.865] [INFO] Run 0 - Step 150: val_loss=5.2310
+[2025-12-09 01:18:18.994] [INFO] Run 0 - Step 175: val_loss=5.1187
+[2025-12-09 01:19:41.111] [INFO] Run 0 - Step 200: val_loss=5.0355
+[2025-12-09 01:20:55.434] [WARNING] Run 0 interrupted by user
+[2025-12-09 01:20:56.351] [INFO] Progress: 1/2 runs completed (0 successful)
+[2025-12-09 01:20:56.351] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 01:20:56.351] [INFO] Starting run 1 with seed 43
+[2025-12-09 01:20:56.352] [INFO] Running: torchrun --standalone --nproc_per_node=1 experiments/train_gpt_depth_warn.py
+[2025-12-09 01:20:56.352] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-09 01:20:56.352] [INFO] Stdout log: experiment_logs/nanogpt_depth_warm_screening_20251209_010651/runs/run_1_seed_43/stdout.log
+[2025-12-09 01:20:58.320] [WARNING] Run 1 interrupted by user
+[2025-12-09 01:20:58.734] [INFO] Progress: 2/2 runs completed (0 successful)
+[2025-12-09 01:20:58.734] [INFO] --------------------------------------------------------------------------------
+[2025-12-09 01:20:58.734] [INFO] ================================================================================
+[2025-12-09 01:20:58.734] [INFO] All runs completed: 0/2 successful
+[2025-12-09 01:20:58.735] [INFO] ================================================================================
+[2025-12-09 01:20:58.735] [INFO] Computing statistics...
+[2025-12-09 01:20:58.735] [INFO] ================================================================================
+[2025-12-09 01:20:58.735] [INFO] FINALIZING EXPERIMENT
+[2025-12-09 01:20:58.735] [INFO] ================================================================================
+[2025-12-09 01:20:58.735] [INFO] Experiment completed with 0 runs
+[2025-12-09 01:20:58.735] [INFO] Successful runs: 0
+[2025-12-09 01:20:58.735] [INFO] Failed runs: 0
+[2025-12-09 01:20:58.735] [INFO] Summary saved to summary.json
+[2025-12-09 01:20:58.735] [INFO] End Time: 2025-12-09 01:20:58.735978
+[2025-12-09 01:20:58.736] [INFO] ================================================================================

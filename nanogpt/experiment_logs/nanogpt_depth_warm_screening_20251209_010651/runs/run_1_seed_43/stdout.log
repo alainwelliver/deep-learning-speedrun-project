@@ -1,0 +1,2 @@
+/deep-learning-speedrun-project/nanogpt/experiments/train_gpt_depth_warn.py:29: SyntaxWarning: invalid escape sequence '\s'
+  """

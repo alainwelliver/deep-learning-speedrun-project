@@ -1,0 +1,46 @@
+{
+  "experiment_name": "nanogpt_depth_warm_screening",
+  "end_time": "2025-12-09T01:20:58.735592",
+  "git_info": {
+    "commit": "7271ad3faae6abb942f7c413fda978bf82d87138",
+    "branch": "main",
+    "dirty": true,
+    "diff": "",
+    "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+    "status": "?? nanogpt/experiment_logs/nanogpt_curriculum_screening_20251209_010409/\n?? nanogpt/fineweb10B/\n?? nanogpt/logs/\n"
+  },
+  "gpu_info": {
+    "available": true,
+    "device_count": 1,
+    "cuda_version": "12.8",
+    "pytorch_version": "2.8.0+cu128",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA L40",
+        "capability": [
+          8,
+          9
+        ],
+        "total_memory_gb": 47.576711168
+      }
+    ]
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-5.15.0-122-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64"
+  },
+  "statistics": {
+    "error": "No results to compute statistics from"
+  },
+  "additional_info": {
+    "config_path": "configs/stage_a_screening/depth_warm_screening.json",
+    "script_name": "experiments/train_gpt_depth_warn.py",
+    "n_gpus": 1,
+    "n_runs": 2,
+    "successful_runs": 0,
+    "failed_runs": 2,
+    "target_val_loss": 3.5
+  }
+}

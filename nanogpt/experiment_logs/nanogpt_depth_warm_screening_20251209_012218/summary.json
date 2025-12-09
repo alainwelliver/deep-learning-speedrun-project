@@ -1,0 +1,73 @@
+{
+  "experiment_name": "nanogpt_depth_warm_screening",
+  "end_time": "2025-12-09T03:28:15.908594",
+  "git_info": {
+    "commit": "7271ad3faae6abb942f7c413fda978bf82d87138",
+    "branch": "main",
+    "dirty": true,
+    "diff": "",
+    "remote": "https://github.com/alainwelliver/deep-learning-speedrun-project.git",
+    "status": "?? nanogpt/experiment_logs/nanogpt_curriculum_screening_20251209_010409/\n?? nanogpt/experiment_logs/nanogpt_depth_warm_screening_20251209_010651/\n?? nanogpt/fineweb10B/\n?? nanogpt/logs/\n"
+  },
+  "gpu_info": {
+    "available": true,
+    "device_count": 1,
+    "cuda_version": "12.8",
+    "pytorch_version": "2.8.0+cu128",
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA L40",
+        "capability": [
+          8,
+          9
+        ],
+        "total_memory_gb": 47.576711168
+      }
+    ]
+  },
+  "system_info": {
+    "python_version": "3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0]",
+    "platform": "Linux-5.15.0-122-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64"
+  },
+  "statistics": {
+    "n_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "val_loss": {
+      "mean": 3.9244,
+      "std": 0.004101219330881838,
+      "min": 3.9215,
+      "max": 3.9273,
+      "median": 3.9244,
+      "ci_95": [
+        3.887552006264348,
+        3.9612479937356517
+      ]
+    },
+    "train_loss": {
+      "mean": 3.7275,
+      "std": 0.005656854249492385,
+      "min": 3.7235,
+      "max": 3.7315,
+      "median": 3.7275
+    },
+    "time": {
+      "mean": 3778.0395650863647,
+      "std": 1.7072707153129838,
+      "min": 3776.8323423862457,
+      "max": 3779.2467877864838,
+      "total": 7556.0791301727295
+    }
+  },
+  "additional_info": {
+    "config_path": "configs/stage_a_screening/depth_warm_screening.json",
+    "script_name": "experiments/train_gpt_depth_warn.py",
+    "n_gpus": 1,
+    "n_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "target_val_loss": 3.5
+  }
+}
