@@ -1,0 +1,58 @@
+/deep-learning-speedrun-project/nanogpt/experiments/train_gpt_depth_warn.py:29: SyntaxWarning: invalid escape sequence '\s'
+  """
+using device: cuda:0
+Training DataLoader: total number of tokens: 900000000 across 9 files
+Validation DataLoader: total number of tokens: 100000000 across 1 files
+[rank0]:[W1208 21:02:16.665579881 reducer.cpp:1457] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+step:0/1000 val_loss:15.9868 train_time:331ms step_avg:nanms
+step:1/1000 train_loss:15.9720 train_time:17178ms step_avg:nanms
+step:2/1000 train_loss:9.4459 train_time:22425ms step_avg:nanms
+step:3/1000 train_loss:8.3981 train_time:23855ms step_avg:nanms
+step:4/1000 train_loss:8.2170 train_time:25327ms step_avg:nanms
+step:5/1000 train_loss:7.8578 train_time:26789ms step_avg:nanms
+step:6/1000 train_loss:7.5804 train_time:28273ms step_avg:nanms
+step:7/1000 train_loss:7.9322 train_time:29695ms step_avg:nanms
+step:8/1000 train_loss:7.4006 train_time:31231ms step_avg:nanms
+step:9/1000 train_loss:7.4349 train_time:32704ms step_avg:nanms
+step:10/1000 train_loss:7.1824 train_time:34183ms step_avg:nanms
+step:11/1000 train_loss:7.2435 train_time:1500ms step_avg:nanms
+step:12/1000 train_loss:7.0249 train_time:2987ms step_avg:nanms
+step:13/1000 train_loss:6.8141 train_time:4472ms step_avg:1490.72ms
+step:14/1000 train_loss:6.7410 train_time:5980ms step_avg:1495.06ms
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/deep-learning-speedrun-project/nanogpt/experiments/train_gpt_depth_warn.py", line 573, in <module>
+[rank0]:     p.grad /= train_accumulation_steps
+[rank0]: TypeError: unsupported operand type(s) for /=: 'NoneType' and 'int'
+E1208 21:03:52.572000 33893 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 0 (pid: 33960) of binary: /usr/local/bin/python
+Traceback (most recent call last):
+  File "/usr/local/bin/torchrun", line 7, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/distributed/launcher/api.py", line 277, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+experiments/train_gpt_depth_warn.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-12-08_21:03:52
+  host      : fc99fc618882
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 33960)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

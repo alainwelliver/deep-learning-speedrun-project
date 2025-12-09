@@ -1,0 +1,99 @@
+
+================================================================================
+NANOGPT EXPERIMENT LOG
+================================================================================
+Experiment Name: nanogpt_depth_warm_screening
+Start Time: 2025-12-08T21:01:40.876934
+
+GIT INFORMATION:
+  Commit:  d64c2f1850c77837f17806bdca6e9bf645884887
+  Branch:  main
+  Remote:  https://github.com/alainwelliver/deep-learning-speedrun-project.git
+  Dirty:   True
+
+GPU INFORMATION:
+  CUDA Available: True
+  Device Count:   1
+  CUDA Version:   12.8
+  PyTorch:        2.8.0+cu128
+  Device 0: NVIDIA L40 (47.6 GB)
+
+================================================================================
+
+[2025-12-08 21:01:40.877] [INFO] Starting experiment: nanogpt_depth_warm_screening
+[2025-12-08 21:01:40.877] [INFO] Configuration file: configs/stage_a_screening/depth_warm_screening.json
+[2025-12-08 21:01:40.877] [INFO] Training script: experiments/train_gpt_depth_warn.py
+[2025-12-08 21:01:40.877] [INFO] Number of GPUs: 1
+[2025-12-08 21:01:40.877] [INFO] Number of runs: 2
+[2025-12-08 21:01:40.877] [INFO] Base seed: 42
+[2025-12-08 21:01:40.877] [INFO] Description: Stage A: DepthWarm layer skipping screening (1000 iters, 1 L40)
+[2025-12-08 21:01:40.877] [INFO] Target validation loss: 3.5
+[2025-12-08 21:01:40.877] [INFO] Configuration saved to config.json
+[2025-12-08 21:01:40.877] [INFO] Configuration: {
+  "experiment_name": "nanogpt_depth_warm_screening",
+  "description": "Stage A: DepthWarm layer skipping screening (1000 iters, 1 L40)",
+  "script": "experiments/train_gpt_depth_warn.py",
+  "stage": "A_screening",
+  "n_gpus": 1,
+  "base_seed": 42,
+  "target_val_loss": 3.5,
+  "modification_type": "architecture",
+  "stage_config": {
+    "num_iterations": 1000,
+    "warmdown_iters": 284,
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "val_loss_every": 25,
+    "recommended_runs": 2,
+    "notes": "~1/5 of full training (1000/5100 iters), batch scaled for 1 GPU, progressive layer activation"
+  },
+  "hyperparameters": {
+    "batch_size": 128,
+    "device_batch_size": 16,
+    "sequence_length": 1024,
+    "num_iterations": 1000,
+    "learning_rate": 0.0036,
+    "warmup_iters": 0,
+    "warmdown_iters": 284,
+    "weight_decay": 0,
+    "val_loss_every": 25,
+    "val_tokens": 10485760,
+    "modification": "Progressive layer skipping during early training with stochastic depth warmup"
+  }
+}
+[2025-12-08 21:01:40.878] [INFO] ================================================================================
+[2025-12-08 21:01:40.878] [INFO] Starting 2 training runs...
+[2025-12-08 21:01:40.878] [INFO] ================================================================================
+[2025-12-08 21:01:40.878] [INFO] Starting run 0 with seed 42
+[2025-12-08 21:01:40.878] [INFO] Running: torchrun --standalone --nproc_per_node=1 experiments/train_gpt_depth_warn.py
+[2025-12-08 21:01:40.878] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-08 21:01:40.878] [INFO] Stdout log: experiment_logs/nanogpt_depth_warm_screening_20251208_210140/runs/run_0_seed_42/stdout.log
+[2025-12-08 21:03:52.828] [ERROR] ERROR in run 0: Process exited with code 1
+[2025-12-08 21:03:52.828] [INFO] Progress: 1/2 runs completed (0 successful)
+[2025-12-08 21:03:52.828] [INFO] --------------------------------------------------------------------------------
+[2025-12-08 21:03:52.828] [INFO] Starting run 1 with seed 43
+[2025-12-08 21:03:52.829] [INFO] Running: torchrun --standalone --nproc_per_node=1 experiments/train_gpt_depth_warn.py
+[2025-12-08 21:03:52.829] [INFO] Working directory: /deep-learning-speedrun-project/nanogpt
+[2025-12-08 21:03:52.829] [INFO] Stdout log: experiment_logs/nanogpt_depth_warm_screening_20251208_210140/runs/run_1_seed_43/stdout.log
+[2025-12-08 21:07:04.975] [INFO] Run 1 - Step 25: val_loss=6.4563
+[2025-12-08 21:08:27.296] [INFO] Run 1 - Step 50: val_loss=6.0515
+[2025-12-08 21:09:50.047] [INFO] Run 1 - Step 75: val_loss=5.7519
+[2025-12-08 21:11:12.142] [INFO] Run 1 - Step 100: val_loss=5.5368
+[2025-12-08 21:12:33.951] [INFO] Run 1 - Step 125: val_loss=5.3648
+[2025-12-08 21:13:55.876] [INFO] Run 1 - Step 150: val_loss=5.2411
+[2025-12-08 21:14:12.865] [ERROR] ERROR in run 1: Process exited with code 1
+[2025-12-08 21:14:12.866] [INFO] Progress: 2/2 runs completed (0 successful)
+[2025-12-08 21:14:12.866] [INFO] --------------------------------------------------------------------------------
+[2025-12-08 21:14:12.866] [INFO] ================================================================================
+[2025-12-08 21:14:12.866] [INFO] All runs completed: 0/2 successful
+[2025-12-08 21:14:12.866] [INFO] ================================================================================
+[2025-12-08 21:14:12.866] [INFO] Computing statistics...
+[2025-12-08 21:14:12.866] [INFO] ================================================================================
+[2025-12-08 21:14:12.866] [INFO] FINALIZING EXPERIMENT
+[2025-12-08 21:14:12.866] [INFO] ================================================================================
+[2025-12-08 21:14:12.866] [INFO] Experiment completed with 0 runs
+[2025-12-08 21:14:12.866] [INFO] Successful runs: 0
+[2025-12-08 21:14:12.866] [INFO] Failed runs: 0
+[2025-12-08 21:14:12.874] [INFO] Summary saved to summary.json
+[2025-12-08 21:14:12.875] [INFO] End Time: 2025-12-08 21:14:12.875134
+[2025-12-08 21:14:12.875] [INFO] ================================================================================
